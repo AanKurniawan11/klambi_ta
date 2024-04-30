@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:get/get.dart';
 
 import '../../color.dart';
-import 'onboardingitem.dart';
+import '../Register/register.dart';
+import 'onboarding_item.dart';
 
 class OnboardingView extends StatefulWidget {
   const OnboardingView({super.key});
@@ -27,54 +29,57 @@ class _OnboardingViewState extends State<OnboardingView> {
     final double width = mediaquery.width;
 
     return Scaffold(
-      bottomSheet: Container(
-        color: Colors.white,
-        height: 160,
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-        child: isLastPage
-            ? Column(
-                children: [
-                  getStarted(),
-                ],
-              )
-            : Column(
-                children: [
-                  ElevatedButton(
-                    onPressed: () => pageController.nextPage(
-                      duration:const Duration(milliseconds: 600),
-                      curve: Curves.easeIn,
-                    ),
-                    style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all(ColorValue.yellow),
-                      minimumSize: MaterialStateProperty.all(
-                          Size(width * 0.85, height * 0.065)),
-                    ),
-                    child: const Text(
-                      "Next",
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 18,
+      bottomSheet: SafeArea(
+        child: Container(
+          color: Colors.white,
+          height: 160,
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+          child: isLastPage
+              ? Column(
+                  children: [
+                    getStarted(),
+                  ],
+                )
+              : Column(
+                  children: [
+                    ElevatedButton(
+                      onPressed: () => pageController.nextPage(
+                        duration: const Duration(milliseconds: 600),
+                        curve: Curves.easeIn,
+                      ),
+                      style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.all(ColorValue.primary),
+                        minimumSize: MaterialStateProperty.all(
+                            Size(width * 0.85, height * 0.065)),
+                      ),
+                      child: const Text(
+                        "Next",
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 18,
+                        ),
                       ),
                     ),
-                  ),
-                const  SizedBox(
-                    height: 20,
-                  ),
-                  SmoothPageIndicator(
-                    controller: pageController,
-                    count: controller.items.length,
-                    onDotClicked: (index) => pageController.animateToPage(index,
-                        duration:const Duration(milliseconds: 600),
-                        curve: Curves.easeIn),
-                    effect: const ExpandingDotsEffect(
-                        dotHeight: 10,
-                        dotWidth: 20,
-                        activeDotColor: ColorValue.yellow),
-                  ),
-                ],
-              ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    SmoothPageIndicator(
+                      controller: pageController,
+                      count: controller.items.length,
+                      onDotClicked: (index) => pageController.animateToPage(
+                          index,
+                          duration: const Duration(milliseconds: 600),
+                          curve: Curves.easeIn),
+                      effect: const ExpandingDotsEffect(
+                          dotHeight: 10,
+                          dotWidth: 20,
+                          activeDotColor: ColorValue.primary),
+                    ),
+                  ],
+                ),
+        ),
       ),
       body: Stack(
         children: [
@@ -93,13 +98,13 @@ class _OnboardingViewState extends State<OnboardingView> {
                     const SizedBox(height: 15),
                     Text(
                       controller.items[index].title,
-                      style:
-                        const  TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                      style: const TextStyle(
+                          fontSize: 25, fontWeight: FontWeight.bold),
                     ),
                     const SizedBox(height: 15),
                     Text(
                       controller.items[index].description,
-                      style:const TextStyle(color: ColorValue.grey),
+                      style: const TextStyle(color: ColorValue.grey),
                       maxLines: 5,
                       textAlign: TextAlign.center,
                     ),
@@ -138,14 +143,14 @@ class _OnboardingViewState extends State<OnboardingView> {
         final pres = await SharedPreferences.getInstance();
         pres.setBool("onboarding", true);
         if (!mounted) return;
-        // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>Register()));
+        Get.offAll(Register());
       },
       style: ButtonStyle(
-        backgroundColor: MaterialStateProperty.all(ColorValue.yellow),
+        backgroundColor: MaterialStateProperty.all(ColorValue.primary),
         minimumSize:
             MaterialStateProperty.all(Size(width * 0.85, height * 0.065)),
       ),
-      child:const Text(
+      child: const Text(
         "Mulai",
         style: TextStyle(
           color: Colors.black,

@@ -75,8 +75,10 @@ flutter:
     - img/on2.png
     - img/on3.png
     - img/dec1.png
-    - img/dec2.png
+    - img/dec4.png
     - img/Logo1.png
+    - img/Google_Icon.png
+    - img/Facebook_Icon.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
