@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 
-import 'OnboardingData.dart';
+import 'onboarding_model.dart';
 class OnboardingItems{
   List<OnboardingData> items = [
     OnboardingData(
