@@ -74,7 +74,7 @@ class Login extends StatelessWidget {
                             Expanded(
                               child: Divider(
                                 thickness: 1, // Adjust thickness as needed
-                                color: ColorValue.ligthgrey,
+                                color: ColorValue.kLightGrey,
                               ),
                             ),
                             Padding(
@@ -91,7 +91,7 @@ class Login extends StatelessWidget {
                             Expanded(
                               child: Divider(
                                 thickness: 1, // Adjust thickness as needed
-                                color: ColorValue.ligthgrey,
+                                color: ColorValue.kLightGrey,
                               ),
                             ),
                           ],
@@ -151,7 +151,7 @@ class Login extends StatelessWidget {
                             child: Text(
                               " Daftar",
                               style: TextStyle(
-                                  color: ColorValue.secondary,
+                                  color: ColorValue.kSecondary,
                                   fontSize: 14,
                                   fontWeight: FontWeight.w600),
                             ),

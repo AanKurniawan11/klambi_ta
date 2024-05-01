@@ -49,7 +49,7 @@ class _OnboardingViewState extends State<OnboardingView> {
                       ),
                       style: ButtonStyle(
                         backgroundColor:
-                            MaterialStateProperty.all(ColorValue.primary),
+                            MaterialStateProperty.all(ColorValue.kPrimary),
                         minimumSize: MaterialStateProperty.all(
                             Size(width * 0.85, height * 0.065)),
                       ),
@@ -75,7 +75,7 @@ class _OnboardingViewState extends State<OnboardingView> {
                       effect: const ExpandingDotsEffect(
                           dotHeight: 10,
                           dotWidth: 20,
-                          activeDotColor: ColorValue.primary),
+                          activeDotColor: ColorValue.kPrimary),
                     ),
                   ],
                 ),
@@ -104,7 +104,7 @@ class _OnboardingViewState extends State<OnboardingView> {
                     const SizedBox(height: 15),
                     Text(
                       controller.items[index].description,
-                      style: const TextStyle(color: ColorValue.grey),
+                      style: const TextStyle(color: ColorValue.kDarkGrey),
                       maxLines: 5,
                       textAlign: TextAlign.center,
                     ),
@@ -122,7 +122,7 @@ class _OnboardingViewState extends State<OnboardingView> {
               child: const Text(
                 "Skip",
                 style: TextStyle(
-                    color: ColorValue.grey,
+                    color: ColorValue.kDarkGrey,
                     fontSize: 16,
                     fontWeight: FontWeight.w600),
               ),
@@ -146,7 +146,7 @@ class _OnboardingViewState extends State<OnboardingView> {
         Get.offAll(Register());
       },
       style: ButtonStyle(
-        backgroundColor: MaterialStateProperty.all(ColorValue.primary),
+        backgroundColor: MaterialStateProperty.all(ColorValue.kPrimary),
         minimumSize:
             MaterialStateProperty.all(Size(width * 0.85, height * 0.065)),
       ),
