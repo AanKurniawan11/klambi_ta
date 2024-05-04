@@ -37,18 +37,18 @@ class MyTextField extends StatelessWidget {
             contentPadding:
                 EdgeInsets.symmetric(vertical: 16.0, horizontal: 20.0),
             enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: ColorValue.ligthgrey),
+              borderSide: BorderSide(color: ColorValue.kLightGrey),
               borderRadius: BorderRadius.circular(10.0),
             ),
             focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: ColorValue.primary),
+              borderSide: BorderSide(color: ColorValue.kPrimary),
               borderRadius: BorderRadius.circular(10.0),
             ),
             filled: true,
             fillColor: Colors.transparent,
             hintText: hintText,
-            hintStyle: TextStyle(color: ColorValue.darkGrey),
-            prefixIcon: prefixIcon != null ? Icon(prefixIcon,color: ColorValue.darkGrey,) : null,
+            hintStyle: TextStyle(color: ColorValue.kDarkGrey),
+            prefixIcon: prefixIcon != null ? Icon(prefixIcon,color: ColorValue.kDarkGrey,) : null,
           ),
         ),
       ),
@@ -74,7 +74,7 @@ Widget elevatedbutton(BuildContext context, String title) {
   return ElevatedButton(
       onPressed: () {},
       style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all(ColorValue.primary),
+          backgroundColor: MaterialStateProperty.all(ColorValue.kPrimary),
           minimumSize:
               MaterialStateProperty.all(Size(width * 0.85, height * 0.065)),
           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -94,20 +94,20 @@ Widget texttest(String hint,String label,final IconData? prefixIcon,
 )=>TextField(
 
   decoration: InputDecoration(
-    hintStyle: TextStyle(color: ColorValue.darkGrey),
+    hintStyle: TextStyle(color: ColorValue.kDarkGrey),
     hintText: hint,
     labelText: label,
-      labelStyle: TextStyle(color: ColorValue.darkGrey),
+      labelStyle: TextStyle(color: ColorValue.kDarkGrey),
       focusedBorder: OutlineInputBorder(
-          borderSide:BorderSide(color: ColorValue.primary),
+          borderSide:BorderSide(color: ColorValue.kPrimary),
           borderRadius: BorderRadius.circular(10.0)
       ),
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(10.0),
-        borderSide: BorderSide(color: ColorValue.ligthgrey)
+        borderSide: BorderSide(color: ColorValue.kLightGrey)
       ),
 
-      prefixIcon: prefixIcon != null ? Icon(prefixIcon,color: ColorValue.darkGrey,) : null,
+      prefixIcon: prefixIcon != null ? Icon(prefixIcon,color: ColorValue.kDarkGrey,) : null,
 
     // suffixIcon: IconButton(
     //   icon: Icon(Icons.close),
@@ -148,23 +148,23 @@ class _PasswordTestState extends State<PasswordTest> {
     return TextField(
       decoration: InputDecoration(
         hintText: widget.hint,
-        hintStyle: TextStyle(color: ColorValue.darkGrey),
+        hintStyle: TextStyle(color: ColorValue.kDarkGrey),
         labelText: widget.label,
-        labelStyle: TextStyle(color: ColorValue.grey),
+        labelStyle: TextStyle(color: ColorValue.kDarkGrey),
         focusedBorder: OutlineInputBorder(
-            borderSide:BorderSide(color: ColorValue.primary),
+            borderSide:BorderSide(color: ColorValue.kPrimary),
             borderRadius: BorderRadius.circular(10.0)
         ),
         enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10.0),
-            borderSide: BorderSide(color: ColorValue.ligthgrey)
+            borderSide: BorderSide(color: ColorValue.kLightGrey)
         ),
         prefixIcon: widget.prefixIcon != null
-            ? Icon(widget.prefixIcon, color: ColorValue.darkGrey)
+            ? Icon(widget.prefixIcon, color: ColorValue.kDarkGrey)
             : null,        suffixIcon: IconButton(
           icon: isPasswordVisible
               ? Icon(Icons.visibility_off,color: Colors.black,)
-              : Icon(Icons.visibility,color: ColorValue.darkGrey,),
+              : Icon(Icons.visibility,color: ColorValue.kDarkGrey,),
           onPressed: () {
             setState(() {
               isPasswordVisible = !isPasswordVisible;

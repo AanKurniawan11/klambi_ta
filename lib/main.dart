@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
       Image.asset("img/klambi_logo.png"),
           duration: 300,
           splashTransition: SplashTransition.fadeTransition,
-          backgroundColor: ColorValue.primary,
+          backgroundColor: ColorValue.kPrimary,
           nextScreen: onboarding? Register() : OnboardingView()),
     );
   }
