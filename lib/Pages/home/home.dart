@@ -1,17 +1,8 @@
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:klambi_ta/color.dart';
 
-class HomePageView extends StatefulWidget {
-  const HomePageView({super.key});
-
-  @override
-  State<HomePageView> createState() => _HomePageViewState();
-}
-
-class _HomePageViewState extends State<HomePageView> {
+class HomePageView extends StatelessWidget {
   final List<String> imgList = [
     'assets/images/banner/dsc_banner1.png',
     'assets/images/banner/dsc_banner2.png',
@@ -19,8 +10,8 @@ class _HomePageViewState extends State<HomePageView> {
     'assets/images/banner/dsc_banner4.png'
   ];
 
-  List catList = ["Semua", "Lengan Pendek", "Lengan Panjang", "Oversize"];
-  List<bool> isSelectedList = [true, false, false, false];
+  final List<String> catList = ["Semua", "Lengan Pendek", "Lengan Panjang", "Oversize"];
+  final List<bool> isSelectedList = [true, false, false, false];
 
   @override
   Widget build(BuildContext context) {
@@ -82,24 +73,24 @@ class _HomePageViewState extends State<HomePageView> {
                 items: imgList
                     .map(
                       (item) => Container(
-                        child: Container(
-                          margin: EdgeInsets.all(1.5),
-                          child: ClipRRect(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(5.0)),
-                            child: Stack(
-                              children: <Widget>[
-                                Image.asset(
-                                  item,
-                                  fit: BoxFit.cover,
-                                  width: 1000.0,
-                                ),
-                              ],
+                    child: Container(
+                      margin: EdgeInsets.all(1.5),
+                      child: ClipRRect(
+                        borderRadius:
+                        BorderRadius.all(Radius.circular(5.0)),
+                        child: Stack(
+                          children: <Widget>[
+                            Image.asset(
+                              item,
+                              fit: BoxFit.cover,
+                              width: 1000.0,
                             ),
-                          ),
+                          ],
                         ),
                       ),
-                    )
+                    ),
+                  ),
+                )
                     .toList(),
               ),
             ),
@@ -124,7 +115,7 @@ class _HomePageViewState extends State<HomePageView> {
                             fontWeight: FontWeight.w500,
                             color: ColorValue.kDarkGrey,
                           ),
-                          hintText: "Cari Style",
+                          hintText: "Cari Style...",
                           border: InputBorder.none,
                           prefixIcon: Icon(
                             Icons.search,
@@ -140,7 +131,7 @@ class _HomePageViewState extends State<HomePageView> {
             ),
             SizedBox(height: 10),
             Padding(
-              padding: EdgeInsets.only(left: 25),
+              padding: EdgeInsets.only(left: 25, right: 25),
               child: SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Row(
@@ -148,19 +139,12 @@ class _HomePageViewState extends State<HomePageView> {
                     for (int i = 0; i < catList.length; i++)
                       GestureDetector(
                         onTap: () {
-                          setState(() {
-                            // Reset all selections
-                            for (int j = 0; j < isSelectedList.length; j++) {
-                              isSelectedList[j] = false;
-                            }
-                            // Set the selected category
-                            isSelectedList[i] = true;
-                          });
+                          // Handle category selection
                         },
                         child: Container(
                           margin: EdgeInsets.all(5),
                           padding:
-                              EdgeInsets.symmetric(vertical: 8, horizontal: 18),
+                          EdgeInsets.symmetric(vertical: 8, horizontal: 18),
                           decoration: BoxDecoration(
                             color: isSelectedList[i]
                                 ? ColorValue.kPrimary.withOpacity(0.2)
@@ -175,6 +159,8 @@ class _HomePageViewState extends State<HomePageView> {
                           child: Text(
                             catList[i],
                             style: TextStyle(
+                              fontFamily: "General Sans",
+                              fontWeight: FontWeight.w500,
                               color: isSelectedList[i]
                                   ? ColorValue.kBlack
                                   : ColorValue.kDarkGrey,
@@ -186,14 +172,143 @@ class _HomePageViewState extends State<HomePageView> {
                 ),
               ),
             ),
-            SizedBox(height: 25),
-            Text(
-              "Rekomendasi Penjual",
-              style: TextStyle(
-                fontFamily: "General Sans",
-                fontWeight: FontWeight.w600,
-                color: ColorValue.kBlack,
-                fontSize: 16,
+            SizedBox(height: 15),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 25),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Rekomendasi Penjual",
+                    style: TextStyle(
+                      fontFamily: "General Sans",
+                      fontWeight: FontWeight.w600,
+                      color: ColorValue.kBlack,
+                      fontSize: 16,
+                    ),
+                  ),
+                  Column(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.symmetric(vertical: 20),
+                        child: Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Container(
+                                  width: 170,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(10),
+                                      topRight: Radius.circular(10),
+                                    ),
+                                    color: Color(0xFFF5F5F5),
+                                    border: Border(
+                                      top: BorderSide(width: 1.0, color: ColorValue.kLightGrey),
+                                      right: BorderSide(width: 1.0, color: ColorValue.kLightGrey),
+                                      left: BorderSide(width: 1.0, color: ColorValue.kLightGrey),
+                                    ),
+                                  ),
+                                  child: Stack(
+                                    alignment: Alignment.center,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.all(20),
+                                        child: Image(
+                                          width: 120,
+                                          height: 100,
+                                          image: AssetImage('assets/images/demo_image.png'),
+                                        ),
+                                      ),
+                                      Positioned(
+                                        top: 10,
+                                        right: 10,
+                                        child: Container(
+                                          padding: EdgeInsets.all(5),
+                                          decoration: BoxDecoration(
+                                            color: ColorValue.kSecondary,
+                                            borderRadius: BorderRadius.circular(5),
+                                          ),
+                                          child: Text(
+                                            'Lengan Pendek',
+                                            style: TextStyle(
+                                              fontFamily: 'General Sans',
+                                              color: Colors.white,
+                                              fontSize: 10,
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Container(
+                                  width: 170,
+                                  height: 120,
+                                  padding: EdgeInsets.all(15),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.only(
+                                      bottomLeft: Radius.circular(10),
+                                      bottomRight: Radius.circular(10),
+                                    ),
+                                    border: Border(
+                                      right: BorderSide(
+                                          width: 1.0,
+                                          color: ColorValue.kLightGrey),
+                                      left: BorderSide(
+                                          width: 1.0,
+                                          color: ColorValue.kLightGrey),
+                                      bottom: BorderSide(
+                                          width: 1.0,
+                                          color: ColorValue.kLightGrey),
+                                    ),
+                                  ),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                    CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        'Custom Baju Hitam Polos',
+                                        style: TextStyle(
+                                          fontFamily: 'General Sans',
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                      Text(
+                                        'Rp. 99.000',
+                                        style: TextStyle(
+                                          fontFamily: 'General Sans',
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                      SizedBox(height: 5),
+                                      Row(
+                                        children: [
+                                          Icon(Icons.star, size: 14, color: ColorValue.kPrimary,),
+                                          Text('4.5 | 20 Stok | 10 Terjual', style: TextStyle(fontFamily: 'General Sans', fontWeight: FontWeight.w500, fontSize: 10, color: ColorValue.kDarkGrey),),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ),
           ],
