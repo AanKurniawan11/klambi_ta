@@ -2,8 +2,9 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:klambi_ta/color.dart';
-
+import 'package:klambi_ta/component/component.dart';
 class HomePageView extends StatefulWidget {
   const HomePageView({super.key});
 
@@ -12,6 +13,7 @@ class HomePageView extends StatefulWidget {
 }
 
 class _HomePageViewState extends State<HomePageView> {
+    int _currentIndex = 0;
   final List<String> imgList = [
     'assets/images/banner/dsc_banner1.png',
     'assets/images/banner/dsc_banner2.png',
@@ -199,6 +201,9 @@ class _HomePageViewState extends State<HomePageView> {
           ],
         ),
       ),
+      
+      bottomNavigationBar: bottomNavbar(context, _currentIndex),
+      
     );
   }
 }

@@ -62,7 +62,9 @@ class Register extends StatelessWidget {
                           ].withSpaceBetween(height: 15),
                         ),
                       ),
-                      elevatedbutton(context, "Daftar"),
+                      elevatedbutton(title: "Daftar",onclick: (){
+                        Get.toNamed("/home");
+                      },),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [

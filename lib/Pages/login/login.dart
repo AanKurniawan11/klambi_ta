@@ -64,7 +64,9 @@ class Login extends StatelessWidget {
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 10),
-                        child: elevatedbutton(context, "Mulai"),
+                        child: elevatedbutton(onclick: (){
+                          Get.toNamed("/home");
+                        }, title: 'Mulai',),
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 35.0),
