@@ -1,8 +1,14 @@
+
+import 'package:flashy_tab_bar2/flashy_tab_bar2.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:klambi_ta/Pages/history/history_binding.dart';
 import 'package:klambi_ta/Pages/home/home.dart';
+import 'package:klambi_ta/Pages/login/login.dart';
 import 'package:klambi_ta/color.dart';
 import 'package:get/get.dart';
+
+import '../Pages/history/history.dart';
 
 class MyTextField extends StatelessWidget {
   // final TextEditingController controller;
@@ -120,7 +126,7 @@ class elevatedbutton extends StatelessWidget {
                     borderRadius: BorderRadius.circular(12.0)))),
         child: Text(
           title,
-          style:const TextStyle(
+          style: const TextStyle(
             color: Colors.black,
             fontWeight: FontWeight.w600,
             fontSize: 18,
@@ -170,7 +176,8 @@ class PasswordTest extends StatefulWidget {
   String password = '';
   bool isPasswordVisible = false;
 
-  PasswordTest({super.key,
+  PasswordTest({
+    super.key,
     required this.hint,
     required this.label,
     this.prefixIcon,
@@ -229,65 +236,42 @@ class _PasswordTestState extends State<PasswordTest> {
 
 Widget bottomNavbar(BuildContext context, int currentIndex) {
   Size size = MediaQuery.of(context).size;
-  return Container(
-    child: Padding(
-      padding: EdgeInsets.symmetric(horizontal: 15, vertical: 20),
-      child: GNav(
-        // tabBackgroundColor: ColorValue.kLightGrey,
-        activeColor: ColorValue.kPrimary,
-        color: ColorValue.kLightGrey,
-        textStyle:
-            const TextStyle(fontFamily: "General Sans", color: ColorValue.kPrimary),
-        iconSize: 30,
-        gap: 8,
+
+    return Container(
+      child: FlashyTabBar(
+        animationCurve: Curves.linear,
         selectedIndex: currentIndex,
-        onTabChange: (index) {
-          currentIndex = index;
+        showElevation: true,
+        animationDuration: Duration(milliseconds: 500),
+        onItemSelected: (index) {
           switch (index) {
             case 0:
-              // Get.off(HomePage());
-              Get.off(HomePageView());
+              // Get.offNamed('/home');
+              Get.off(HomePageView());// Navigate to home route
               break;
             case 1:
-              // Get.off(HistoryPage());
+              Get.off(HistoryPage());
               break;
             case 2:
-              // Get.off(WhislistPage());
-
+              // Get.offNamed('/settings'); // Navigate to settings route
               break;
             case 3:
-              // Get.offNamed('/profile');
+              // Get.offNamed('/notifications'); // Navigate to notifications route
+              break;
+            default:
+            // Do something or navigate to a default route
               break;
           }
         },
-        padding: EdgeInsets.all(16.0),
-        tabs: const [
-          GButton(
-            icon: Icons.home,
-            text: "Home",
-            textStyle: TextStyle(
-                fontFamily: "General Sans", color: ColorValue.kPrimary),
-          ),
-          GButton(
-            icon: Icons.receipt_long_sharp,
-            text: "Riwayat",
-            textStyle: TextStyle(
-                fontFamily: "General Sans", color: ColorValue.kPrimary),
-          ),
-          GButton(
-            icon: Icons.bookmark,
-            text: "Whislist",
-            textStyle: TextStyle(
-                fontFamily: "General Sans", color: ColorValue.kPrimary),
-          ),
-          GButton(
-            icon: Icons.message_rounded,
-            text: "Chat",
-            textStyle: TextStyle(
-                fontFamily: "General Sans", color: ColorValue.kPrimary),
-          ),
+        iconSize: 30,
+        items: [
+          FlashyTabBarItem(icon: Icon(Icons.home_filled), title: Text("Home"),activeColor: ColorValue.kPrimary,inactiveColor: ColorValue.kLightGrey),
+          FlashyTabBarItem(icon: Icon(Icons.receipt_long_sharp), title: Text("Riwayat"),activeColor: ColorValue.kPrimary,inactiveColor: ColorValue.kLightGrey),
+          FlashyTabBarItem(icon: Icon(Icons.bookmark), title: Text("Whislist"),activeColor: ColorValue.kPrimary,inactiveColor: ColorValue.kLightGrey),
+          FlashyTabBarItem(icon: Icon(Icons.chat), title: Text("Home"),activeColor: ColorValue.kPrimary,inactiveColor: ColorValue.kLightGrey),
+
         ],
       ),
-    ),
-  );
-}
+    );
+  }
+

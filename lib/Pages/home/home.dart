@@ -2,7 +2,6 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:klambi_ta/color.dart';
 import 'package:klambi_ta/component/component.dart';
 
