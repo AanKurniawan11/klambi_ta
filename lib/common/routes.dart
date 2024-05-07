@@ -1,26 +1,40 @@
 import 'package:get/get.dart';
-import 'package:klambi_ta/Pages/Register/register.dart';
-import 'package:klambi_ta/Pages/home/home.dart';
-import 'package:klambi_ta/Pages/home/home_binding.dart';
-import 'package:klambi_ta/Pages/login/login.dart';
-import 'package:klambi_ta/Pages/login/login_binding.dart';
-import 'package:klambi_ta/Pages/register/register_binding.dart';
+import 'package:klambi_ta/Pages/history/history.dart';
 import 'package:klambi_ta/common/routes_name.dart';
+import '../Pages/Register/register.dart';
+import '../Pages/history/history_binding.dart';
+import '../Pages/home/home.dart';
+import '../Pages/home/home_binding.dart';
+import '../Pages/login/login.dart';
+import '../Pages/login/login_binding.dart';
+import '../Pages/register/register_binding.dart';
+import '../Pages/whislist/whislist.dart';
+import '../Pages/whislist/whislist_binding.dart';
 
-List<GetPage> pageRoutes = [
+List<GetPage> pageRoutes = <GetPage>[
   GetPage(
       name: RouteName.login,
-      page: () => Login(),
+      page: () => const Login(),
       binding: loginbinding()
   ),
   GetPage(
       name: RouteName.register,
-      page: () => Register(),
-      binding: registerbinding()
+      page: () => const Register(),
+      binding: Registerbinding()
   ),
   GetPage(
       name: RouteName.home,
-      page: () => HomePageView(),
+      page: () => const HomePageView(),
       binding: HomeBinding()
+  ),
+  GetPage(
+      name: RouteName.history,
+      page: () => HistoryPage(),
+      binding: HistoryBinding()
+  ),
+  GetPage(
+      name: RouteName.whislist,
+      page: () =>  const WhislistPage(),
+      binding: WhislistBinding()
   ),
 ];

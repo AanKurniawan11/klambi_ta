@@ -2,20 +2,31 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:klambi_ta/color.dart';
 import 'package:klambi_ta/component/component.dart';
 
-class HomePageView extends StatelessWidget {
+import '../../color.dart';
+
+class HomePageView extends StatefulWidget {
+  const HomePageView({super.key});
+
+  @override
+  State<HomePageView> createState() => _HomePageViewState();
+}
+
+class _HomePageViewState extends State<HomePageView> {
   final List<String> imgList = [
     'assets/images/banner/dsc_banner1.png',
     'assets/images/banner/dsc_banner2.png',
     'assets/images/banner/dsc_banner3.png',
     'assets/images/banner/dsc_banner4.png'
   ];
+  final int _currentIndex = 0;
 
-  int _currentIndex = 0;
-  final List<String> catList = ["Semua", "Lengan Pendek", "Lengan Panjang", "Oversize"];
-  final List<bool> isSelectedList = [true, false, false, false];
+
+
+  List catList = ["Semua", "Lengan Pendek", "Lengan Panjang", "Oversize"];
+  List<bool> isSelectedList = [true, false, false, false];
+
 
   @override
   Widget build(BuildContext context) {
@@ -77,24 +88,24 @@ class HomePageView extends StatelessWidget {
                 items: imgList
                     .map(
                       (item) => Container(
-                    child: Container(
-                      margin: EdgeInsets.all(1.5),
-                      child: ClipRRect(
-                        borderRadius:
-                        BorderRadius.all(Radius.circular(5.0)),
-                        child: Stack(
-                          children: <Widget>[
-                            Image.asset(
-                              item,
-                              fit: BoxFit.cover,
-                              width: 1000.0,
+                        child: Container(
+                          margin: EdgeInsets.all(1.5),
+                          child: ClipRRect(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(5.0)),
+                            child: Stack(
+                              children: <Widget>[
+                                Image.asset(
+                                  item,
+                                  fit: BoxFit.cover,
+                                  width: 1000.0,
+                                ),
+                              ],
                             ),
-                          ],
+                          ),
                         ),
                       ),
-                    ),
-                  ),
-                )
+                    )
                     .toList(),
               ),
             ),
@@ -143,12 +154,19 @@ class HomePageView extends StatelessWidget {
                     for (int i = 0; i < catList.length; i++)
                       GestureDetector(
                         onTap: () {
-                          // Handle category selection
+                          setState(() {
+                            // Reset all selections
+                            for (int j = 0; j < isSelectedList.length; j++) {
+                              isSelectedList[j] = false;
+                            }
+                            // Set the selected category
+                            isSelectedList[i] = true;
+                          });
                         },
                         child: Container(
                           margin: EdgeInsets.all(5),
                           padding:
-                          EdgeInsets.symmetric(vertical: 8, horizontal: 18),
+                              EdgeInsets.symmetric(vertical: 8, horizontal: 18),
                           decoration: BoxDecoration(
                             color: isSelectedList[i]
                                 ? ColorValue.kPrimary.withOpacity(0.2)
@@ -209,9 +227,15 @@ class HomePageView extends StatelessWidget {
                                     ),
                                     color: Color(0xFFF5F5F5),
                                     border: Border(
-                                      top: BorderSide(width: 1.0, color: ColorValue.kLightGrey),
-                                      right: BorderSide(width: 1.0, color: ColorValue.kLightGrey),
-                                      left: BorderSide(width: 1.0, color: ColorValue.kLightGrey),
+                                      top: BorderSide(
+                                          width: 1.0,
+                                          color: ColorValue.kLightGrey),
+                                      right: BorderSide(
+                                          width: 1.0,
+                                          color: ColorValue.kLightGrey),
+                                      left: BorderSide(
+                                          width: 1.0,
+                                          color: ColorValue.kLightGrey),
                                     ),
                                   ),
                                   child: Stack(
@@ -222,7 +246,8 @@ class HomePageView extends StatelessWidget {
                                         child: Image(
                                           width: 120,
                                           height: 100,
-                                          image: AssetImage('assets/images/demo_image.png'),
+                                          image: AssetImage(
+                                              'assets/images/demo_image.png'),
                                         ),
                                       ),
                                       Positioned(
@@ -232,7 +257,8 @@ class HomePageView extends StatelessWidget {
                                           padding: EdgeInsets.all(5),
                                           decoration: BoxDecoration(
                                             color: ColorValue.kSecondary,
-                                            borderRadius: BorderRadius.circular(5),
+                                            borderRadius:
+                                                BorderRadius.circular(5),
                                           ),
                                           child: Text(
                                             'Lengan Pendek',
@@ -257,8 +283,8 @@ class HomePageView extends StatelessWidget {
                                 Container(
                                   width: 170,
                                   height: 120,
-                                  padding: EdgeInsets.all(15),
-                                  decoration: BoxDecoration(
+                                  padding: const EdgeInsets.all(15),
+                                  decoration: const BoxDecoration(
                                     borderRadius: BorderRadius.only(
                                       bottomLeft: Radius.circular(10),
                                       bottomRight: Radius.circular(10),
@@ -275,9 +301,9 @@ class HomePageView extends StatelessWidget {
                                           color: ColorValue.kLightGrey),
                                     ),
                                   ),
-                                  child: Column(
+                                  child: const Column(
                                     crossAxisAlignment:
-                                    CrossAxisAlignment.start,
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Text(
                                         'Custom Baju Hitam Polos',
@@ -298,8 +324,19 @@ class HomePageView extends StatelessWidget {
                                       SizedBox(height: 5),
                                       Row(
                                         children: [
-                                          Icon(Icons.star, size: 14, color: ColorValue.kPrimary,),
-                                          Text('4.5 | 20 Stok | 10 Terjual', style: TextStyle(fontFamily: 'General Sans', fontWeight: FontWeight.w500, fontSize: 10, color: ColorValue.kDarkGrey),),
+                                          Icon(
+                                            Icons.star,
+                                            size: 14,
+                                            color: ColorValue.kPrimary,
+                                          ),
+                                          Text(
+                                            '4.5 | 20 Stok | 10 Terjual',
+                                            style: TextStyle(
+                                                fontFamily: 'General Sans',
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 10,
+                                                color: ColorValue.kDarkGrey),
+                                          ),
                                         ],
                                       ),
                                     ],
@@ -318,9 +355,7 @@ class HomePageView extends StatelessWidget {
           ],
         ),
       ),
-
-      bottomNavigationBar: bottomNavbar(context, _currentIndex),
+      bottomNavigationBar: BottomNavigation(currentIndex: _currentIndex),
     );
   }
 }
-

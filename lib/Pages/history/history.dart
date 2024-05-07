@@ -1,28 +1,28 @@
-
 import 'package:flutter/material.dart';
-
 import '../../color.dart';
 import '../../component/component.dart';
 
 class HistoryPage extends StatelessWidget {
-   HistoryPage({super.key});
-  int _currentIndex = 1;
-
+  const HistoryPage({super.key});
+  final int _currentIndex = 1;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 30),
-            child: Text("Riwayat",style: TextStyle(fontSize: 25,fontWeight: FontWeight.w500),),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+            child: Text(
+              "Riwayat",
+              style: TextStyle(fontSize: 25, fontWeight: FontWeight.w500),
+            ),
           ),
           DefaultTabController(
             length: 2,
             child: Column(
               children: [
-                TabBar(
+                const TabBar(
                   tabs: [
                     Tab(text: 'Sedang diproses'),
                     Tab(text: 'Selesai Dipesan'),
@@ -31,21 +31,25 @@ class HistoryPage extends StatelessWidget {
                   unselectedLabelColor: Colors.black,
                   indicatorColor: ColorValue.kPrimary,
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Container(
                   height: 200,
-                  child: TabBarView(
+                  child:  TabBarView(
                     children: [
                       SingleChildScrollView(
                         child: Column(
                           children: [
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text("nfsakj",style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 14,
-                              ),
-                              ),
+                            Container(
+                              child: Text('Proses'),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            Container(
+                              child: Text('Selesai'),
                             ),
                           ],
                         ),
@@ -58,8 +62,7 @@ class HistoryPage extends StatelessWidget {
           ),
         ],
       ),
-      bottomNavigationBar: bottomNavbar(context, _currentIndex),
-
+      bottomNavigationBar: BottomNavigation(currentIndex: _currentIndex),
     );
   }
 }
