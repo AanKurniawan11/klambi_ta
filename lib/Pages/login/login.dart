@@ -115,7 +115,7 @@ class Login extends StatelessWidget {
                                     borderRadius: BorderRadius.circular(16),
                                     color: Colors.grey[200]),
                                 child: Image.asset(
-                                  "img/Google_Icon.png",
+                                  "assets/images/banner/Google_Icon.png",
                                   height: 10,
                                 ),
                               ),
@@ -131,7 +131,7 @@ class Login extends StatelessWidget {
                                     borderRadius: BorderRadius.circular(16),
                                     color: Colors.grey[200]),
                                 child: Image.asset(
-                                  "img/Facebook_Icon.png",
+                                  "assets/images/banner/Facebook_Icon.png",
                                 ),
                               ),
                             ),
@@ -166,7 +166,7 @@ class Login extends StatelessWidget {
               ),
               Align(
                 alignment: Alignment.topRight,
-                child: Image.asset("img/dec4.png"),
+                child: Image.asset("assets/images/banner/dec4.png"),
               ),
             ],
           ),

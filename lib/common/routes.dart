@@ -1,4 +1,6 @@
 import 'package:get/get.dart';
+import 'package:klambi_ta/Pages/chat/chat.dart';
+import 'package:klambi_ta/Pages/chat/chat_binding.dart';
 import 'package:klambi_ta/Pages/history/history.dart';
 import 'package:klambi_ta/common/routes_name.dart';
 import '../Pages/Register/register.dart';
@@ -29,12 +31,17 @@ List<GetPage> pageRoutes = <GetPage>[
   ),
   GetPage(
       name: RouteName.history,
-      page: () => HistoryPage(),
+      page: () => const HistoryPage(),
       binding: HistoryBinding()
   ),
   GetPage(
       name: RouteName.whislist,
       page: () =>  const WhislistPage(),
       binding: WhislistBinding()
+  ),
+  GetPage(
+      name: RouteName.chat,
+      page: () =>  const ChatPage(),
+      binding: ChatBinding()
   ),
 ];

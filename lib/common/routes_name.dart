@@ -4,4 +4,5 @@ abstract class RouteName {
   static const home = "/home";
   static const history = "/history";
   static const whislist = "/whislist";
+  static const chat = "/chat";
 }

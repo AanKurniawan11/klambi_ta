@@ -20,29 +20,30 @@ class Register extends StatelessWidget {
             children: [
               Column(
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     height: 150,
                   ),
                   Center(
                     child: Container(
                       height: height * 0.1,
                       width: width * 0.5,
-                      foregroundDecoration: BoxDecoration(
+                      foregroundDecoration: const BoxDecoration(
                           image: DecorationImage(
-                              image: AssetImage("img/Logo1.png"))),
+                              image: AssetImage(
+                                  "assets/images/banner/Logo1.png"))),
                     ),
                   ),
-                  Text(
+                  const Text(
                     "Daftar",
                     style: TextStyle(fontSize: 32, fontWeight: FontWeight.w500),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   Column(
                     children: [
                       Container(
-                        margin: EdgeInsets.all(10.0),
+                        margin: const EdgeInsets.all(10.0),
                         width: width * 0.85,
                         child: Column(
                           children: [
@@ -62,13 +63,16 @@ class Register extends StatelessWidget {
                           ].withSpaceBetween(height: 15),
                         ),
                       ),
-                      elevatedbutton(title: "Daftar",onclick: (){
-                        Get.toNamed("/home");
-                      },),
+                      elevatedbutton(
+                        title: "Daftar",
+                        onclick: () {
+                          Get.toNamed("/home");
+                        },
+                      ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(
+                          const Text(
                             "sudah punya akun ?",
                             style: TextStyle(
                                 fontSize: 14, fontWeight: FontWeight.w400),
@@ -77,7 +81,7 @@ class Register extends StatelessWidget {
                             onTap: () {
                               Get.toNamed("/login");
                             },
-                            child: Text(
+                            child: const Text(
                               " Login",
                               style: TextStyle(
                                   color: ColorValue.kSecondary,
@@ -94,7 +98,7 @@ class Register extends StatelessWidget {
               Positioned(
                 top: 0,
                 right: 0,
-                child: Image.asset("img/dec4.png"),
+                child: Image.asset("assets/images/banner/dec4.png"),
               ),
             ],
           ),
