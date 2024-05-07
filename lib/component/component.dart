@@ -1,13 +1,7 @@
-
-import 'package:flashy_tab_bar2/flashy_tab_bar2.dart';
 import 'package:flutter/material.dart';
-import 'package:google_nav_bar/google_nav_bar.dart';
-import 'package:klambi_ta/Pages/history/history_binding.dart';
 import 'package:klambi_ta/Pages/home/home.dart';
-import 'package:klambi_ta/Pages/login/login.dart';
 import 'package:klambi_ta/color.dart';
 import 'package:get/get.dart';
-
 import '../Pages/history/history.dart';
 
 class MyTextField extends StatelessWidget {
@@ -39,22 +33,22 @@ class MyTextField extends StatelessWidget {
         child: TextField(
           // controller: controller,
           obscureText: obscureText,
-          style: TextStyle(color: Colors.black, fontSize: 16.0),
+          style: const TextStyle(color: Colors.black, fontSize: 16.0),
           decoration: InputDecoration(
             contentPadding:
-                EdgeInsets.symmetric(vertical: 16.0, horizontal: 20.0),
+                const EdgeInsets.symmetric(vertical: 16.0, horizontal: 20.0),
             enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: ColorValue.kLightGrey),
+              borderSide: const BorderSide(color: ColorValue.kLightGrey),
               borderRadius: BorderRadius.circular(10.0),
             ),
             focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: ColorValue.kPrimary),
+              borderSide: const BorderSide(color: ColorValue.kPrimary),
               borderRadius: BorderRadius.circular(10.0),
             ),
             filled: true,
             fillColor: Colors.transparent,
             hintText: hintText,
-            hintStyle: TextStyle(color: ColorValue.kDarkGrey),
+            hintStyle: const TextStyle(color: ColorValue.kDarkGrey),
             prefixIcon: prefixIcon != null
                 ? Icon(
                     prefixIcon,
@@ -78,37 +72,11 @@ extension ListSpaceBetweenExtension on List<Widget> {
       ];
 }
 
-// Widget elevatedbutton(BuildContext context, String title) {
-//   final Size mediaquery = MediaQuery.of(context).size;
-//   final double height = mediaquery.height;
-//   final double width = mediaquery.width;
-//   final VoidCallback onclick;
-//
-//
-//   return ElevatedButton(
-//     onPressed: onclick,
-//       style: ButtonStyle(
-//           backgroundColor: MaterialStateProperty.all(ColorValue.kPrimary),
-//           minimumSize:
-//               MaterialStateProperty.all(Size(width * 0.85, height * 0.065)),
-//           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-//               RoundedRectangleBorder(
-//                   borderRadius: BorderRadius.circular(12.0)))),
-//       child: Text(
-//         title,
-//         style: TextStyle(
-//           color: Colors.black,
-//           fontWeight: FontWeight.w600,
-//           fontSize: 18,
-//         ),
-//       ));
-// }
-
 class elevatedbutton extends StatelessWidget {
   final VoidCallback onclick;
   final String title;
 
-  elevatedbutton({super.key, required this.onclick, required this.title});
+  const elevatedbutton({super.key, required this.onclick, required this.title});
 
   @override
   Widget build(BuildContext context) {
@@ -151,7 +119,7 @@ Widget texttest(
               borderRadius: BorderRadius.circular(10.0)),
           enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10.0),
-              borderSide: BorderSide(color: ColorValue.kLightGrey)),
+              borderSide: const BorderSide(color: ColorValue.kLightGrey)),
           prefixIcon: prefixIcon != null
               ? Icon(
                   prefixIcon,
@@ -187,8 +155,6 @@ class PasswordTest extends StatefulWidget {
 }
 
 class _PasswordTestState extends State<PasswordTest> {
-  // final String hint;
-  // final String label;
   String password = '';
   bool isPasswordVisible = false;
 
@@ -225,7 +191,7 @@ class _PasswordTestState extends State<PasswordTest> {
             });
           },
         ),
-        border: OutlineInputBorder(),
+        border: const OutlineInputBorder(),
       ),
       keyboardType: TextInputType.emailAddress,
       textInputAction: TextInputAction.done,
@@ -234,44 +200,54 @@ class _PasswordTestState extends State<PasswordTest> {
   }
 }
 
-Widget bottomNavbar(BuildContext context, int currentIndex) {
-  Size size = MediaQuery.of(context).size;
+class BottomNavigation extends StatelessWidget {
+  final int currentIndex;
 
-    return Container(
-      child: FlashyTabBar(
-        animationCurve: Curves.linear,
-        selectedIndex: currentIndex,
-        showElevation: true,
-        animationDuration: Duration(milliseconds: 500),
-        onItemSelected: (index) {
-          switch (index) {
-            case 0:
-              // Get.offNamed('/home');
-              Get.off(HomePageView());// Navigate to home route
-              break;
-            case 1:
-              Get.off(HistoryPage());
-              break;
-            case 2:
-              // Get.offNamed('/settings'); // Navigate to settings route
-              break;
-            case 3:
-              // Get.offNamed('/notifications'); // Navigate to notifications route
-              break;
-            default:
-            // Do something or navigate to a default route
-              break;
-          }
-        },
-        iconSize: 30,
-        items: [
-          FlashyTabBarItem(icon: Icon(Icons.home_filled), title: Text("Home"),activeColor: ColorValue.kPrimary,inactiveColor: ColorValue.kLightGrey),
-          FlashyTabBarItem(icon: Icon(Icons.receipt_long_sharp), title: Text("Riwayat"),activeColor: ColorValue.kPrimary,inactiveColor: ColorValue.kLightGrey),
-          FlashyTabBarItem(icon: Icon(Icons.bookmark), title: Text("Whislist"),activeColor: ColorValue.kPrimary,inactiveColor: ColorValue.kLightGrey),
-          FlashyTabBarItem(icon: Icon(Icons.chat), title: Text("Home"),activeColor: ColorValue.kPrimary,inactiveColor: ColorValue.kLightGrey),
+  const BottomNavigation({super.key, required this.currentIndex});
 
-        ],
-      ),
-    );
+  void _onTap(int index) {
+    switch (index) {
+      case 0:
+        Get.off(const HomePageView()); // Navigate to home route
+        break;
+      case 1:
+        Get.off(HistoryPage());
+        break;
+      case 2:
+        Get.offNamed("/whislist");
+        break;
+      case 3:
+        // Handle other cases if needed
+        break;
+    }
   }
 
+  @override
+  Widget build(BuildContext context) {
+    return BottomNavigationBar(
+      currentIndex: currentIndex,
+      onTap: _onTap,
+      items: const [
+        BottomNavigationBarItem(
+          icon: Icon(Icons.home),
+          label: 'Home',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.receipt_long_sharp),
+          label: 'Riwayat',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.bookmark),
+          label: 'Whislist',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.chat),
+          label: 'Chat',
+        ),
+      ],
+      iconSize: 30,
+      selectedItemColor: ColorValue.kPrimary,
+      unselectedItemColor: ColorValue.kLightGrey,
+    );
+  }
+}
