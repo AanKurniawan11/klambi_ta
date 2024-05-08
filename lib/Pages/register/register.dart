@@ -1,8 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:klambi_ta/color.dart';
-import 'package:klambi_ta/component/component.dart';
 import 'package:get/get.dart';
+import 'package:klambi_ta/component/my_elevatedbutton.dart';
+import 'package:klambi_ta/component/my_textfield.dart';
+import 'package:klambi_ta/component/pass_textfield.dart';
+import 'package:klambi_ta/component/space_extension.dart';
 
 class Register extends StatelessWidget {
   const Register({super.key});
@@ -47,15 +50,15 @@ class Register extends StatelessWidget {
                         width: width * 0.85,
                         child: Column(
                           children: [
-                            texttest(
+                            MyTextField(
                                 "Username", "Username", Icons.person_outlined),
-                            texttest("Email", "Email", Icons.email_outlined),
-                            PasswordTest(
+                            MyTextField("Email", "Email", Icons.email_outlined),
+                            PassTextField(
                               hint: "Password",
                               label: "Password",
                               prefixIcon: Icons.lock_outline,
                             ),
-                            PasswordTest(
+                            PassTextField(
                               hint: "Password",
                               label: "Confirm Password",
                               prefixIcon: Icons.lock_outline,
@@ -63,7 +66,7 @@ class Register extends StatelessWidget {
                           ].withSpaceBetween(height: 15),
                         ),
                       ),
-                      elevatedbutton(
+                      My_Button(
                         title: "Daftar",
                         onclick: () {
                           Get.toNamed("/home");

@@ -2,9 +2,8 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:klambi_ta/component/component.dart';
-
 import '../../color.dart';
+import '../../component/navbar.dart';
 
 class HomePageView extends StatefulWidget {
   const HomePageView({super.key});
@@ -22,11 +21,8 @@ class _HomePageViewState extends State<HomePageView> {
   ];
   final int _currentIndex = 0;
 
-
-
   List catList = ["Semua", "Lengan Pendek", "Lengan Panjang", "Oversize"];
   List<bool> isSelectedList = [true, false, false, false];
-
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +36,7 @@ class _HomePageViewState extends State<HomePageView> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Column(
+                  const Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
@@ -64,12 +60,12 @@ class _HomePageViewState extends State<HomePageView> {
                       ),
                     ],
                   ),
-                  Spacer(), // Adds flexible space
+                  const Spacer(), // Adds flexible space
                   IconButton(
                     onPressed: () {
                       // Handle menu icon press
                     },
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.menu,
                       size: 30,
                     ),
@@ -109,7 +105,7 @@ class _HomePageViewState extends State<HomePageView> {
                     .toList(),
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 25),
               child: Column(
@@ -122,9 +118,9 @@ class _HomePageViewState extends State<HomePageView> {
                       borderRadius: BorderRadius.circular(15),
                     ),
                     child: Padding(
-                      padding: EdgeInsets.all(2),
+                      padding: const EdgeInsets.all(2),
                       child: TextFormField(
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           hintStyle: TextStyle(
                             fontFamily: "General Sans",
                             fontWeight: FontWeight.w500,
@@ -144,9 +140,9 @@ class _HomePageViewState extends State<HomePageView> {
                 ],
               ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Padding(
-              padding: EdgeInsets.only(left: 25, right: 25),
+              padding: const EdgeInsets.only(left: 25, right: 25),
               child: SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Row(
@@ -164,13 +160,13 @@ class _HomePageViewState extends State<HomePageView> {
                           });
                         },
                         child: Container(
-                          margin: EdgeInsets.all(5),
-                          padding:
-                              EdgeInsets.symmetric(vertical: 8, horizontal: 18),
+                          margin: const EdgeInsets.all(5),
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 8, horizontal: 18),
                           decoration: BoxDecoration(
                             color: isSelectedList[i]
                                 ? ColorValue.kPrimary.withOpacity(0.2)
-                                : Color(0xFFF7F8FA),
+                                : const Color(0xFFF7F8FA),
                             borderRadius: BorderRadius.circular(10),
                             border: Border.all(
                               color: isSelectedList[i]
@@ -194,13 +190,13 @@ class _HomePageViewState extends State<HomePageView> {
                 ),
               ),
             ),
-            SizedBox(height: 15),
+            const SizedBox(height: 15),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 25),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  const Text(
                     "Rekomendasi Penjual",
                     style: TextStyle(
                       fontFamily: "General Sans",
@@ -220,7 +216,7 @@ class _HomePageViewState extends State<HomePageView> {
                               children: [
                                 Container(
                                   width: 170,
-                                  decoration: BoxDecoration(
+                                  decoration: const BoxDecoration(
                                     borderRadius: BorderRadius.only(
                                       topLeft: Radius.circular(10),
                                       topRight: Radius.circular(10),
@@ -241,8 +237,8 @@ class _HomePageViewState extends State<HomePageView> {
                                   child: Stack(
                                     alignment: Alignment.center,
                                     children: [
-                                      Padding(
-                                        padding: const EdgeInsets.all(20),
+                                      const Padding(
+                                        padding: EdgeInsets.all(20),
                                         child: Image(
                                           width: 120,
                                           height: 100,
@@ -260,7 +256,7 @@ class _HomePageViewState extends State<HomePageView> {
                                             borderRadius:
                                                 BorderRadius.circular(5),
                                           ),
-                                          child: Text(
+                                          child: const Text(
                                             'Lengan Pendek',
                                             style: TextStyle(
                                               fontFamily: 'General Sans',
@@ -355,7 +351,7 @@ class _HomePageViewState extends State<HomePageView> {
           ],
         ),
       ),
-      bottomNavigationBar: BottomNavigation(currentIndex: _currentIndex),
+      bottomNavigationBar: BottomBar(currentIndex: _currentIndex),
     );
   }
 }
