@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
       ),
       getPages: pageRoutes,
       home: AnimatedSplashScreen(splash:
-      Image.asset("img/klambi_logo.png"),
+      Image.asset("assets/images/banner/klambi_logo.png"),
           duration: 300,
           splashTransition: SplashTransition.fadeTransition,
           backgroundColor: ColorValue.kPrimary,

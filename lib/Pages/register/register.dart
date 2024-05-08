@@ -29,7 +29,7 @@ class Register extends StatelessWidget {
                       width: width * 0.5,
                       foregroundDecoration: BoxDecoration(
                           image: DecorationImage(
-                              image: AssetImage("img/Logo1.png"))),
+                              image: AssetImage("assets/images/banner/Logo1.png"))),
                     ),
                   ),
                   Text(
@@ -94,7 +94,7 @@ class Register extends StatelessWidget {
               Positioned(
                 top: 0,
                 right: 0,
-                child: Image.asset("img/dec4.png"),
+                child: Image.asset("assets/images/banner/dec4.png"),
               ),
             ],
           ),
