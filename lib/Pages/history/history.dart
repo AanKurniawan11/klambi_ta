@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../color.dart';
-import '../../component/component.dart';
+import '../../component/navbar.dart';
 
 class HistoryPage extends StatelessWidget {
   const HistoryPage({super.key});
@@ -50,7 +50,7 @@ class HistoryPage extends StatelessWidget {
                           child: Column(
                             children: [
                               Container(
-                                child: Text('Selesai'),
+                                child: const Text('Selesai'),
                               ),
                             ],
                           ),
@@ -64,7 +64,7 @@ class HistoryPage extends StatelessWidget {
           ],
         ),
       ),
-      bottomNavigationBar: BottomNavigation(currentIndex: _currentIndex),
+      bottomNavigationBar: BottomBar(currentIndex: _currentIndex),
     );
   }
 }

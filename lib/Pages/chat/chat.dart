@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:klambi_ta/color.dart';
-import 'package:klambi_ta/component/component.dart';
+import 'package:klambi_ta/component/chat_textfield.dart';
 import 'package:get/get.dart';
 
 class ChatPage extends StatelessWidget {
@@ -17,7 +17,10 @@ class ChatPage extends StatelessWidget {
       appBar: AppBar(
         // leading: Image.asset("/assets/images/banner/Logo1.png"),
         leading: GestureDetector(
-          child: Icon(Icons.arrow_back_outlined,size: 30,),
+          child: const Icon(
+            Icons.arrow_back_outlined,
+            size: 30,
+          ),
           onTap: () {
             Get.offNamed("/home");
           },
@@ -74,7 +77,7 @@ class ChatPage extends StatelessWidget {
               Container(
                   height: height * 0.09,
                   width: width * 0.58,
-                  child: chatfield(
+                  child: ChatTextField(
                     hintText: "Masukkan Pesan",
                     suffixIcon: Icons.send,
                   )),

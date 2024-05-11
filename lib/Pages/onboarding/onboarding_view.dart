@@ -143,7 +143,7 @@ class _OnboardingViewState extends State<OnboardingView> {
         final pres = await SharedPreferences.getInstance();
         pres.setBool("onboarding", true);
         if (!mounted) return;
-        Get.offAll(Register());
+        Get.offAll(const Register());
       },
       style: ButtonStyle(
         backgroundColor: MaterialStateProperty.all(ColorValue.kPrimary),

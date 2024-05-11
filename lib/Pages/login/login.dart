@@ -2,9 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-
+import 'package:klambi_ta/component/my_elevatedbutton.dart';
+import 'package:klambi_ta/component/my_textfield.dart';
+import 'package:klambi_ta/component/pass_textfield.dart';
+import 'package:klambi_ta/component/space_extension.dart';
 import '../../color.dart';
-import '../../component/component.dart';
 
 class Login extends StatelessWidget {
   const Login({super.key});
@@ -22,23 +24,23 @@ class Login extends StatelessWidget {
             children: [
               Column(
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     height: 150,
                   ),
                   Center(
                     child: Container(
                       height: height * 0.1,
                       width: width * 0.5,
-                      foregroundDecoration: BoxDecoration(
+                      foregroundDecoration: const BoxDecoration(
                           image: DecorationImage(
                               image: AssetImage("img/Logo1.png"))),
                     ),
                   ),
-                  Text(
+                  const Text(
                     "Masuk",
                     style: TextStyle(fontSize: 32, fontWeight: FontWeight.w500),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   Column(
@@ -49,12 +51,12 @@ class Login extends StatelessWidget {
                         width: width * 0.85,
                         child: Column(
                           children: [
-                            texttest(
+                            MyTextField(
                                 "@example.com", "Email", Icons.email_outlined),
-                            SizedBox(
+                            const SizedBox(
                               height: 15,
                             ),
-                            PasswordTest(
+                            PassTextField(
                               hint: "Password",
                               label: "Password",
                               prefixIcon: Icons.lock_outline,
@@ -64,12 +66,15 @@ class Login extends StatelessWidget {
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 10),
-                        child: elevatedbutton(onclick: (){
-                          Get.toNamed("/home");
-                        }, title: 'Mulai',),
+                        child: My_Button(
+                          onclick: () {
+                            Get.toNamed("/home");
+                          },
+                          title: 'Mulai',
+                        ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 35.0),
+                      const Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 35.0),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
@@ -80,8 +85,7 @@ class Login extends StatelessWidget {
                               ),
                             ),
                             Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 25.0),
+                              padding: EdgeInsets.symmetric(horizontal: 25.0),
                               child: Text(
                                 "Atau masuk dengan",
                                 style: TextStyle(
@@ -107,7 +111,7 @@ class Login extends StatelessWidget {
                             GestureDetector(
                               onTap: () {},
                               child: Container(
-                                padding: EdgeInsets.all(20),
+                                padding: const EdgeInsets.all(20),
                                 height: height * 0.08,
                                 width: width * 0.16,
                                 decoration: BoxDecoration(
@@ -141,7 +145,7 @@ class Login extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(
+                          const Text(
                             "sudah punya akun ?",
                             style: TextStyle(
                                 fontSize: 14, fontWeight: FontWeight.w400),
@@ -150,7 +154,7 @@ class Login extends StatelessWidget {
                             onTap: () {
                               Get.toNamed("/register");
                             },
-                            child: Text(
+                            child: const Text(
                               " Daftar",
                               style: TextStyle(
                                   color: ColorValue.kSecondary,
