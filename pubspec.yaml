@@ -73,6 +73,7 @@ flutter:
   assets:
     - assets/images/banner/
     - assets/images/demo_image.png
+    - assets/images/banner/profile.jpg
 
 
 
