@@ -19,7 +19,7 @@ class BottomBar extends StatelessWidget {
         Get.offNamed("/whislist");
         break;
       case 3:
-        Get.offNamed("/chat");
+        Get.offNamed("/profile");
         break;
     }
   }
@@ -44,7 +44,7 @@ class BottomBar extends StatelessWidget {
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.person),
-          label: 'Chat',
+          label: 'Profile',
         ),
       ],
       iconSize: 30,

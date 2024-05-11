@@ -3,6 +3,8 @@ import 'package:klambi_ta/Pages/chat/chat.dart';
 import 'package:klambi_ta/Pages/chat/chat_binding.dart';
 import 'package:klambi_ta/Pages/history/history.dart';
 import 'package:klambi_ta/common/routes_name.dart';
+import 'package:klambi_ta/profile/profile.dart';
+import 'package:klambi_ta/profile/profile_binding.dart';
 import '../Pages/Register/register.dart';
 import '../Pages/history/history_binding.dart';
 import '../Pages/home/home.dart';
@@ -43,5 +45,10 @@ List<GetPage> pageRoutes = <GetPage>[
       name: RouteName.chat,
       page: () =>  const ChatPage(),
       binding: ChatBinding()
+  ),
+  GetPage(
+      name: RouteName.profile,
+      page: () =>  const Profile(),
+      binding: ProfileBinding()
   ),
 ];

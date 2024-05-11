@@ -24,7 +24,7 @@ class Register extends StatelessWidget {
               Column(
                 children: [
                   const SizedBox(
-                    height: 150,
+                    height: 100,
                   ),
                   Center(
                     child: Container(
