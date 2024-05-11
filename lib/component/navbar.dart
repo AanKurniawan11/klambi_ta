@@ -43,7 +43,7 @@ class BottomBar extends StatelessWidget {
           label: 'Whislist',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.chat),
+          icon: Icon(Icons.person),
           label: 'Chat',
         ),
       ],
