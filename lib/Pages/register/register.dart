@@ -69,7 +69,7 @@ class Register extends StatelessWidget {
                       My_Button(
                         title: "Daftar",
                         onclick: () {
-                          Get.toNamed("/home");
+                          Get.toNamed("/navbar");
                         },
                       ),
                       Row(

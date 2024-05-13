@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import '../../color.dart';
-import '../../component/navbar.dart';
 
 class HistoryPage extends StatelessWidget {
   const HistoryPage({super.key});
-  final int _currentIndex = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +62,6 @@ class HistoryPage extends StatelessWidget {
           ],
         ),
       ),
-      bottomNavigationBar: BottomBar(currentIndex: _currentIndex),
     );
   }
 }

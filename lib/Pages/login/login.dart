@@ -68,7 +68,7 @@ class Login extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(vertical: 10),
                         child: My_Button(
                           onclick: () {
-                            Get.toNamed("/home");
+                            Get.toNamed("/navbar");
                           },
                           title: 'Mulai',
                         ),

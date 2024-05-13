@@ -4,14 +4,12 @@ import 'package:flutter/widgets.dart';
 import 'package:klambi_ta/color.dart';
 import 'package:get/get.dart';
 import 'package:klambi_ta/component/space_extension.dart';
-import '../component/navbar.dart';
 
 class Profile extends StatelessWidget {
   const Profile({super.key});
 
   @override
   Widget build(BuildContext context) {
-    const int _currentIndex = 3;
     final Size mediaquery = MediaQuery.of(context).size;
     final double height = mediaquery.height;
     final double width = mediaquery.width;
@@ -51,7 +49,9 @@ class Profile extends StatelessWidget {
                   child: Column(
                     children: [
                       GestureDetector(
-                        onTap: (){},
+                        onTap: (){
+                          Get.offNamed("/edit");
+                        },
                         child: Row(
                           children: [
                             const Icon(CupertinoIcons.person_alt_circle,size: 35,color: ColorValue.kPrimary,),
@@ -114,7 +114,6 @@ class Profile extends StatelessWidget {
           ),
         ),
       ),
-      bottomNavigationBar:const BottomBar(currentIndex: _currentIndex),
 
     );
   }

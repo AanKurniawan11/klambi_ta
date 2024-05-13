@@ -11,7 +11,7 @@ import 'Pages/onboarding/onboarding_view.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final prefs = await SharedPreferences.getInstance();
-  final onboarding = prefs.getBool("onboarding") ?? false;
+  final onboarding = prefs.getBool("onboardings") ?? false;
   runApp(MyApp(
     onboarding: onboarding,
   ));
@@ -36,7 +36,11 @@ class MyApp extends StatelessWidget {
           duration: 300,
           splashTransition: SplashTransition.fadeTransition,
           backgroundColor: ColorValue.kPrimary,
-          nextScreen: onboarding ? Register() : OnboardingView()),
+          nextScreen: onboarding ? Register() : OnboardingView()
+      ),
+
+      // home: LandingPage(),
+
     );
   }
 }
