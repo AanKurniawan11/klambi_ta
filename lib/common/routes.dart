@@ -1,8 +1,11 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:klambi_ta/Pages/chat/chat.dart';
 import 'package:klambi_ta/Pages/chat/chat_binding.dart';
 import 'package:klambi_ta/Pages/history/history.dart';
 import 'package:klambi_ta/common/routes_name.dart';
+import 'package:klambi_ta/component/awdawd.dart';
+import 'package:klambi_ta/profile/edit/editprofile.dart';
 import 'package:klambi_ta/profile/profile.dart';
 import 'package:klambi_ta/profile/profile_binding.dart';
 import '../Pages/Register/register.dart';
@@ -14,6 +17,7 @@ import '../Pages/login/login_binding.dart';
 import '../Pages/register/register_binding.dart';
 import '../Pages/whislist/whislist.dart';
 import '../Pages/whislist/whislist_binding.dart';
+import '../profile/edit/edit_binding.dart';
 
 List<GetPage> pageRoutes = <GetPage>[
   GetPage(
@@ -50,5 +54,16 @@ List<GetPage> pageRoutes = <GetPage>[
       name: RouteName.profile,
       page: () =>  const Profile(),
       binding: ProfileBinding()
+  ),
+  GetPage(
+      name: RouteName.edit,
+      page: () =>  const EditProfile(),
+      binding: EditBinding()
+  ),
+
+  GetPage(
+      name: RouteName.navbar,
+      page: () =>  LandingPage(),
+      // binding: ProfileBinding()
   ),
 ];

@@ -22,7 +22,7 @@ class ChatPage extends StatelessWidget {
             size: 30,
           ),
           onTap: () {
-            Get.offNamed("/home");
+            Get.offNamed("/navbar");
           },
         ),
         title: Row(
