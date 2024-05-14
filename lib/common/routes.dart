@@ -4,7 +4,9 @@ import 'package:klambi_ta/Pages/chat/chat.dart';
 import 'package:klambi_ta/Pages/chat/chat_binding.dart';
 import 'package:klambi_ta/Pages/history/history.dart';
 import 'package:klambi_ta/common/routes_name.dart';
-import 'package:klambi_ta/component/awdawd.dart';
+import 'package:klambi_ta/component/navbar.dart';
+import 'package:klambi_ta/profile/cart/cart.dart';
+import 'package:klambi_ta/profile/cart/cart_binding.dart';
 import 'package:klambi_ta/profile/edit/editprofile.dart';
 import 'package:klambi_ta/profile/profile.dart';
 import 'package:klambi_ta/profile/profile_binding.dart';
@@ -59,6 +61,11 @@ List<GetPage> pageRoutes = <GetPage>[
       name: RouteName.edit,
       page: () =>  const EditProfile(),
       binding: EditBinding()
+  ),
+  GetPage(
+      name: RouteName.cart,
+      page: () =>  const Cart(),
+      binding: CartBinding()
   ),
 
   GetPage(

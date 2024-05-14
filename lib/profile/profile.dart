@@ -20,22 +20,40 @@ class Profile extends StatelessWidget {
           child: Center(
             child: Column(
               children: [
-                ClipOval(
-                    child:Container(
-                      height: height * 0.15,
-                      width: width *0.32,
-                      foregroundDecoration: BoxDecoration(
-                        image:DecorationImage(image: AssetImage("assets/images/banner/profile.jpg"),fit: BoxFit.cover)
-                      ),
-                    )
+                Container(
+                  height: height * 0.15,
+                  width: width * 0.32,
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image: AssetImage("assets/images/banner/profile.jpg"),
+                          fit: BoxFit.cover),
+                      shape: BoxShape.circle),
                 ),
-                const Text("Zidni PSHT",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w600,fontFamily: "General Sans"),),
-                const Text("Zidnipsht@gmail.com",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w500,fontFamily: "General Sans",color: ColorValue.kDarkGrey),),
-
-
+                const Text(
+                  "Zidni PSHT",
+                  style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w600,
+                      fontFamily: "General Sans"),
+                ),
+                const Text(
+                  "Zidnipsht@gmail.com",
+                  style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                      fontFamily: "General Sans",
+                      color: ColorValue.kDarkGrey),
+                ),
                 const Padding(
-                  padding: EdgeInsets.only(right: 280,top: 50),
-                  child: Text("Menu",style: TextStyle(fontSize: 18,fontWeight: FontWeight.w500,fontFamily: "General Sans",color: ColorValue.kDarkGrey),),
+                  padding: EdgeInsets.only(right: 280, top: 50),
+                  child: Text(
+                    "Menu",
+                    style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w500,
+                        fontFamily: "General Sans",
+                        color: ColorValue.kDarkGrey),
+                  ),
                 ),
                 const Divider(
                   thickness: 1,
@@ -43,37 +61,60 @@ class Profile extends StatelessWidget {
                   endIndent: 25,
                   color: ColorValue.kLightGrey,
                 ),
-
                 Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 20,horizontal: 25),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 20, horizontal: 25),
                   child: Column(
                     children: [
                       GestureDetector(
-                        onTap: (){
+                        onTap: () {
                           Get.offNamed("/edit");
                         },
                         child: Row(
                           children: [
-                            const Icon(CupertinoIcons.person_alt_circle,size: 35,color: ColorValue.kPrimary,),
-                            const Text("Tentang Akun",style: TextStyle(fontSize: 16),)
+                            const Icon(
+                              CupertinoIcons.person_alt_circle,
+                              size: 35,
+                              color: ColorValue.kPrimary,
+                            ),
+                            const Text(
+                              "Tentang Akun",
+                              style: TextStyle(fontSize: 16),
+                            )
                           ].withSpaceBetween(width: 20),
                         ),
                       ),
                       GestureDetector(
-                        onTap: (){},
+                        onTap: () {
+                          Get.offNamed("/cart");
+                        },
                         child: Row(
                           children: [
-                            const Icon(CupertinoIcons.cart,size: 35,color: ColorValue.kPrimary,),
-                            const Text("Keranjang Saya",style: TextStyle(fontSize: 16),)
+                            const Icon(
+                              CupertinoIcons.cart,
+                              size: 35,
+                              color: ColorValue.kPrimary,
+                            ),
+                            const Text(
+                              "Keranjang Saya",
+                              style: TextStyle(fontSize: 16),
+                            )
                           ].withSpaceBetween(width: 20),
                         ),
                       ),
                       GestureDetector(
-                        onTap: (){},
+                        onTap: () {},
                         child: Row(
                           children: [
-                            const Icon(Icons.headset_mic_outlined,size: 35,color: ColorValue.kPrimary,),
-                            const Text("Pusat Bantuan",style: TextStyle(fontSize: 16),)
+                            const Icon(
+                              Icons.headset_mic_outlined,
+                              size: 35,
+                              color: ColorValue.kPrimary,
+                            ),
+                            const Text(
+                              "Pusat Bantuan",
+                              style: TextStyle(fontSize: 16),
+                            )
                           ].withSpaceBetween(width: 20),
                         ),
                       ),
@@ -81,7 +122,8 @@ class Profile extends StatelessWidget {
                         onTap: () {
                           Get.defaultDialog(
                             title: "Konfirmasi",
-                            content: const Text("Apakah Anda yakin ingin keluar?"),
+                            content:
+                                const Text("Apakah Anda yakin ingin keluar?"),
                             confirm: ElevatedButton(
                               onPressed: () {
                                 Get.offAllNamed("/login");
@@ -98,10 +140,12 @@ class Profile extends StatelessWidget {
                         },
                         child: Row(
                           children: [
-                            const Icon(Icons.output_outlined, size: 35, color: ColorValue.kDanger),
+                            const Icon(Icons.output_outlined,
+                                size: 35, color: ColorValue.kDanger),
                             const Text(
                               "Log Out",
-                              style: TextStyle(fontSize: 16, color: ColorValue.kDanger),
+                              style: TextStyle(
+                                  fontSize: 16, color: ColorValue.kDanger),
                             )
                           ].withSpaceBetween(width: 20),
                         ),
@@ -114,7 +158,6 @@ class Profile extends StatelessWidget {
           ),
         ),
       ),
-
     );
   }
 }

@@ -8,4 +8,5 @@ abstract class RouteName {
   static const profile = "/profile";
   static const navbar = "/navbar";
   static const edit = "/edit";
+  static const cart = "/cart";
 }

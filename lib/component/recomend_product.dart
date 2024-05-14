@@ -28,7 +28,6 @@ Widget RecomendProduct(
                 width: size.width *   0.5,
                 height: size.height * 0.17,
                 foregroundDecoration: BoxDecoration(
-                  // color: ColorValue.kLightGrey,
                     image: DecorationImage(image: AssetImage(item.image))),
               ),
               Positioned(
