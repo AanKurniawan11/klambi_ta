@@ -14,7 +14,7 @@ class SearchField extends StatelessWidget {
           onChanged: (value) {},
           decoration: InputDecoration(
             filled: true,
-            fillColor: ColorValue.kLightGrey,
+            fillColor: ColorValue.kSuperLightGrey,
             contentPadding:
             const EdgeInsets.all(14),
             border: searchOutlineInputBorder,

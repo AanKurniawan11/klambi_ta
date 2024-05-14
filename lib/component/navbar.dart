@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../color.dart';
+import 'package:flutter_svg/svg.dart';
 
 class BottomBar extends StatelessWidget {
   final int currentIndex;
@@ -29,22 +30,22 @@ class BottomBar extends StatelessWidget {
     return BottomNavigationBar(
       currentIndex: currentIndex,
       onTap: _onTap,
-      items: const [
+      items: [
         BottomNavigationBarItem(
-          icon: Icon(Icons.home),
+          icon: SvgPicture.asset('assets/icons/home.svg'),
           label: 'Home',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.receipt_long_sharp),
+          icon: SvgPicture.asset('assets/icons/receipt.svg'),
           label: 'Riwayat',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.bookmark),
-          label: 'Whislist',
+          icon: SvgPicture.asset('assets/icons/wishlist.svg'),
+          label: 'Wishlist',
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.person),
-          label: 'Chat',
+          label: 'Profile',
         ),
       ],
       iconSize: 30,

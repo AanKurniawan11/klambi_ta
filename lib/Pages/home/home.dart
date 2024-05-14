@@ -7,7 +7,7 @@ import '../../component/carousel.dart';
 import '../../component/category_tabs.dart';
 import '../../component/header.dart';
 import '../../component/navbar.dart';
-import '../../component/recomend_product.dart';
+import '../../component/recommended_product.dart';
 import '../../component/search_field.dart';
 import '../../model/model.dart';
 
