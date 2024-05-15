@@ -27,6 +27,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+        // dialogTheme: DialogTheme(titleTextStyle: TextStyle(color: Colors.red)),
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
         appBarTheme: const AppBarTheme(
           surfaceTintColor: Colors.white

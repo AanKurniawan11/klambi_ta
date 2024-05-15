@@ -111,7 +111,8 @@ class Profile extends StatelessWidget {
                         ),
                       ),
                       GestureDetector(
-                        onTap: () {},
+                        onTap: () {
+                          Get.offNamed("/cs");
                         child: Container(
                           width: width * 1,
                           height: height * 0.07,
@@ -126,8 +127,22 @@ class Profile extends StatelessWidget {
                                 "Pusat Bantuan",
                                 style: TextStyle(fontSize: 16),
                               )
-                            ].withSpaceBetween(width: 20),
-                          ),
+                            ].withSpaceBetween(width: 20)
+                          )
+                          );
+                        },
+                        child: Row(
+                          children: [
+                            const Icon(
+                              Icons.headset_mic_outlined,
+                              size: 35,
+                              color: ColorValue.kPrimary,
+                            ),
+                            const Text(
+                              "Pusat Bantuan",
+                              style: TextStyle(fontSize: 16),
+                            )
+                          ].withSpaceBetween(width: 20),
                         ),
                       ),
                       GestureDetector(

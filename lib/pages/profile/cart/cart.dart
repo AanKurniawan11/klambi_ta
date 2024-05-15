@@ -23,10 +23,7 @@ class Cart extends StatelessWidget {
             onPressed: () {
               Get.offAndToNamed("/navbar", arguments: 3);
             },
-            icon: Container(
-                width: width * 1,
-                height: height * 0.07,
-                child: Icon(Icons.arrow_back))),
+            icon: Icon(Icons.arrow_back)),
         title: Text(
           "Keranjangku",
           textAlign: TextAlign.center,
@@ -43,7 +40,7 @@ class Cart extends StatelessWidget {
               ProductCards(demoProducts),
               SizedBox(
                 height: 150,
-              )
+              ),
             ],
           ),
         ),
@@ -51,11 +48,8 @@ class Cart extends StatelessWidget {
       bottomSheet: Stack(
         children: [
           Container(
-            height: height * 0.18,
+            height: height * 0.22,
             width: double.infinity,
-            decoration: BoxDecoration(color: Colors.white, boxShadow: [
-              BoxShadow(color: ColorValue.kDarkGrey, blurRadius: 2)
-            ]),
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 20),
               child: Column(
@@ -68,11 +62,13 @@ class Cart extends StatelessWidget {
                         style: TextStyle(
                             fontSize: 20, fontWeight: FontWeight.w600),
                       ),
-                      Text("Rp 190.000",
-                          style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w600,
-                              color: ColorValue.kSecondary)),
+                      Text(
+                        "Rp 190.000",
+                        style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w600,
+                            color: ColorValue.kSecondary),
+                      ),
                     ].withSpaceBetween(width: 40)),
                 My_Button(
                   onclick: () {},
