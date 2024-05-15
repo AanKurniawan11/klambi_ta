@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:klambi_ta/Pages/address/address.dart';
+import 'package:klambi_ta/Pages/address/address_binding.dart';
+import 'package:klambi_ta/Pages/address/insert/insert.dart';
+import 'package:klambi_ta/Pages/address/insert/insert_binding.dart';
 import 'package:klambi_ta/Pages/chat/chat.dart';
 import 'package:klambi_ta/Pages/chat/chat_binding.dart';
 import 'package:klambi_ta/Pages/history/history.dart';
@@ -67,7 +71,16 @@ List<GetPage> pageRoutes = <GetPage>[
       page: () =>  const Cart(),
       binding: CartBinding()
   ),
-
+  GetPage(
+      name: RouteName.address,
+      page: () =>  const AddressPageView(),
+      binding: AddressBinding()
+  ),
+  GetPage(
+      name: RouteName.insert,
+      page: () =>  const InsertAddressPageView(),
+      binding: InserAddressBinding()
+  ),
   GetPage(
       name: RouteName.navbar,
       page: () =>  LandingPage(),
