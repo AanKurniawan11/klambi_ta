@@ -23,11 +23,14 @@ class EditProfile extends StatelessWidget {
         centerTitle: true,
         leading: GestureDetector(
             onTap: () {
-              // Get.offNamed("/navbar");
               Get.offAndToNamed("/navbar",arguments: 3);
             },
-            child: Icon(
-              Icons.arrow_back,
+            child: Container(
+              width: width * 1,
+              height: height * 0.07,
+              child: Icon(
+                Icons.arrow_back,
+              ),
             )),
       ),
       body: SafeArea(
@@ -71,6 +74,7 @@ class EditProfile extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text("Konfirmasi Password",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w500),),
+                      SizedBox(height: 20,),
                       PassTextFields(hint: "Konfirmasi")
                     ],
                   ),
