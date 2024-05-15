@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:klambi_ta/Pages/history/history.dart';
 import 'package:klambi_ta/Pages/home/home.dart';
-import 'package:klambi_ta/Pages/whislist/whislist.dart';
-import 'package:klambi_ta/profile/profile.dart';
 import '../color.dart';
+import '../pages/profile/profile.dart';
+import '../pages/wishlist/whislist.dart';
 
 class LandingPageController extends GetxController {
   var tabIndex = 0.obs;
