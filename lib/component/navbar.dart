@@ -1,56 +1,90 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:klambi_ta/Pages/history/history.dart';
+import 'package:klambi_ta/Pages/home/home.dart';
+import 'package:klambi_ta/Pages/whislist/whislist.dart';
+import 'package:klambi_ta/profile/profile.dart';
 import '../color.dart';
-import 'package:flutter_svg/svg.dart';
 
-class BottomBar extends StatelessWidget {
-  final int currentIndex;
+class LandingPageController extends GetxController {
+  var tabIndex = 0.obs;
 
-  const BottomBar({super.key, required this.currentIndex});
-
-  void _onTap(int index) {
-    switch (index) {
-      case 0:
-        Get.offNamed("/home"); // Navigate to home route
-        break;
-      case 1:
-        Get.offNamed("/history");
-        break;
-      case 2:
-        Get.offNamed("/whislist");
-        break;
-      case 3:
-        Get.offNamed("/chat");
-        break;
-    }
+  void changeTabIndex(int index) {
+    print("Changing Tab Index to: $index");
+    tabIndex.value = index;
   }
+}
 
+class LandingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BottomNavigationBar(
-      currentIndex: currentIndex,
-      onTap: _onTap,
-      items: [
-        BottomNavigationBarItem(
-          icon: SvgPicture.asset('assets/icons/home.svg'),
-          label: 'Home',
-        ),
-        BottomNavigationBarItem(
-          icon: SvgPicture.asset('assets/icons/receipt.svg'),
-          label: 'Riwayat',
-        ),
-        BottomNavigationBarItem(
-          icon: SvgPicture.asset('assets/icons/wishlist.svg'),
-          label: 'Wishlist',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.person),
-          label: 'Profile',
-        ),
-      ],
-      iconSize: 30,
-      selectedItemColor: ColorValue.kPrimary,
-      unselectedItemColor: ColorValue.kLightGrey,
+    final LandingPageController landingPageController =
+    Get.put(LandingPageController(), permanent: false);
+
+    final args = Get.arguments;
+    if (args != null && args is int) {
+      print("Received argument: $args");
+      landingPageController.changeTabIndex(args);
+
+      // Clear arguments after using them
+      Future.delayed(Duration.zero, () {
+        Get.offNamed("/navbar");
+      });
+    }
+
+    return SafeArea(
+      child: Scaffold(
+        bottomNavigationBar: buildBottomNavigationMenu(context, landingPageController),
+        body: Obx(() {
+          print("Current Tab Index: ${landingPageController.tabIndex.value}");
+          return IndexedStack(
+            index: landingPageController.tabIndex.value,
+            children: [
+              HomePageView(),
+              HistoryPage(),
+              WhislistPage(),
+              Profile()
+            ],
+          );
+        }),
+      ),
     );
+  }
+
+  buildBottomNavigationMenu(context, landingPageController) {
+    return Obx(() => MediaQuery(
+      data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+      child: SizedBox(
+        height: 70,
+        child: BottomNavigationBar(
+          currentIndex: landingPageController.tabIndex.value,
+          onTap: (index) {
+            print("Bottom Navigation Item Clicked: $index");
+            landingPageController.changeTabIndex(index);
+          },
+          items: const [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: 'Home',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.receipt_long_sharp),
+              label: 'Riwayat',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.bookmark),
+              label: 'Whislist',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.person),
+              label: 'Profile',
+            ),
+          ],
+          iconSize: 30,
+          selectedItemColor: ColorValue.kPrimary,
+          unselectedItemColor: ColorValue.kLightGrey,
+        ),
+      ),
+    ));
   }
 }

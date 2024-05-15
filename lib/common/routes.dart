@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:klambi_ta/Pages/chat/chat.dart';
 import 'package:klambi_ta/Pages/chat/chat_binding.dart';
@@ -6,6 +7,7 @@ import 'package:klambi_ta/Pages/detail/detail_binding.dart';
 import 'package:klambi_ta/Pages/history/history.dart';
 import 'package:klambi_ta/common/routes_name.dart';
 import 'package:klambi_ta/model/model.dart';
+
 import '../Pages/Register/register.dart';
 import '../Pages/history/history_binding.dart';
 import '../Pages/home/home.dart';
@@ -15,6 +17,12 @@ import '../Pages/login/login_binding.dart';
 import '../Pages/register/register_binding.dart';
 import '../Pages/whislist/whislist.dart';
 import '../Pages/whislist/whislist_binding.dart';
+import '../component/navbar.dart';
+import '../profile/cart/cart.dart';
+import '../profile/cart/cart_binding.dart';
+import '../profile/edit/edit_binding.dart';
+import '../profile/edit/editprofile.dart';
+
 
 List<GetPage> pageRoutes = <GetPage>[
   GetPage(
@@ -51,5 +59,21 @@ List<GetPage> pageRoutes = <GetPage>[
       name: RouteName.detail,
       page: () =>   DetailView(),
       binding: DetailBinding()
+  ),
+  GetPage(
+      name: RouteName.edit,
+      page: () =>  const EditProfile(),
+      binding: EditBinding()
+  ),
+  GetPage(
+      name: RouteName.cart,
+      page: () =>  const Cart(),
+      binding: CartBinding()
+  ),
+
+  GetPage(
+      name: RouteName.navbar,
+      page: () =>  LandingPage(),
+      // binding: ProfileBinding()
   ),
 ];

@@ -33,7 +33,7 @@ class Login extends StatelessWidget {
                       width: width * 0.5,
                       foregroundDecoration: const BoxDecoration(
                           image: DecorationImage(
-                              image: AssetImage("img/Logo1.png"))),
+                              image: AssetImage("assets/images/banner/Logo1.png"))),
                     ),
                   ),
                   const Text(
@@ -68,7 +68,7 @@ class Login extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(vertical: 10),
                         child: My_Button(
                           onclick: () {
-                            Get.toNamed("/home");
+                            Get.offAllNamed("/navbar");
                           },
                           title: 'Mulai',
                         ),

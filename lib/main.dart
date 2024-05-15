@@ -20,23 +20,31 @@ void main() async {
 class MyApp extends StatelessWidget {
   final bool onboarding;
   const MyApp({super.key, this.onboarding = false});
-  // This widget is the root of your application.
+
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
+        appBarTheme: const AppBarTheme(
+          surfaceTintColor: Colors.white
+        ),
+        tabBarTheme: TabBarTheme(indicatorColor: Colors.red,labelColor: Colors.red,dividerColor: Colors.transparent,labelStyle: TextStyle(fontSize: 14),overlayColor: MaterialStatePropertyAll(Colors.transparent)),
         useMaterial3: true,
       ),
       getPages: pageRoutes,
       home: AnimatedSplashScreen(
-          splash: Image.asset("assets/images/banner/klambi_logo.png"),
+          splash: Image.asset("assets/Logo.png"),
           duration: 300,
           splashTransition: SplashTransition.fadeTransition,
           backgroundColor: ColorValue.kPrimary,
-          nextScreen: onboarding ? Register() : OnboardingView()),
+          nextScreen: onboarding ? Register() : OnboardingView()
+      ),
+
+      // home: LandingPage(),
+
     );
   }
 }

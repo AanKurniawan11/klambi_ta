@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import '../../component/navbar.dart';
 
 class WhislistPage extends StatelessWidget {
   const WhislistPage({super.key});
-  final int _currentIndex = 2;
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +33,6 @@ class WhislistPage extends StatelessWidget {
           ],
         ),
       ),
-      bottomNavigationBar: BottomBar(currentIndex: _currentIndex),
     );
   }
 }

@@ -6,4 +6,8 @@ abstract class RouteName {
   static const whislist = "/whislist";
   static const chat = "/chat";
   static const detail = "/detail";
+  static const profile = "/profile";
+  static const navbar = "/navbar";
+  static const edit = "/edit";
+  static const cart = "/cart";
 }
