@@ -126,7 +126,9 @@ class _CartState extends State<Cart> {
                     ].withSpaceBetween(width: 40),
                   ),
                   My_Button(
-                    onclick: () {},
+                    onclick: () {
+                      Get.offNamed("/address");
+                    },
                     title: "Bayar",
                   ),
                 ].withSpaceBetween(height: 20),
