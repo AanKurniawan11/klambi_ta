@@ -11,4 +11,7 @@ abstract class RouteName {
   static const cart = "/cart";
   static const address = "/address";
   static const insert = "/insert";
+  static const detail = "/detail";
+  static const cs = "/cs";
+  static const payment = "/payment";
 }

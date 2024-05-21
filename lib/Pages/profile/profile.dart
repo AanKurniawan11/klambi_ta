@@ -104,7 +104,7 @@ class Profile extends StatelessWidget {
                       ),
                       GestureDetector(
                         onTap: () {
-                          Get.offNamed("/address");
+                          Get.offNamed("/cs");
                         },
                         child: Row(
                           children: [

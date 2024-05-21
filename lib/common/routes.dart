@@ -6,24 +6,29 @@ import 'package:klambi_ta/Pages/address/insert/insert.dart';
 import 'package:klambi_ta/Pages/address/insert/insert_binding.dart';
 import 'package:klambi_ta/Pages/chat/chat.dart';
 import 'package:klambi_ta/Pages/chat/chat_binding.dart';
+import 'package:klambi_ta/Pages/detail/detail.dart';
+import 'package:klambi_ta/Pages/detail/detail_binding.dart';
 import 'package:klambi_ta/Pages/history/history.dart';
-import 'package:klambi_ta/Pages/profile/profile_binding.dart';
+import 'package:klambi_ta/Pages/payment/payment.dart';
+import 'package:klambi_ta/Pages/payment/payment_binding.dart';
 import 'package:klambi_ta/common/routes_name.dart';
 import 'package:klambi_ta/component/navbar.dart';
 import '../Pages/Register/register.dart';
+import '../Pages/cs/cs.dart';
+import '../Pages/cs/cs_binding.dart';
 import '../Pages/history/history_binding.dart';
 import '../Pages/home/home.dart';
 import '../Pages/home/home_binding.dart';
 import '../Pages/login/login.dart';
 import '../Pages/login/login_binding.dart';
-import '../Pages/profile/cart/cart.dart';
-import '../Pages/profile/cart/cart_binding.dart';
-import '../Pages/profile/edit/edit_binding.dart';
-import '../Pages/profile/edit/editprofile.dart';
-import '../Pages/profile/profile.dart';
 import '../Pages/register/register_binding.dart';
 import '../Pages/whislist/whislist.dart';
 import '../Pages/whislist/whislist_binding.dart';
+import '../pages/profile/cart/cart.dart';
+import '../pages/profile/cart/cart_binding.dart';
+import '../pages/profile/edit/edit_binding.dart';
+import '../pages/profile/edit/editprofile.dart';
+
 
 List<GetPage> pageRoutes = <GetPage>[
   GetPage(
@@ -57,9 +62,9 @@ List<GetPage> pageRoutes = <GetPage>[
       binding: ChatBinding()
   ),
   GetPage(
-      name: RouteName.profile,
-      page: () =>  const Profile(),
-      binding: ProfileBinding()
+      name: RouteName.detail,
+      page: () =>   DetailView(),
+      binding: DetailBinding()
   ),
   GetPage(
       name: RouteName.edit,
@@ -72,6 +77,11 @@ List<GetPage> pageRoutes = <GetPage>[
       binding: CartBinding()
   ),
   GetPage(
+      name: RouteName.cs,
+      page: () =>  const CustomerService(),
+      binding: CustomerServiceBinding()
+  ),
+  GetPage(
       name: RouteName.address,
       page: () =>  const AddressPageView(),
       binding: AddressBinding()
@@ -82,8 +92,13 @@ List<GetPage> pageRoutes = <GetPage>[
       binding: InserAddressBinding()
   ),
   GetPage(
-      name: RouteName.navbar,
-      page: () =>  LandingPage(),
-      // binding: ProfileBinding()
+      name: RouteName.payment,
+      page: () =>  const Payment(),
+      binding: PaymentBinding()
+  ),
+  GetPage(
+    name: RouteName.navbar,
+    page: () =>  LandingPage(),
+    // binding: ProfileBinding()
   ),
 ];
