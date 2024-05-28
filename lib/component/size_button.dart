@@ -39,6 +39,7 @@ class _SizeButtonState extends State<SizeButton> {
         shape: MaterialStateProperty.all<RoundedRectangleBorder>(
           RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12.0),
+              side: BorderSide(color: ColorValue.kLightGrey)
             // side:  BorderSide(color: Colors.black)
           ),
         ),
