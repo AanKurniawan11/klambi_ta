@@ -41,6 +41,7 @@ dependencies:
   intl: ^0.19.0
   sliding_up_panel: ^2.0.0+1
   dropdown_button2: ^2.3.9
+  image_picker: ^1.1.1
 
 
 
@@ -79,6 +80,7 @@ flutter:
     - assets/images/
     - assets/images/banner/
     - assets/images/checkout/
+    - assets/images/design/
     - assets/images/demo_image.png
     - assets/images/banner/profile.jpg
 

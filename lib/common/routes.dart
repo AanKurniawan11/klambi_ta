@@ -6,6 +6,8 @@ import 'package:klambi_ta/Pages/address/insert/insert.dart';
 import 'package:klambi_ta/Pages/address/insert/insert_binding.dart';
 import 'package:klambi_ta/Pages/chat/chat.dart';
 import 'package:klambi_ta/Pages/chat/chat_binding.dart';
+import 'package:klambi_ta/Pages/design/design.dart';
+import 'package:klambi_ta/Pages/design/design_binding.dart';
 import 'package:klambi_ta/Pages/detail/detail.dart';
 import 'package:klambi_ta/Pages/detail/detail_binding.dart';
 import 'package:klambi_ta/Pages/history/history.dart';
@@ -100,5 +102,10 @@ List<GetPage> pageRoutes = <GetPage>[
     name: RouteName.navbar,
     page: () =>  LandingPage(),
     // binding: ProfileBinding()
+  ),
+  GetPage(
+      name: RouteName.design,
+      page: () =>  const DesignPageView(),
+      binding: DesignBinding()
   ),
 ];
