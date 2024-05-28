@@ -1,17 +1,20 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:klambi_ta/Pages/home/allproductresponsemodel.dart';
+import 'package:klambi_ta/Pages/home/home_controller.dart';
 
 
-import '../../component/carousel.dart';
-import '../../component/category_tabs.dart';
-import '../../component/header.dart';
-import '../../component/recomend_product.dart';
-import '../../component/search_field.dart';
-import '../../model/model.dart';
-
+import 'components/carousel.dart';
+import 'components/category_tabs.dart';
+import 'components/header.dart';
+import 'components/recomend_product.dart';
+import 'components/search_field.dart';
+import 'package:get/get.dart';
 class HomePageView extends StatelessWidget {
-  const HomePageView({super.key});
+   HomePageView({super.key});
+
+  final HomeController homeController = Get.put(HomeController());
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +34,11 @@ class HomePageView extends StatelessWidget {
                 SizedBox(height: 10),
                 CategoryTabs(),
                 SizedBox(height: 15),
-                ProductCard(demoProducts),
+                Obx((){
+                  return ProductCard(homeController.productResponeAll,
+                    homeController.productResponeAll
+                  );
+                })
               ],
             )
           ],

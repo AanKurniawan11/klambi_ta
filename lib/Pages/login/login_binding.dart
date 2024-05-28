@@ -5,6 +5,6 @@ import 'package:klambi_ta/Pages/register/register_controller.dart';
 class loginbinding extends Bindings{
   @override
   void dependencies(){
-    Get.put(logincontroller());
+    Get.put(LoginController());
   }
 }

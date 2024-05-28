@@ -1,7 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
-import 'banner.dart';
+import '../../../component/banner.dart';
 
 class Carousel extends StatelessWidget {
   const Carousel({Key? key});

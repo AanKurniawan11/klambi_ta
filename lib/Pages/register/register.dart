@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:klambi_ta/Pages/register/register_controller.dart';
 import 'package:klambi_ta/color.dart';
 import 'package:get/get.dart';
 import 'package:klambi_ta/component/my_elevatedbutton.dart';
@@ -8,13 +9,27 @@ import 'package:klambi_ta/component/pass_textfield.dart';
 import 'package:klambi_ta/component/space_extension.dart';
 
 class Register extends StatelessWidget {
-  const Register({super.key});
+  Register({super.key});
+
+  final registerController = Get.put(RegisterController());
+  final TextEditingController ctrUsername = TextEditingController();
+  final TextEditingController ctrPassword = TextEditingController();
+  final TextEditingController ctrConfirmPass = TextEditingController();
+  final TextEditingController ctrEmail = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     final Size mediaquery = MediaQuery.of(context).size;
     final double height = mediaquery.height;
     final double width = mediaquery.width;
+
+    // Check if user is already registered and navigate accordingly
+    registerController.checkIfRegistered().then((isRegistered) {
+      if (isRegistered) {
+        Get.offAllNamed('/navbar');
+      }
+    });
+
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -51,17 +66,26 @@ class Register extends StatelessWidget {
                         child: Column(
                           children: [
                             MyTextField(
-                                "Username", "Username", Icons.person_outlined),
-                            MyTextField("Email", "Email", Icons.email_outlined),
+                                label: "Username",
+                                hint: "Username",
+                                prefixIcon: Icons.person_outline,
+                                controller: ctrUsername),
+                            MyTextField(
+                                label: "Email",
+                                hint: "Email",
+                                prefixIcon: Icons.email_outlined,
+                                controller: ctrEmail),
                             PassTextField(
                               hint: "Password",
                               label: "Password",
                               prefixIcon: Icons.lock_outline,
+                              controller: ctrPassword,
                             ),
                             PassTextField(
                               hint: "Password",
                               label: "Confirm Password",
                               prefixIcon: Icons.lock_outline,
+                              controller: ctrConfirmPass,
                             ),
                           ].withSpaceBetween(height: 15),
                         ),
@@ -69,7 +93,12 @@ class Register extends StatelessWidget {
                       My_Button(
                         title: "Daftar",
                         onclick: () {
-                          Get.toNamed("/navbar");
+                          registerController.registerAction(
+                            ctrUsername.text,
+                            ctrEmail.text,
+                            ctrPassword.text,
+                            ctrConfirmPass.text,
+                          );
                         },
                       ),
                       Row(

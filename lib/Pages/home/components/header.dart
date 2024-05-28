@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:klambi_ta/color.dart';
 import 'package:get/get.dart';
-import 'custom_icon.dart';
+import '../../../component/custom_icon.dart';
 
 class Header extends StatelessWidget {
   const Header({super.key});

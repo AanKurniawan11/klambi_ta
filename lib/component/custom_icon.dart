@@ -1,9 +1,8 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class CustomIconButton extends StatelessWidget {
-  const   CustomIconButton({
+  const CustomIconButton({
     required this.svgIcon,
     required this.press,
     Key? key, // corrected the super keyword

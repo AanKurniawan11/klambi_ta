@@ -30,9 +30,12 @@ class _SizeButtonState extends State<SizeButton> {
       },
       style: ButtonStyle(
         backgroundColor: MaterialStateProperty.all(
-          _isClicked ? ColorValue.kPrimary : ColorValue.kWhite, // Change the color when clicked
+          _isClicked
+              ? ColorValue.kPrimary
+              : ColorValue.kWhite, // Change the color when clicked
         ),
-        minimumSize: MaterialStateProperty.all(Size(width * 0.01, height * 0.065)),
+        minimumSize:
+            MaterialStateProperty.all(Size(width * 0.01, height * 0.065)),
         shape: MaterialStateProperty.all<RoundedRectangleBorder>(
           RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12.0),
@@ -40,7 +43,8 @@ class _SizeButtonState extends State<SizeButton> {
           ),
         ),
       ),
-      child: Text(widget.title,
+      child: Text(
+        widget.title,
         style: const TextStyle(
           color: Colors.black,
           fontWeight: FontWeight.w600,
@@ -50,4 +54,3 @@ class _SizeButtonState extends State<SizeButton> {
     );
   }
 }
-

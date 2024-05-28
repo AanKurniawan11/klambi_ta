@@ -30,7 +30,7 @@ class CustomTextfield extends StatelessWidget {
           style: TextStyle(
             fontFamily: 'General Sans',
             fontWeight: FontWeight.w500,
-            fontSize: 16  ,
+            fontSize: 16,
             color: ColorValue.kBlack,
           ),
         ),

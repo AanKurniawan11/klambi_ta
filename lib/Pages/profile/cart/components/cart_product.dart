@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:klambi_ta/color.dart';
 import 'package:klambi_ta/component/space_extension.dart';
-import '../model/model.dart';
+import '../../../../model/model.dart';
 
 class CartProduct extends StatefulWidget {
   final Product item;

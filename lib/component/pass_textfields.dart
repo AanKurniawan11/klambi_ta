@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../color.dart';
 
-
 class PassTextFields extends StatefulWidget {
   final String hint;
   // final String label;
@@ -44,13 +43,13 @@ class _PasswordTestState extends State<PassTextFields> {
         suffixIcon: IconButton(
           icon: isPasswordVisible
               ? const Icon(
-            Icons.visibility_off,
-            color: Colors.black,
-          )
+                  Icons.visibility_off,
+                  color: Colors.black,
+                )
               : const Icon(
-            Icons.visibility,
-            color: ColorValue.kDarkGrey,
-          ),
+                  Icons.visibility,
+                  color: ColorValue.kDarkGrey,
+                ),
           onPressed: () {
             setState(() {
               isPasswordVisible = !isPasswordVisible;

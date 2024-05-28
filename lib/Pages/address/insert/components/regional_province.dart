@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:klambi_ta/component/custom_dropdown.dart';
+import 'package:klambi_ta/Pages/address/insert/components/custom_dropdown.dart';
 
 import '../../../../color.dart';
 
@@ -23,9 +23,13 @@ class RegionalProvince extends StatelessWidget {
             ),
           ),
           SizedBox(height: 10),
-          CustomDropdown(items: ['Jawa Tengah', 'Jawa Timur', 'Jawa Barat'], hintText: 'Provinsi...', onChanged: (String? newValue) {
-            print('Selected: $newValue');
-          },)
+          CustomDropdown(
+            items: ['Jawa Tengah', 'Jawa Timur', 'Jawa Barat'],
+            hintText: 'Provinsi...',
+            onChanged: (String? newValue) {
+              print('Selected: $newValue');
+            },
+          )
         ],
       ),
     );

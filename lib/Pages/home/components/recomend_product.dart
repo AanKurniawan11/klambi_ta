@@ -2,18 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:klambi_ta/color.dart';
 import 'package:klambi_ta/component/space_extension.dart';
 import 'package:get/get.dart';
-import '../model/model.dart';
+import '../../../model/model.dart';
+import '../../detail/detail.dart';
+import '../allproductresponsemodel.dart';
 
 
 Widget RecomendProduct(
     BuildContext context,
-    Product item,
+    Datum item,
     ) {
   final size = MediaQuery.of(context).size;
 
   return GestureDetector(
     onTap: (){
-      Get.toNamed("/detail");
+      Get.to(DetailView(item: item));
     },
     child: Container(
       height: size.height * 0.9,
@@ -32,7 +34,7 @@ Widget RecomendProduct(
                   width: size.width *   0.5,
                   height: size.height * 0.17,
                   foregroundDecoration: BoxDecoration(
-                      image: DecorationImage(image: AssetImage(item.image))),
+                      image: DecorationImage(image: NetworkImage(item.imageUrl))),
                 ),
                 Positioned(
                     right: 0,
@@ -44,7 +46,7 @@ Widget RecomendProduct(
                           color: ColorValue.kSecondary,
                           borderRadius: BorderRadius.circular(10)),
                       child: Center(
-                          child: Text(item.category, style: TextStyle(color: Colors.white,fontSize: 9,fontWeight: FontWeight.w500,fontFamily: "General Sans"))),
+                          child: Text(item.category.toString(), style: TextStyle(color: Colors.white,fontSize: 5.5,fontWeight: FontWeight.w500,fontFamily: "General Sans"))),
                     ))
               ],
             ),
@@ -75,13 +77,15 @@ Widget RecomendProduct(
                       size: 14,
                       color: ColorValue.kPrimary,
                     ),
-                    Text(item.rating.toString(),style: TextStyle(color: ColorValue.kDarkGrey,fontSize: 12,fontFamily: "General Sans"),),
+                    Text(item.rate.toString(),style: TextStyle(color: ColorValue.kDarkGrey,fontSize: 12,fontFamily: "General Sans"),),
                   ],
                 ),
                 Text('|',style: TextStyle(color: ColorValue.kDarkGrey,fontWeight: FontWeight.w500,fontSize: 16),),
-                Text("Stock ${item.stock.toString()}",style: TextStyle(fontSize: 12,color: ColorValue.kDarkGrey,fontFamily: "General Sans"),),
+                // Text("Stock ${item..toString()}",style: TextStyle(fontSize: 12,color: ColorValue.kDarkGrey,fontFamily: "General Sans"),),
+                Text("Stock 20",style: TextStyle(fontSize: 12,color: ColorValue.kDarkGrey,fontFamily: "General Sans"),),
                 Text('|',style: TextStyle(color: ColorValue.kDarkGrey,fontWeight: FontWeight.w500,fontSize: 16),),
-                Text("Terjual ${item.saled.toString()}",style: TextStyle(fontSize: 12,color: ColorValue.kDarkGrey,fontFamily: "General Sans"),),
+                // Text("Terjual ${item..toString()}",style: TextStyle(fontSize: 12,color: ColorValue.kDarkGrey,fontFamily: "General Sans"),),
+                Text("Terjual 10",style: TextStyle(fontSize: 12,color: ColorValue.kDarkGrey,fontFamily: "General Sans"),),
               ].withSpaceBetween(width: 4),
             ),
           ],
@@ -91,7 +95,7 @@ Widget RecomendProduct(
   );
 }
 
-Widget ProductCard(List<Product> itemList) {
+Widget ProductCard(List<Datum> itemList, RxList<Datum> productResponseAll) {
   return GridView.builder(
     shrinkWrap: true,
     physics: const NeverScrollableScrollPhysics(),
