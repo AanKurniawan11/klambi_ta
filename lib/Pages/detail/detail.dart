@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:klambi_ta/Pages/detail/detail_controller.dart';
 import 'package:klambi_ta/color.dart';
 import 'package:klambi_ta/component/my_elevatedbutton.dart';
-import 'package:klambi_ta/component/my_textfields.dart';
+import 'package:intl/intl.dart';
 import 'package:klambi_ta/component/space_extension.dart';
 import 'package:get/get.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
@@ -17,6 +17,10 @@ class DetailView extends StatelessWidget {
   final Datum item;
   final controller = Get.put(DetailController());
    DetailView({super.key, required this.item});
+  String formatPrice(int price) {
+    final format = NumberFormat.currency(locale: 'id_ID', symbol: 'Rp ', decimalDigits: 0,);
+    return format.format(price);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -117,26 +121,27 @@ class DetailView extends StatelessWidget {
                     ),maxLines: 2,
                   ),
                 ),
-                Obx(
-                      () => GestureDetector(
-                      onTap: () {
-                        controller.toggleBookmark();
-                        Get.snackbar(
-                          "Berhasil",
-                          icon: Icon(CupertinoIcons.checkmark_alt_circle),
-                          controller.isBookmarkClicked.value
-                              ? "Dihapus dari whislist anda"
-                              : "Ditambahkan ke whislist anda",
-                          colorText: Colors.white,
-                          backgroundColor: ColorValue.kPrimary,
-                        );
-                      },
-                      child: Icon(Icons.bookmark,
-                          size: 40,
-                          color: controller.isBookmarkClicked.value
-                              ? ColorValue.kLightGrey
-                              : ColorValue.kPrimary)),
-                )
+                // Obx(
+                //       () => GestureDetector(
+                //       onTap: () {
+                //         controller.toggleBookmark();
+                //         // Get.to(WhislistPage(item: item));
+                //         Get.snackbar(
+                //           "Berhasil",
+                //           icon: Icon(CupertinoIcons.checkmark_alt_circle),
+                //           controller.isBookmarkClicked.value
+                //               ? "Dihapus dari whislist anda"
+                //               : "Ditambahkan ke whislist anda",
+                //           colorText: Colors.white,
+                //           backgroundColor: ColorValue.kPrimary,
+                //         );
+                //       },
+                //       child: Icon(Icons.bookmark,
+                //           size: 40,
+                //           color: controller.isBookmarkClicked.value
+                //               ? ColorValue.kLightGrey
+                //               : ColorValue.kPrimary)),
+                // )
               ],
             ),
             SizedBox(height: 10),
@@ -222,7 +227,7 @@ class DetailView extends StatelessWidget {
             ),
             SizedBox(height: 10),
             Text(
-              "Rp ${item.price}",
+              formatPrice(item.price),
               style: TextStyle(
                 fontFamily: 'General Sans',
                 fontWeight: FontWeight.w600,

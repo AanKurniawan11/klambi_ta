@@ -1,12 +1,20 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:klambi_ta/Pages/detail/detail_controller.dart';
+import 'package:klambi_ta/Pages/whislist/components/whislist_card.dart';
+
+import '../home/allproductresponsemodel.dart';
 
 class WhislistPage extends StatelessWidget {
-  const WhislistPage({super.key});
+   WhislistPage({super.key});
+  // final Datum item;
+  final detailcontroller = Get.put(DetailController());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: const SafeArea(
+      body:  SafeArea(
         child: Column(
           children: [
             Padding(
@@ -26,13 +34,20 @@ class WhislistPage extends StatelessWidget {
                   Text(
                     "(no Item)",
                     style: TextStyle(fontSize: 18),
-                  )
+                  ),
+
                 ],
+
               ),
-            )
+
+            ),
+            // Container(
+            //   child:WhislistCard(context,item) ,
+            // )
           ],
         ),
       ),
     );
   }
+
 }

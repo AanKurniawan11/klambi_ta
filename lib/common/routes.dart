@@ -44,10 +44,7 @@ List<GetPage> pageRoutes = <GetPage>[
       name: RouteName.history,
       page: () => const HistoryPage(),
       binding: HistoryBinding()),
-  // GetPage(
-  //     name: RouteName.whislist,
-  //     page: () => const WhislistPage(),
-  //     binding: WhislistBinding()),
+
   GetPage(
       name: RouteName.chat,
       page: () => const ChatPage(),
