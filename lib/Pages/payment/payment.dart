@@ -57,19 +57,24 @@ class Payment extends StatelessWidget {
                     ],
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 30),
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 30, horizontal: 30),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text("Dikirim ke : ", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500)),
+                        Text("Dikirim ke : ",
+                            style: TextStyle(
+                                fontSize: 14, fontWeight: FontWeight.w500)),
                         Row(
                           children: [
-                            Icon(Icons.add_location_sharp, size: 55, color: ColorValue.kWhite),
+                            Icon(Icons.add_location_sharp,
+                                size: 55, color: ColorValue.kWhite),
                             Container(
                               width: width * 0.45,
                               child: Text(
                                 "Kost Pororo, Besito, Gebog, Kudus, Jawa Tengah, 33089",
-                                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+                                style: TextStyle(
+                                    fontSize: 18, fontWeight: FontWeight.w500),
                                 maxLines: 3,
                               ),
                             ),
@@ -79,7 +84,8 @@ class Payment extends StatelessWidget {
                           alignment: Alignment.bottomRight,
                           child: TextButton(
                             onPressed: () {},
-                            child: Text("Ganti", style: TextStyle(color: ColorValue.kBlack)),
+                            child: Text("Ganti",
+                                style: TextStyle(color: ColorValue.kBlack)),
                           ),
                         ),
                       ].withSpaceBetween(height: 5),
@@ -99,22 +105,31 @@ class Payment extends StatelessWidget {
               child: Column(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 15, horizontal: 15),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Row(
                           children: [
-                            Icon(CupertinoIcons.cart_fill, color: ColorValue.kDarkGrey, size: 25),
+                            Icon(CupertinoIcons.cart_fill,
+                                color: ColorValue.kDarkGrey, size: 25),
                             Text(
                               "Rincian Pesanan ",
-                              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: ColorValue.kDarkGrey),
+                              style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w500,
+                                  color: ColorValue.kDarkGrey),
                             ),
                           ].withSpaceBetween(width: 10),
                         ),
                         Text(
                           "Rp.199.000",
-                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: ColorValue.kBlack, fontFamily: "General Sans"),
+                          style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                              color: ColorValue.kBlack,
+                              fontFamily: "General Sans"),
                         ),
                       ],
                     ),
@@ -134,23 +149,34 @@ class Payment extends StatelessWidget {
                           width: width * 0.18,
                           height: height * 0.12,
                           foregroundDecoration: BoxDecoration(
-                            image: DecorationImage(image: AssetImage("assets/images/demo_image.png")),
+                            image: DecorationImage(
+                                image:
+                                    AssetImage("assets/images/demo_image.png")),
                           ),
                         ),
                         Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text("Lengan Pendek", style: TextStyle(fontSize: 11, fontWeight: FontWeight.w500)),
+                            Text("Lengan Pendek",
+                                style: TextStyle(
+                                    fontSize: 11, fontWeight: FontWeight.w500)),
                             Container(
                               width: width * 0.5,
                               child: Text(
                                 "Custom Baju Hitam Lengan Pendek",
-                                style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, fontFamily: "General Sans"),
+                                style: TextStyle(
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.w600,
+                                    fontFamily: "General Sans"),
                                 maxLines: 2,
                               ),
                             ),
-                            Text("Rp 199.000", style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600, fontFamily: "General Sans")),
+                            Text("Rp 199.000",
+                                style: TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w600,
+                                    fontFamily: "General Sans")),
                           ].withSpaceBetween(height: 10),
                         ),
                       ],
@@ -160,12 +186,21 @@ class Payment extends StatelessWidget {
                   Column(
                     children: [
                       Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 1, horizontal: 20),
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 1, horizontal: 20),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text("Subtotal", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500, fontFamily: "General Sans")),
-                            Text("Rp 199.000", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, fontFamily: "General Sans")),
+                            Text("Subtotal",
+                                style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w500,
+                                    fontFamily: "General Sans")),
+                            Text("Rp 199.000",
+                                style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w600,
+                                    fontFamily: "General Sans")),
                           ],
                         ),
                       ),
@@ -174,8 +209,16 @@ class Payment extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text("Subtotal", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500, fontFamily: "General Sans")),
-                            Text("Rp 199.000", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, fontFamily: "General Sans")),
+                            Text("Subtotal",
+                                style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w500,
+                                    fontFamily: "General Sans")),
+                            Text("Rp 199.000",
+                                style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w600,
+                                    fontFamily: "General Sans")),
                           ],
                         ),
                       ),
@@ -184,8 +227,16 @@ class Payment extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text("Subtotal", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500, fontFamily: "General Sans")),
-                            Text("Rp 199.000", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, fontFamily: "General Sans")),
+                            Text("Subtotal",
+                                style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w500,
+                                    fontFamily: "General Sans")),
+                            Text("Rp 199.000",
+                                style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w600,
+                                    fontFamily: "General Sans")),
                           ],
                         ),
                       ),
@@ -194,8 +245,16 @@ class Payment extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text("Subtotal", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500, fontFamily: "General Sans")),
-                            Text("Rp 199.000", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, fontFamily: "General Sans")),
+                            Text("Subtotal",
+                                style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w500,
+                                    fontFamily: "General Sans")),
+                            Text("Rp 199.000",
+                                style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w600,
+                                    fontFamily: "General Sans")),
                           ],
                         ),
                       ),
@@ -210,12 +269,21 @@ class Payment extends StatelessWidget {
                   ),
                   SizedBox(height: 20),
                   Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 1, horizontal: 20),
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 1, horizontal: 20),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text("Total", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, fontFamily: "General Sans")),
-                        Text("Rp 199.000", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, fontFamily: "General Sans")),
+                        Text("Total",
+                            style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
+                                fontFamily: "General Sans")),
+                        Text("Rp 199.000",
+                            style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
+                                fontFamily: "General Sans")),
                       ],
                     ),
                   ),
@@ -235,9 +303,12 @@ class Payment extends StatelessWidget {
             SizedBox(height: 40),
             Container(
               width: width * 0.9,
-              child: My_Button(onclick: () {
-                onTap(){}
-              }, title: 'Konfirmasi dan Bayar',),
+              child: My_Button(
+                onclick: () {
+                  Get.offAndToNamed("/design");
+                },
+                title: 'Konfirmasi dan Bayar',
+              ),
             )
           ],
         ),

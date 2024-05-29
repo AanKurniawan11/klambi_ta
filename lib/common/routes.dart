@@ -22,8 +22,6 @@ import '../Pages/home/home_binding.dart';
 import '../Pages/login/login.dart';
 import '../Pages/login/login_binding.dart';
 import '../Pages/register/register_binding.dart';
-import '../Pages/whislist/whislist.dart';
-import '../Pages/whislist/whislist_binding.dart';
 import '../pages/profile/cart/cart.dart';
 import '../pages/profile/cart/cart_binding.dart';
 import '../pages/profile/edit/edit_binding.dart';
@@ -46,10 +44,10 @@ List<GetPage> pageRoutes = <GetPage>[
       name: RouteName.history,
       page: () => const HistoryPage(),
       binding: HistoryBinding()),
-  GetPage(
-      name: RouteName.whislist,
-      page: () => const WhislistPage(),
-      binding: WhislistBinding()),
+  // GetPage(
+  //     name: RouteName.whislist,
+  //     page: () => const WhislistPage(),
+  //     binding: WhislistBinding()),
   GetPage(
       name: RouteName.chat,
       page: () => const ChatPage(),

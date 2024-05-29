@@ -17,7 +17,7 @@ class SearchField extends StatelessWidget {
           },
           decoration: InputDecoration(
             filled: true,
-            fillColor: ColorValue.kLightGrey,
+            fillColor: ColorValue.kSuperLightGrey,
             contentPadding: const EdgeInsets.all(14),
             border: searchOutlineInputBorder,
             focusedBorder: searchOutlineInputBorder,
@@ -31,7 +31,7 @@ class SearchField extends StatelessWidget {
             ),
             prefixIcon: Padding(
               padding: EdgeInsets.only(left: 20, right: 15),
-              child: SvgPicture.asset('assets/icons/search.svg'),
+              child: SvgPicture.asset('assets/icons/search_icon.svg'),
             ),
           ),
         ),

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:klambi_ta/Pages/history/history.dart';
 import 'package:klambi_ta/Pages/home/home.dart';
-import 'package:klambi_ta/Pages/whislist/whislist.dart';
 import '../Pages/profile/profile.dart';
 import '../color.dart';
 
@@ -43,7 +42,7 @@ class LandingPage extends StatelessWidget {
             children: [
               HomePageView(),
               HistoryPage(),
-              WhislistPage(),
+              // WhislistPage(),
               Profile()
             ],
           );
@@ -76,6 +75,10 @@ class LandingPage extends StatelessWidget {
                   icon: Icon(Icons.bookmark),
                   label: 'Whislist',
                 ),
+                // BottomNavigationBarItem(
+                //   icon: Icon(Icons.bookmark),
+                //   label: 'Whislist',
+                // ),
                 BottomNavigationBarItem(
                   icon: Icon(Icons.person),
                   label: 'Profile',
