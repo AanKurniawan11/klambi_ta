@@ -11,10 +11,7 @@ class DetailController extends GetxController{
   void toggleBookmark() {
     isBookmarkClicked.value = !isBookmarkClicked.value;
   }
-  void onInit() {
-    // print(argumentData[0]["first"]);
-    // print(argumentData[0]['first']);
-    // print(argumentData[1]['second']);
-    super.onInit();
-  }
+  // void onInit() {
+  //   super.onInit();
+  // }
 }

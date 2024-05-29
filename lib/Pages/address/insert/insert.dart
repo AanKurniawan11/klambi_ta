@@ -33,23 +33,27 @@ class InsertAddressPageView extends StatelessWidget {
           icon: Icon(Icons.arrow_back),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 25,
-          vertical: 20,
-        ),
-        child: Column(
-          children: [
-            AddressName(),
-            StreetName(),
-            OptionalNote(),
-            RegionalProvince(),
-            CityPostCode(),
-            My_Button(
-              onclick: () {},
-              title: 'Lanjutkan',
-            ),
-          ],
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: 25,
+            vertical: 20,
+          ),
+          child: Column(
+            children: [
+              AddressName(),
+              StreetName(),
+              OptionalNote(),
+              RegionalProvince(),
+              CityPostCode(),
+              My_Button(
+                onclick: () {
+                  Get.toNamed("/payment");
+                },
+                title: 'Lanjutkan',
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -4,7 +4,6 @@ import 'package:klambi_ta/color.dart';
 import 'package:klambi_ta/common/routes.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
-
 import 'Pages/Register/register.dart';
 import 'Pages/onboarding/onboarding_view.dart';
 
@@ -34,7 +33,11 @@ class MyApp extends StatelessWidget {
         ),
         tabBarTheme: TabBarTheme(indicatorColor: Colors.red,labelColor: Colors.red,dividerColor: Colors.transparent,labelStyle: TextStyle(fontSize: 14),overlayColor: MaterialStatePropertyAll(Colors.transparent)),
         useMaterial3: true,
-      ),
+        appBarTheme: const AppBarTheme(
+            surfaceTintColor: Colors.white,color: Colors.transparent
+
+        ),
+        tabBarTheme: TabBarTheme(indicatorColor: Colors.red,labelColor: Colors.red,dividerColor: Colors.transparent,labelStyle: TextStyle(fontSize: 14),overlayColor: MaterialStatePropertyAll(Colors.transparent)),),
       getPages: pageRoutes,
       home: AnimatedSplashScreen(
           splash: Image.asset("assets/Logo.png"),
