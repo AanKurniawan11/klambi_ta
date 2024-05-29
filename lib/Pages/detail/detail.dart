@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:klambi_ta/Pages/detail/detail_controller.dart';
-import 'package:klambi_ta/Pages/whislist/whislist.dart';
 import 'package:klambi_ta/color.dart';
 import 'package:klambi_ta/component/my_elevatedbutton.dart';
 import 'package:intl/intl.dart';

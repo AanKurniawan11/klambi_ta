@@ -5,7 +5,6 @@ import 'package:klambi_ta/common/routes.dart';
 import 'package:klambi_ta/component/navbar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
-import 'Pages/Register/register.dart';
 import 'Pages/onboarding/onboarding_view.dart';
 import 'Pages/login/login.dart';
 

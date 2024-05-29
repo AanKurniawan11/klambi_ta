@@ -2,12 +2,11 @@ import 'package:flutter/material.dart';
 
 import '../color.dart';
 
-class My_Button extends StatelessWidget {
+class My_Button2 extends StatelessWidget {
   final VoidCallback onclick;
   final String title;
 
-
-   My_Button({super.key, required this.onclick, required this.title});
+  const My_Button2({super.key, required this.onclick, required this.title});
 
   @override
   Widget build(BuildContext context) {
@@ -17,18 +16,18 @@ class My_Button extends StatelessWidget {
     return ElevatedButton(
         onPressed: onclick,
         style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all(ColorValue.kPrimary),
+            backgroundColor: MaterialStateProperty.all(ColorValue.kSecondary),
             minimumSize:
-                MaterialStateProperty.all(Size(width * 0.85, height * 0.065)),
+            MaterialStateProperty.all(Size(width * 0.85, height * 0.065)),
             shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                 RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12.0)))),
         child: Text(
           title,
           style: const TextStyle(
-            color: Colors.black,
-            fontWeight: FontWeight.w600,
-            fontSize: 18,
+            color: ColorValue.kWhite,
+            fontWeight: FontWeight.w500,
+            fontSize: 16,
           ),
         ));
   }
