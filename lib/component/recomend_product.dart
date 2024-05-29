@@ -75,7 +75,7 @@ Widget RecomendProduct(
                 ],
               ),
               Text('|',style: TextStyle(color: ColorValue.kDarkGrey,fontWeight: FontWeight.w500,fontSize: 16),),
-              Text("Stock ${item.stock.toString()}",style: TextStyle(fontSize: 12,color: ColorValue.kDarkGrey,fontFamily: "General Sans"),),
+              Text("stock ${item.stock.toString()}",style: TextStyle(fontSize: 12,color: ColorValue.kDarkGrey,fontFamily: "General Sans"),),
               Text('|',style: TextStyle(color: ColorValue.kDarkGrey,fontWeight: FontWeight.w500,fontSize: 16),),
               Text("Terjual ${item.saled.toString()}",style: TextStyle(fontSize: 12,color: ColorValue.kDarkGrey,fontFamily: "General Sans"),),
             ].withSpaceBetween(width: 4),
