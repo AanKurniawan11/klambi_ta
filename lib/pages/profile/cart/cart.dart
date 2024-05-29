@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:klambi_ta/color.dart';
-import 'package:klambi_ta/component/cart_product.dart';
+import 'package:klambi_ta/Pages/profile/cart/components/cart_product.dart';
 import 'package:klambi_ta/component/my_elevatedbutton.dart';
 import 'package:klambi_ta/component/space_extension.dart';
 import 'package:klambi_ta/model/model.dart';
