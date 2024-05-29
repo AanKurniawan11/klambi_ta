@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:klambi_ta/Pages/history/history.dart';
 import 'package:klambi_ta/Pages/home/home.dart';
 import 'package:klambi_ta/Pages/whislist/whislist.dart';
-import 'package:klambi_ta/profile/profile.dart';
+import '../Pages/profile/profile.dart';
 import '../color.dart';
 
 class LandingPageController extends GetxController {

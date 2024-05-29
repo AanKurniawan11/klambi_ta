@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 
 class Product {
   final int id,stock, saled;
-  final String title, image, category, price, description;
+  final String title, image, category, description;
   final double rating ;
+  final num price;
   final bool isFavourite, isPopular;
 
   Product({
@@ -28,7 +29,7 @@ List<Product> demoProducts = [
     image: 'assets/images/demo_image.png',
     title: 'Custom Baju Warna Hitam Polos',
     category: 'Lengan Pendek',
-    price: '99.000',
+    price: 99000,
     description: description,
     rating: 4.5,
     stock: 10,
@@ -41,7 +42,7 @@ List<Product> demoProducts = [
     image: 'assets/images/demo_image.png',
     title: 'Custom Baju Warna Hitam Polos',
     category: 'Lengan Pendek',
-    price: '199.000',
+    price: 199000,
     description: description,
     rating: 4.0,
     stock: 12,
@@ -54,7 +55,7 @@ List<Product> demoProducts = [
     image: 'assets/images/demo_image.png',
     title: 'Custom Baju Warna Hitam Polos',
     category: 'Oversize',
-    price: '119.000',
+    price: 119000,
     description: description,
     rating: 5.0,
     stock: 15,
@@ -67,7 +68,7 @@ List<Product> demoProducts = [
     image: 'assets/images/demo_image.png',
     title: 'Custom Baju Warna Hitam Polos',
     category: 'Lengan Panjang',
-    price: '129.000',
+    price: 129000,
     description: description,
     rating: 4.0,
     stock: 12,
