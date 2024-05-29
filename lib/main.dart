@@ -11,7 +11,7 @@ import 'Pages/onboarding/onboarding_view.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final prefs = await SharedPreferences.getInstance();
-  final onboarding = prefs.getBool("onboardings") ?? false;
+  final onboarding = prefs.getBool("onboarding") ?? false;
   runApp(MyApp(
     onboarding: onboarding,
   ));
@@ -27,12 +27,17 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+        // dialogTheme: DialogTheme(titleTextStyle: TextStyle(color: Colors.red)),
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
+        appBarTheme: const AppBarTheme(
+          surfaceTintColor: Colors.white
+        ),
+        tabBarTheme: TabBarTheme(indicatorColor: Colors.red,labelColor: Colors.red,dividerColor: Colors.transparent,labelStyle: TextStyle(fontSize: 14),overlayColor: MaterialStatePropertyAll(Colors.transparent)),
         useMaterial3: true,
       ),
       getPages: pageRoutes,
       home: AnimatedSplashScreen(
-          splash: Image.asset("assets/images/banner/klambi_logo.png"),
+          splash: Image.asset("assets/Logo.png"),
           duration: 300,
           splashTransition: SplashTransition.fadeTransition,
           backgroundColor: ColorValue.kPrimary,

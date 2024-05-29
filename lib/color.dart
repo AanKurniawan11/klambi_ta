@@ -11,7 +11,6 @@ class ColorValue {
   static const kBackground = Color(0xFFFAFAFA);
   static const kDarkGrey = Color(0xFF8B8B8B);
   static const kLightGrey = Color(0xFFE7E7E7);
+  static const kSuperLightGrey = Color(0xFFF5F5F5);
   static const kDanger = Color(0xffFF0000);
-
-
 }

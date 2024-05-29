@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:klambi_ta/color.dart';
-import 'package:klambi_ta/component/cart_product.dart';
+import 'package:klambi_ta/Pages/profile/cart/components/cart_product.dart';
 import 'package:klambi_ta/component/my_elevatedbutton.dart';
 import 'package:klambi_ta/component/space_extension.dart';
 import 'package:klambi_ta/model/model.dart';
@@ -126,9 +126,7 @@ class _CartState extends State<Cart> {
                     ].withSpaceBetween(width: 40),
                   ),
                   My_Button(
-                    onclick: () {
-                      Get.offNamed("/address");
-                    },
+                    onclick: () {},
                     title: "Bayar",
                   ),
                 ].withSpaceBetween(height: 20),
