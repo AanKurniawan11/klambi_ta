@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:klambi_ta/color.dart';
-import 'package:klambi_ta/component/chat_textfield.dart';
+import 'package:klambi_ta/Pages/chat/components/chat_textfield.dart';
 import 'package:get/get.dart';
 
 class ChatPage extends StatelessWidget {

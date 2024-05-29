@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:klambi_ta/component/DeliverOpsi.dart';
+import 'package:klambi_ta/Pages/payment/components/DeliverOpsi.dart';
 import 'package:klambi_ta/component/my_elevatedbutton.dart';
 import 'package:klambi_ta/component/space_extension.dart';
 import '../../color.dart';
-import '../../component/listdown.dart';
+import 'components/listdown.dart';
 
 class Payment extends StatelessWidget {
   const Payment({super.key});

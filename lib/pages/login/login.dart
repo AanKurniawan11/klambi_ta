@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:klambi_ta/Pages/login/login_controller.dart';
 import 'package:klambi_ta/component/my_elevatedbutton.dart';
 import 'package:klambi_ta/component/my_textfield.dart';
 import 'package:klambi_ta/component/pass_textfield.dart';
@@ -9,7 +9,11 @@ import 'package:klambi_ta/component/space_extension.dart';
 import '../../color.dart';
 
 class Login extends StatelessWidget {
-  const Login({super.key});
+  Login({super.key});
+
+  final loginController = Get.put(LoginController());
+  final TextEditingController ctrEmail = TextEditingController();
+  final TextEditingController ctrPassword = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -24,42 +28,42 @@ class Login extends StatelessWidget {
             children: [
               Column(
                 children: [
-                  const SizedBox(
-                    height: 150,
-                  ),
+                  const SizedBox(height: 150),
                   Center(
                     child: Container(
                       height: height * 0.1,
                       width: width * 0.5,
                       foregroundDecoration: const BoxDecoration(
-                          image: DecorationImage(
-                              image: AssetImage("assets/images/banner/Logo1.png"))),
+                        image: DecorationImage(
+                          image: AssetImage("assets/images/banner/Logo1.png"),
+                        ),
+                      ),
                     ),
                   ),
                   const Text(
                     "Masuk",
                     style: TextStyle(fontSize: 32, fontWeight: FontWeight.w500),
                   ),
-                  const SizedBox(
-                    height: 20,
-                  ),
+                  const SizedBox(height: 20),
                   Column(
                     children: [
                       Container(
-                        // padding: EdgeInsets.all(1),
                         margin: EdgeInsets.all(10.0),
                         width: width * 0.85,
                         child: Column(
                           children: [
                             MyTextField(
-                                "@example.com", "Email", Icons.email_outlined),
-                            const SizedBox(
-                              height: 15,
+                              hint: "@example.com",
+                              label: "Email",
+                              prefixIcon: Icons.email_outlined,
+                              controller: ctrEmail,
                             ),
+                            const SizedBox(height: 15),
                             PassTextField(
                               hint: "Password",
                               label: "Password",
                               prefixIcon: Icons.lock_outline,
+                              controller: ctrPassword,
                             ),
                           ],
                         ),
@@ -68,6 +72,10 @@ class Login extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(vertical: 10),
                         child: My_Button(
                           onclick: () {
+                            loginController.loginAction(
+                              ctrEmail.text,
+                              ctrPassword.text,
+                            );
                             Get.offAllNamed("/navbar");
                           },
                           title: 'Mulai',
@@ -80,7 +88,7 @@ class Login extends StatelessWidget {
                           children: [
                             Expanded(
                               child: Divider(
-                                thickness: 1, // Adjust thickness as needed
+                                thickness: 1,
                                 color: ColorValue.kLightGrey,
                               ),
                             ),
@@ -96,7 +104,7 @@ class Login extends StatelessWidget {
                             ),
                             Expanded(
                               child: Divider(
-                                thickness: 1, // Adjust thickness as needed
+                                thickness: 1,
                                 color: ColorValue.kLightGrey,
                               ),
                             ),
@@ -115,9 +123,10 @@ class Login extends StatelessWidget {
                                 height: height * 0.08,
                                 width: width * 0.16,
                                 decoration: BoxDecoration(
-                                    border: Border.all(color: Colors.white),
-                                    borderRadius: BorderRadius.circular(16),
-                                    color: Colors.grey[200]),
+                                  border: Border.all(color: Colors.white),
+                                  borderRadius: BorderRadius.circular(16),
+                                  color: Colors.grey[200],
+                                ),
                                 child: Image.asset(
                                   "assets/images/banner/Google_Icon.png",
                                   height: 10,
@@ -127,13 +136,14 @@ class Login extends StatelessWidget {
                             GestureDetector(
                               onTap: () {},
                               child: Container(
-                                padding: EdgeInsets.all(20),
+                                padding: const EdgeInsets.all(20),
                                 height: height * 0.08,
                                 width: width * 0.16,
                                 decoration: BoxDecoration(
-                                    border: Border.all(color: Colors.white),
-                                    borderRadius: BorderRadius.circular(16),
-                                    color: Colors.grey[200]),
+                                  border: Border.all(color: Colors.white),
+                                  borderRadius: BorderRadius.circular(16),
+                                  color: Colors.grey[200],
+                                ),
                                 child: Image.asset(
                                   "assets/images/banner/Facebook_Icon.png",
                                 ),
@@ -148,7 +158,9 @@ class Login extends StatelessWidget {
                           const Text(
                             "sudah punya akun ?",
                             style: TextStyle(
-                                fontSize: 14, fontWeight: FontWeight.w400),
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400,
+                            ),
                           ),
                           GestureDetector(
                             onTap: () {
@@ -157,9 +169,10 @@ class Login extends StatelessWidget {
                             child: const Text(
                               " Daftar",
                               style: TextStyle(
-                                  color: ColorValue.kSecondary,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w600),
+                                color: ColorValue.kSecondary,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
+                              ),
                             ),
                           )
                         ],

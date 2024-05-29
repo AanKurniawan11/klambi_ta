@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import '../color.dart';
 
 Widget MyTextFields(
-    String hint,
-    // String label,
-    ) =>
+  String hint,
+  // String label,
+) =>
     TextField(
       decoration: InputDecoration(
           hintStyle: const TextStyle(color: ColorValue.kDarkGrey),

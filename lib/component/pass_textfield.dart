@@ -2,31 +2,31 @@ import 'package:flutter/material.dart';
 
 import '../color.dart';
 
-
 class PassTextField extends StatefulWidget {
   final String hint;
   final String label;
   final IconData? prefixIcon;
-  String password = '';
-  bool isPasswordVisible = false;
+  final TextEditingController controller;
 
   PassTextField({
     super.key,
     required this.hint,
     required this.label,
     this.prefixIcon,
+    required this.controller,
   });
+
   @override
-  _PasswordTestState createState() => _PasswordTestState();
+  _PassTextFieldState createState() => _PassTextFieldState();
 }
 
-class _PasswordTestState extends State<PassTextField> {
-  String password = '';
+class _PassTextFieldState extends State<PassTextField> {
   bool isPasswordVisible = false;
 
   @override
   Widget build(BuildContext context) {
     return TextField(
+      controller: widget.controller,
       decoration: InputDecoration(
         hintText: widget.hint,
         hintStyle: const TextStyle(color: ColorValue.kDarkGrey),
@@ -59,9 +59,9 @@ class _PasswordTestState extends State<PassTextField> {
         ),
         border: const OutlineInputBorder(),
       ),
-      keyboardType: TextInputType.emailAddress,
+      keyboardType: TextInputType.text,
       textInputAction: TextInputAction.done,
-      obscureText: isPasswordVisible,
+      obscureText: !isPasswordVisible,
     );
   }
 }

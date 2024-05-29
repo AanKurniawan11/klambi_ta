@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../color.dart';
+import '../../../color.dart';
 
 class ChatTextField extends StatelessWidget {
   // final TextEditingController controller;
@@ -30,7 +30,7 @@ class ChatTextField extends StatelessWidget {
           style: const TextStyle(color: Colors.black, fontSize: 16.0),
           decoration: InputDecoration(
             contentPadding:
-            const EdgeInsets.symmetric(vertical: 16.0, horizontal: 20.0),
+                const EdgeInsets.symmetric(vertical: 16.0, horizontal: 20.0),
             enabledBorder: OutlineInputBorder(
               borderSide: const BorderSide(color: ColorValue.kLightGrey),
               borderRadius: BorderRadius.circular(10.0),
@@ -45,12 +45,12 @@ class ChatTextField extends StatelessWidget {
             hintStyle: const TextStyle(color: ColorValue.kDarkGrey),
             suffixIcon: suffixIcon != null
                 ? GestureDetector(
-              child: Icon(
-                suffixIcon,
-                color: ColorValue.kDarkGrey,
-              ),
-              onTap: (){},
-            )
+                    child: Icon(
+                      suffixIcon,
+                      color: ColorValue.kDarkGrey,
+                    ),
+                    onTap: () {},
+                  )
                 : null,
           ),
         ),
