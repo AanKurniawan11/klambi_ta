@@ -64,12 +64,13 @@ class Profile extends StatelessWidget {
             child: Column(
               children: [
                 Container(
-                  height: height * 0.15,
+                  height: height * 0.13,
                   width: width * 0.32,
                   decoration: BoxDecoration(
                       image: DecorationImage(
-                          image: AssetImage("assets/images/banner/profile.jpg"),
-                          fit: BoxFit.cover),
+                          image: AssetImage("assets/images/banner/pro.png"),
+                          fit: BoxFit.cover
+                      ),
                       shape: BoxShape.circle),
                 ),
                 const Text(

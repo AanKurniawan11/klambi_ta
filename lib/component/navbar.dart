@@ -43,7 +43,7 @@ class LandingPage extends StatelessWidget {
             children: [
               HomePageView(),
               HistoryPage(),
-              WhislistPage(),
+              // WhislistPage(),
               Profile()
             ],
           );
@@ -72,10 +72,10 @@ class LandingPage extends StatelessWidget {
                   icon: Icon(Icons.receipt_long_sharp),
                   label: 'Riwayat',
                 ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.bookmark),
-                  label: 'Whislist',
-                ),
+                // BottomNavigationBarItem(
+                //   icon: Icon(Icons.bookmark),
+                //   label: 'Whislist',
+                // ),
                 BottomNavigationBarItem(
                   icon: Icon(Icons.person),
                   label: 'Profile',

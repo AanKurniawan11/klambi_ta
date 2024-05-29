@@ -11,24 +11,24 @@ String registerResponseModelToJson(RegisterResponseModel data) => json.encode(da
 class RegisterResponseModel {
   bool success;
   String message;
-  Data data;
+  Data? data; // Change to nullable
 
   RegisterResponseModel({
     required this.success,
     required this.message,
-    required this.data,
+    this.data,
   });
 
   factory RegisterResponseModel.fromJson(Map<String, dynamic> json) => RegisterResponseModel(
     success: json["success"],
     message: json["message"],
-    data: Data.fromJson(json["data"]),
+    data: json["data"] == null ? null : Data.fromJson(json["data"]),
   );
 
   Map<String, dynamic> toJson() => {
     "success": success,
     "message": message,
-    "data": data.toJson(),
+    "data": data?.toJson(),
   };
 }
 
@@ -59,3 +59,4 @@ class Data {
     "confirm_password": List<dynamic>.from(confirmPassword.map((x) => x)),
   };
 }
+

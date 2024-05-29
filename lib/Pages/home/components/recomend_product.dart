@@ -3,6 +3,7 @@ import 'package:klambi_ta/color.dart';
 import 'package:klambi_ta/component/space_extension.dart';
 import 'package:get/get.dart';
 import '../../../model/model.dart';
+import 'package:intl/intl.dart';
 import '../../detail/detail.dart';
 import '../allproductresponsemodel.dart';
 
@@ -11,6 +12,10 @@ Widget RecomendProduct(
     BuildContext context,
     Datum item,
     ) {
+  String formatPrices(int price) {
+    final format = NumberFormat.currency(locale: 'id_ID', symbol: 'Rp ', decimalDigits: 0,);
+    return format.format(price);
+  }
   final size = MediaQuery.of(context).size;
 
   return GestureDetector(
@@ -62,7 +67,7 @@ Widget RecomendProduct(
               height: size.height * 0.005,
             ),
             Text(
-              "Rp ${item.price}",
+              formatPrices(item.price),
               style: TextStyle(fontSize: 16,fontWeight: FontWeight.w600,fontFamily: "General Sans"),
             ),
             SizedBox(

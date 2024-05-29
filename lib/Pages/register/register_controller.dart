@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:klambi_ta/Pages/login/login.dart';
 import 'package:klambi_ta/Pages/login/toast_message.dart';
 import 'package:klambi_ta/Pages/register/register_respons_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -7,6 +8,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 class RegisterController extends GetxController {
   RxBool isLoading = false.obs;
   RxString message = "".obs;
+
+
 
   Future<void> registerAction(String username, String email, String password,
       String confirmPassword) async {
@@ -44,19 +47,19 @@ class RegisterController extends GetxController {
       print(response.body);
 
       if (response.statusCode == 200) {
-        // Assuming the response contains a user ID or token
         final responseData = registerResponseModelFromJson(response.body);
         // message.value = responseData.message;
 
         SharedPreferences prefs = await SharedPreferences.getInstance();
-        await prefs.setString('username', username);
+        await prefs.setString('name', username);
         await prefs.setString('email', email);
+        print(response.statusCode);
         // If there's a token in the response, save it too
         // await prefs.setString('token', responseData.token);
 
         isLoading.value = false;
         ToastMessage.show("Register berhasil");
-        Get.offAllNamed('/navbar');  // Navigate to the main screen
+        Get.offAllNamed('/login');  // Navigate to the main screen
       } else {
         message.value = "Registration failed: ${response.statusCode}";
         ToastMessage.show(message.value);

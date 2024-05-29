@@ -34,12 +34,10 @@ class LoginController extends GetxController {
       final response = await http.post(url, body: body);
 
       if (response.statusCode == 200) {
-        // Assuming the response body contains a token
+
         final responseData = response.body;  // Parse JSON if needed
-        // Save token or necessary information to SharedPreferences
         await prefs.setString("username", email);
-        // Assuming the token is in responseData["token"]
-        // await prefs.setString("token", responseData["token"]);
+
 
         ToastMessage.show("berhasil login");
         Get.offAllNamed('/navbar');  // Navigate to the main screen
