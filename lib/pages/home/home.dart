@@ -7,7 +7,6 @@ import 'package:klambi_ta/Pages/home/home_controller.dart';
 import 'components/carousel.dart';
 import 'components/category_tabs.dart';
 import 'components/header.dart';
-import 'components/recomend_product.dart';
 import 'components/search_field.dart';
 import 'package:get/get.dart';
 class HomePageView extends StatelessWidget {
@@ -33,11 +32,11 @@ class HomePageView extends StatelessWidget {
                 SizedBox(height: 10),
                 CategoryTabs(),
                 SizedBox(height: 15),
-                Obx((){
-                  return ProductCard(homeController.productResponeAll,
-                    homeController.productResponeAll
-                  );
-                })
+                // Obx((){
+                //   return ProductCard(homeController.productResponeAll,
+                //     homeController.productResponeAll
+                //   );
+                // })
               ],
             )
           ],

@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:klambi_ta/component/my_elevatedbutton.dart';
-import 'package:klambi_ta/component/my_textfield.dart';
 import 'package:klambi_ta/component/my_textfields.dart';
-import 'package:klambi_ta/component/pass_textfield.dart';
 import 'package:klambi_ta/component/pass_textfields.dart';
 import 'package:klambi_ta/component/space_extension.dart';
 
