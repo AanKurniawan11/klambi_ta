@@ -32,7 +32,7 @@ Widget RecomendProduct(
               children: [
                 Container(
                   width: size.width *   0.5,
-                  height: size.height * 0.17,
+                  height: size.height * 0.18,
                   foregroundDecoration: BoxDecoration(
                       image: DecorationImage(image: NetworkImage(item.imageUrl))),
                 ),
