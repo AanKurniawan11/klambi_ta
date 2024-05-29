@@ -41,6 +41,8 @@ dependencies:
   intl: ^0.19.0
   sliding_up_panel: ^2.0.0+1
   dropdown_button2: ^2.3.9
+  fluttertoast:
+  http: ^1.2.1
 
 
 

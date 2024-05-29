@@ -29,76 +29,60 @@ import '../pages/profile/cart/cart_binding.dart';
 import '../pages/profile/edit/edit_binding.dart';
 import '../pages/profile/edit/editprofile.dart';
 
-
 List<GetPage> pageRoutes = <GetPage>[
   GetPage(
       name: RouteName.login,
-      page: () => const Login(),
-      binding: loginbinding()
-  ),
+      page: () =>  Login(),
+      binding: loginbinding()),
   GetPage(
       name: RouteName.register,
-      page: () => const Register(),
-      binding: Registerbinding()
-  ),
+      page: () =>  Register(),
+      binding: Registerbinding()),
   GetPage(
       name: RouteName.home,
-      page: () => const HomePageView(),
-      binding: HomeBinding()
-  ),
+      page: () =>  HomePageView(),
+      binding: HomeBinding()),
   GetPage(
       name: RouteName.history,
       page: () => const HistoryPage(),
-      binding: HistoryBinding()
-  ),
+      binding: HistoryBinding()),
   GetPage(
       name: RouteName.whislist,
-      page: () =>  const WhislistPage(),
-      binding: WhislistBinding()
-  ),
+      page: () => const WhislistPage(),
+      binding: WhislistBinding()),
   GetPage(
       name: RouteName.chat,
-      page: () =>  const ChatPage(),
-      binding: ChatBinding()
-  ),
-  GetPage(
-      name: RouteName.detail,
-      page: () =>   DetailView(),
-      binding: DetailBinding()
-  ),
+      page: () => const ChatPage(),
+      binding: ChatBinding()),
+  // GetPage(
+  //     name: RouteName.detail,
+  //     page: () => DetailView(items: item,),
+  //     binding: DetailBinding()),
   GetPage(
       name: RouteName.edit,
-      page: () =>  const EditProfile(),
-      binding: EditBinding()
-  ),
+      page: () => const EditProfile(),
+      binding: EditBinding()),
   GetPage(
-      name: RouteName.cart,
-      page: () =>  const Cart(),
-      binding: CartBinding()
-  ),
+      name: RouteName.cart, page: () => const Cart(), binding: CartBinding()),
   GetPage(
       name: RouteName.cs,
-      page: () =>  const CustomerService(),
-      binding: CustomerServiceBinding()
-  ),
+      page: () => const CustomerService(),
+      binding: CustomerServiceBinding()),
   GetPage(
       name: RouteName.address,
-      page: () =>  const AddressPageView(),
-      binding: AddressBinding()
-  ),
+      page: () => const AddressPageView(),
+      binding: AddressBinding()),
   GetPage(
       name: RouteName.insert,
-      page: () =>  const InsertAddressPageView(),
-      binding: InserAddressBinding()
-  ),
+      page: () => const InsertAddressPageView(),
+      binding: InserAddressBinding()),
   GetPage(
       name: RouteName.payment,
-      page: () =>  const Payment(),
-      binding: PaymentBinding()
-  ),
+      page: () => const Payment(),
+      binding: PaymentBinding()),
   GetPage(
     name: RouteName.navbar,
-    page: () =>  LandingPage(),
+    page: () => LandingPage(),
     // binding: ProfileBinding()
   ),
 ];
