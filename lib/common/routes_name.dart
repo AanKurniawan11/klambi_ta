@@ -10,5 +10,7 @@ abstract class RouteName {
   static const navbar = "/navbar";
   static const edit = "/edit";
   static const cart = "/cart";
+  static const address = "/address";
+  static const insert = "/insert";
   static const cs = "/cs";
 }
