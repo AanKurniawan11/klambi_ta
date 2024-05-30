@@ -41,9 +41,9 @@ class Header extends StatelessWidget {
            padding: const EdgeInsets.symmetric(horizontal: 30),
            child: GestureDetector(
              onTap: (){
-               Get.offNamed("/chat");
+               Get.offNamed("/cart");
              },
-               child: Icon(Icons.chat,size: 30,)),
+               child: Icon(Icons.shopping_cart_outlined,size: 30,)),
          )
         ],
       ),

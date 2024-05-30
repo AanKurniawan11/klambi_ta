@@ -33,11 +33,7 @@ class HomePageView extends StatelessWidget {
                 SizedBox(height: 10),
                 CategoryTabs(),
                 SizedBox(height: 15),
-                Obx((){
-                  return ProductCard(homeController.productResponeAll,
-                    homeController.productResponeAll
-                  );
-                })
+                Obx(()=> homeController.isLoading.value ?CircularProgressIndicator():ProductCard(homeController.productResponseAll.value))
               ],
             )
           ],

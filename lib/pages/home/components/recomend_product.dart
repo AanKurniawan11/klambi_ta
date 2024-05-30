@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:klambi_ta/color.dart';
 import 'package:klambi_ta/component/space_extension.dart';
 import 'package:get/get.dart';
-import '../../../model/model.dart';
 import 'package:intl/intl.dart';
 import '../../detail/detail.dart';
-import '../allproductresponsemodel.dart';
+import '../models/allproductresponsemodel.dart';
 
 
 Widget RecomendProduct(
@@ -51,7 +50,7 @@ Widget RecomendProduct(
                           color: ColorValue.kSecondary,
                           borderRadius: BorderRadius.circular(10)),
                       child: Center(
-                          child: Text(item.category.toString(), style: TextStyle(color: Colors.white,fontSize: 5.5,fontWeight: FontWeight.w500,fontFamily: "General Sans"))),
+                          child: Text(item.category, style: TextStyle(color: Colors.white,fontSize: 9,fontWeight: FontWeight.w600,fontFamily: "General Sans"))),
                     ))
               ],
             ),
@@ -100,7 +99,7 @@ Widget RecomendProduct(
   );
 }
 
-Widget ProductCard(List<Datum> itemList, RxList<Datum> productResponseAll) {
+Widget ProductCard(List<Datum> itemList) {
   return GridView.builder(
     shrinkWrap: true,
     physics: const NeverScrollableScrollPhysics(),

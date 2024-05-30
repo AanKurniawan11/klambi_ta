@@ -58,7 +58,7 @@ List<GetPage> pageRoutes = <GetPage>[
       page: () =>  EditProfile(),
       binding: EditBinding()),
   GetPage(
-      name: RouteName.cart, page: () => const Cart(), binding: CartBinding()),
+      name: RouteName.cart, page: () =>  Cart(), binding: CartBinding()),
   GetPage(
       name: RouteName.cs,
       page: () => const CustomerService(),

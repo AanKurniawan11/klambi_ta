@@ -59,7 +59,7 @@ class _CartState extends State<Cart> {
       appBar: AppBar(
         leading: IconButton(
             onPressed: () {
-              Get.offAndToNamed("/navbar", arguments: 3);
+              Get.offAndToNamed("/navbar");
             },
             icon: Icon(Icons.arrow_back)),
         title: Text(

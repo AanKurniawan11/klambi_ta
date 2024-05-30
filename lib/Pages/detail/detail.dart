@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:klambi_ta/Pages/detail/detail_controller.dart';
+import 'package:klambi_ta/Pages/profile/cart/cart.dart';
+import 'package:klambi_ta/Pages/profile/cart/cart_controller.dart';
 import 'package:klambi_ta/color.dart';
 import 'package:klambi_ta/component/my_elevatedbutton.dart';
 import 'package:intl/intl.dart';
@@ -10,12 +12,12 @@ import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 import '../../component/size_button.dart';
 import '../../component/size_field.dart';
-import '../home/allproductresponsemodel.dart';
+import '../home/models/allproductresponsemodel.dart';
 
 
 class DetailView extends StatelessWidget {
   final Datum item;
-  final controller = Get.put(DetailController());
+  final controller = Get.put(CartController());
    DetailView({super.key, required this.item});
   String formatPrice(int price) {
     final format = NumberFormat.currency(locale: 'id_ID', symbol: 'Rp ', decimalDigits: 0,);
@@ -121,27 +123,6 @@ class DetailView extends StatelessWidget {
                     ),maxLines: 2,
                   ),
                 ),
-                // Obx(
-                //       () => GestureDetector(
-                //       onTap: () {
-                //         controller.toggleBookmark();
-                //         // Get.to(WhislistPage(item: item));
-                //         Get.snackbar(
-                //           "Berhasil",
-                //           icon: Icon(CupertinoIcons.checkmark_alt_circle),
-                //           controller.isBookmarkClicked.value
-                //               ? "Dihapus dari whislist anda"
-                //               : "Ditambahkan ke whislist anda",
-                //           colorText: Colors.white,
-                //           backgroundColor: ColorValue.kPrimary,
-                //         );
-                //       },
-                //       child: Icon(Icons.bookmark,
-                //           size: 40,
-                //           color: controller.isBookmarkClicked.value
-                //               ? ColorValue.kLightGrey
-                //               : ColorValue.kPrimary)),
-                // )
               ],
             ),
             SizedBox(height: 10),
@@ -399,16 +380,8 @@ class DetailView extends StatelessWidget {
                   height: height * 0.075,
                   child: ElevatedButton(
                     onPressed: () {
-                      Get.snackbar(
-                        "Berhasil",
-                        "Barang berhasil ditambahkan",
-                        icon: Icon(
-                          CupertinoIcons.checkmark_alt_circle_fill,
-                          color: ColorValue.kSecondary,
-                        ),
-                        backgroundColor: ColorValue.kPrimary,
-                        colorText: ColorValue.kSecondary,
-                      );
+                      // Get.to(Cart());
+
                     },
                     style: ButtonStyle(
                         backgroundColor:

@@ -43,6 +43,7 @@ dependencies:
   dropdown_button2: ^2.3.9
   fluttertoast:
   http: ^1.2.1
+  image_picker: ^1.1.1
 
 
 
