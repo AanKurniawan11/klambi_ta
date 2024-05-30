@@ -1,6 +1,5 @@
 import 'package:get/get.dart';
-import 'cart_controller.dart';
-
+import 'package:klambi_ta/Pages/profile/cart/cart_controller.dart';
 
 class CartBinding extends Bindings{
   @override
