@@ -16,8 +16,7 @@ import 'package:klambi_ta/Pages/payment/payment_binding.dart';
 import 'package:klambi_ta/common/routes_name.dart';
 import 'package:klambi_ta/common/navbar.dart';
 import '../Pages/Register/register.dart';
-import '../Pages/cs/cs.dart';
-import '../Pages/cs/cs_binding.dart';
+
 import '../Pages/history/history_binding.dart';
 import '../Pages/home/home.dart';
 import '../Pages/home/home_binding.dart';
@@ -63,10 +62,10 @@ List<GetPage> pageRoutes = <GetPage>[
       name: RouteName.cart,
       page: () => Cart(),
       binding: CartBinding()),
-  GetPage(
-      name: RouteName.cs,
-      page: () => const CustomerService(),
-      binding: CustomerServiceBinding()),
+  // GetPage(
+  //     name: RouteName.cs,
+  //     page: () => const CustomerService(),
+  //     binding: CustomerServiceBinding()),
   GetPage(
       name: RouteName.address,
       page: () => const AddressPageView(),
