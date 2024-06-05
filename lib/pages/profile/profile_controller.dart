@@ -6,11 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class ProfileController extends GetxController{
   late final SharedPreferences prefs;
   RxString username = "".obs;
-  RxString email = "".obs;
 
-  void getEmail() {
-    email.value = prefs.getString("email") ?? "";
-  }
   void getUser() {
     username.value = prefs.getString("username") ?? "";
   }
@@ -18,7 +14,6 @@ class ProfileController extends GetxController{
   setPreference() async {
     prefs = await SharedPreferences.getInstance();
     getUser();
-    getEmail();
   }
 
   @override
