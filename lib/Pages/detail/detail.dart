@@ -8,7 +8,6 @@ import 'package:intl/intl.dart';
 import 'package:klambi_ta/component/space_extension.dart';
 import 'package:get/get.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
-
 import '../../component/size_button.dart';
 import '../../component/size_field.dart';
 import '../../component/sizes.dart';
@@ -363,6 +362,5 @@ class DetailView extends StatelessWidget {
     );
   }
 }
-
 
 

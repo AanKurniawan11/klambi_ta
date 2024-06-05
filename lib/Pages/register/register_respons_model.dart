@@ -57,4 +57,3 @@ class Data {
     "confirm_password": List<dynamic>.from(confirmPassword.map((x) => x)),
   };
 }
-

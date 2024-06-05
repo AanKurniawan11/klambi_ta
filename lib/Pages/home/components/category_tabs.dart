@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:klambi_ta/color.dart';
 import 'package:get/get.dart';
 import 'package:klambi_ta/Pages/home/sizeModel.dart';
-import 'package:klambi_ta/color.dart';
 import '../home_controller.dart';
 
 class CategoryTabs extends StatelessWidget {

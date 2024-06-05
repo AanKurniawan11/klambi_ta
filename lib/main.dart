@@ -14,8 +14,8 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final prefs = await SharedPreferences.getInstance();
   final onboarding = prefs.getBool("onboarding") ?? false;
-
   final isLoggedIn = prefs.containsKey('username');
+
   runApp(MyApp(
     onboarding: onboarding,
     isLoggedIn: isLoggedIn,
@@ -50,7 +50,7 @@ class MyApp extends StatelessWidget {
       ),
       getPages: pageRoutes,
       home: AnimatedSplashScreen(
-        splash: Image.asset("assets/images/banner/klambi_logo.png"),
+        splash: ("assets/images/banner/klambi_logo.png"),
         duration: 300,
         splashTransition: SplashTransition.fadeTransition,
         backgroundColor: ColorValue.kPrimary,

@@ -38,7 +38,6 @@ class LoginController extends GetxController {
       if (response.statusCode == 200) {
 
 
-
         LoginResponseModel loginResponseModel = loginResponseModelFromJson(response.body);
 
 
@@ -49,7 +48,6 @@ class LoginController extends GetxController {
         await prefs.getString("username");
         await prefs.getString("email");
         await prefs.getString("token");
-
 
         ToastMessage.show("berhasil login");
         Get.offAllNamed('/navbar');  // Navigate to the main screen

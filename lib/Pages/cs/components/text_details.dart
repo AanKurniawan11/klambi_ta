@@ -93,7 +93,7 @@ class TextDetails extends StatelessWidget {
           ),
           SizedBox(height: 20),
           Text(
-            '2. Cara Me Return Barang',
+            '2. Cara Me - Return Barang',
             style: TextStyle(
               fontFamily: 'General Sans',
               fontWeight: FontWeight.w500,
