@@ -75,7 +75,7 @@ class Profile extends StatelessWidget {
                     ),
 
                     txt(username: profileController.username.value),
-                    txte(email: profileController.email.value),
+                    txt(username: profileController.email.value),
                     const Padding(
                       padding: EdgeInsets.only(right: 280, top: 50),
                       child: Text(
