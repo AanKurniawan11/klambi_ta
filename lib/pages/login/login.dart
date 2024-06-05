@@ -76,7 +76,7 @@ class Login extends StatelessWidget {
                               ctrEmail.text,
                               ctrPassword.text,
                             );
-                            Get.offAllNamed("/navbar");
+                            // Get.offAllNamed("/navbar");
                           },
                           title: 'Mulai',
                         ),

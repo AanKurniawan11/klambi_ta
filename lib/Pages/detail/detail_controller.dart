@@ -11,6 +11,12 @@ class DetailController extends GetxController{
   void toggleBookmark() {
     isBookmarkClicked.value = !isBookmarkClicked.value;
   }
+
+  var selectedIndex = 0.obs;
+
+  void selectSize(int index) {
+    selectedIndex.value = index;
+  }
   // void onInit() {
   //   super.onInit();
   // }

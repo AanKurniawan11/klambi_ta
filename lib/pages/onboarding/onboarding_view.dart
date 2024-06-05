@@ -54,7 +54,7 @@ class _OnboardingViewState extends State<OnboardingView> {
                             Size(width * 0.85, height * 0.065)),
                       ),
                       child: const Text(
-                        "Next",
+                        "Lanjut",
                         style: TextStyle(
                           color: Colors.black,
                           fontWeight: FontWeight.w600,

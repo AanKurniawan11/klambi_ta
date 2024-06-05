@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:klambi_ta/Pages/history/history.dart';
 import 'package:klambi_ta/Pages/home/home.dart';
+import 'package:klambi_ta/Pages/profile/cart/cart.dart';
 import '../Pages/profile/profile.dart';
 import '../color.dart';
 
@@ -19,7 +20,7 @@ class LandingPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final LandingPageController landingPageController =
         Get.put(LandingPageController(), permanent: false);
-
+    //
     final args = Get.arguments;
     if (args != null && args is int) {
       print("Received argument: $args");
@@ -42,7 +43,6 @@ class LandingPage extends StatelessWidget {
             children: [
               HomePageView(),
               HistoryPage(),
-              // WhislistPage(),
               Profile()
             ],
           );
@@ -71,14 +71,6 @@ class LandingPage extends StatelessWidget {
                   icon: Icon(Icons.receipt_long_sharp),
                   label: 'Riwayat',
                 ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.bookmark),
-                  label: 'Whislist',
-                ),
-                // BottomNavigationBarItem(
-                //   icon: Icon(Icons.bookmark),
-                //   label: 'Whislist',
-                // ),
                 BottomNavigationBarItem(
                   icon: Icon(Icons.person),
                   label: 'Profile',

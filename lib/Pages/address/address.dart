@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:klambi_ta/Pages/detail/detail.dart';
 import 'package:klambi_ta/color.dart';
 import 'package:get/get.dart';
 import 'package:klambi_ta/component/my_elevatedbutton.dart';
@@ -10,14 +11,14 @@ class AddressPageView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: ColorValue.kBackground,
-      appBar: AppBar(
-        leading: IconButton(
-          onPressed: () {
-            Get.offAndToNamed("/navbar", arguments: 3);
-          },
-          icon: Icon(Icons.arrow_back),
-        ),
-      ),
+      // appBar: AppBar(
+      //   // leading: IconButton(
+      //   //   onPressed: () {
+      //   //     Get.toNamed("/detail");
+      //   //   },
+      //   //   icon: Icon(Icons.arrow_back),
+      //   // ),
+      // ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 20),
         child: Column(

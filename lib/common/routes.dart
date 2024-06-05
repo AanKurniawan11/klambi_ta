@@ -6,13 +6,15 @@ import 'package:klambi_ta/Pages/address/insert/insert.dart';
 import 'package:klambi_ta/Pages/address/insert/insert_binding.dart';
 import 'package:klambi_ta/Pages/chat/chat.dart';
 import 'package:klambi_ta/Pages/chat/chat_binding.dart';
+import 'package:klambi_ta/Pages/design/design.dart';
+import 'package:klambi_ta/Pages/design/design_binding.dart';
 import 'package:klambi_ta/Pages/detail/detail.dart';
 import 'package:klambi_ta/Pages/detail/detail_binding.dart';
 import 'package:klambi_ta/Pages/history/history.dart';
 import 'package:klambi_ta/Pages/payment/payment.dart';
 import 'package:klambi_ta/Pages/payment/payment_binding.dart';
 import 'package:klambi_ta/common/routes_name.dart';
-import 'package:klambi_ta/component/navbar.dart';
+import 'package:klambi_ta/common/navbar.dart';
 import '../Pages/Register/register.dart';
 import '../Pages/cs/cs.dart';
 import '../Pages/cs/cs_binding.dart';
@@ -44,24 +46,23 @@ List<GetPage> pageRoutes = <GetPage>[
       name: RouteName.history,
       page: () => const HistoryPage(),
       binding: HistoryBinding()),
-  // GetPage(
-  //     name: RouteName.whislist,
-  //     page: () => const WhislistPage(),
-  //     binding: WhislistBinding()),
+
   GetPage(
       name: RouteName.chat,
       page: () => const ChatPage(),
       binding: ChatBinding()),
-  // GetPage(
-  //     name: RouteName.detail,
-  //     page: () => DetailView(items: item,),
-  //     binding: DetailBinding()),
+  GetPage(
+      name: RouteName.design,
+      page: () => DesignPageView(),
+      binding: DesignBinding()),
   GetPage(
       name: RouteName.edit,
-      page: () => const EditProfile(),
+      page: () =>  EditProfile(),
       binding: EditBinding()),
   GetPage(
-      name: RouteName.cart, page: () => const Cart(), binding: CartBinding()),
+      name: RouteName.cart,
+      page: () => Cart(),
+      binding: CartBinding()),
   GetPage(
       name: RouteName.cs,
       page: () => const CustomerService(),

@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:klambi_ta/Pages/profile/cart/cart.dart';
 import 'package:klambi_ta/color.dart';
 import 'package:get/get.dart';
 import '../../../component/custom_icon.dart';
+import '../../profile/profile_controller.dart';
 
 class Header extends StatelessWidget {
   const Header({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(ProfileController());
+
     return Padding(
       padding: const EdgeInsets.only(left: 25),
       child: Row(
@@ -18,7 +22,7 @@ class Header extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Text(
-                'Selamat Pagi Filo,',
+                'Selamat Pagi '+ controller.username.value,
                 style: TextStyle(
                   fontFamily: 'General Sans',
                   fontWeight: FontWeight.w600,
@@ -37,14 +41,14 @@ class Header extends StatelessWidget {
             ],
           ),
           Spacer(),
-         Padding(
-           padding: const EdgeInsets.symmetric(horizontal: 30),
-           child: GestureDetector(
-             onTap: (){
-               Get.offNamed("/chat");
-             },
-               child: Icon(Icons.chat,size: 30,)),
-         )
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 30),
+            child: GestureDetector(
+                onTap: (){
+                  Get.to(Cart());
+                },
+                child: Icon(Icons.shopping_cart_outlined,size: 30,)),
+          )
         ],
       ),
     );

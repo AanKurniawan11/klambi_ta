@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:klambi_ta/Pages/login/login_response_model.dart';
 import 'package:klambi_ta/Pages/login/toast_message.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
@@ -32,14 +33,21 @@ class LoginController extends GetxController {
       final url = Uri.parse("https://klambi.ta.rplrus.com/api/login");
       final body = {"email": email, "password": password};
       final response = await http.post(url, body: body);
+      print("Login..");
 
       if (response.statusCode == 200) {
-        // Assuming the response body contains a token
-        final responseData = response.body;  // Parse JSON if needed
-        // Save token or necessary information to SharedPreferences
-        await prefs.setString("username", email);
-        // Assuming the token is in responseData["token"]
-        // await prefs.setString("token", responseData["token"]);
+
+
+        LoginResponseModel loginResponseModel = loginResponseModelFromJson(response.body);
+
+
+        await prefs.setString("username", loginResponseModel.data.name);
+        await prefs.setString("email", loginResponseModel.data.email);
+        await prefs.setString("token", loginResponseModel.data.token);
+
+        await prefs.getString("username");
+        await prefs.getString("email");
+        await prefs.getString("token");
 
         ToastMessage.show("berhasil login");
         Get.offAllNamed('/navbar');  // Navigate to the main screen
@@ -50,6 +58,7 @@ class LoginController extends GetxController {
     } catch (e) {
       message.value = "An error occurred";
       ToastMessage.show(message.value);
+
       print(e);
     } finally {
       isLoading.value = false;

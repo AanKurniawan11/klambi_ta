@@ -4,7 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:klambi_ta/Pages/profile/profile_controller.dart';
 import 'package:klambi_ta/color.dart';
 import 'package:get/get.dart';
-import 'package:klambi_ta/common/mytext.dart';
+import 'package:klambi_ta/component/mytext.dart';
 import 'package:klambi_ta/component/space_extension.dart';
 
 class Profile extends StatelessWidget {
@@ -57,129 +57,143 @@ class Profile extends StatelessWidget {
     final double width = mediaquery.width;
     return Scaffold(
         body: Obx(
-      () => SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 80),
-          child: Center(
-            child: Column(
-              children: [
-                Container(
-                  height: height * 0.15,
-                  width: width * 0.32,
-                  decoration: BoxDecoration(
-                      image: DecorationImage(
-                          image: AssetImage("assets/images/banner/profile.jpg"),
-                          fit: BoxFit.cover),
-                      shape: BoxShape.circle),
-                ),
-                const Text(
-                  "Zidni PSHT",
-                  style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w600,
-                      fontFamily: "General Sans"),
-                ),
-                txt(username: profileController.username.value),
-                const Padding(
-                  padding: EdgeInsets.only(right: 280, top: 50),
-                  child: Text(
-                    "Menu",
-                    style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w500,
-                        fontFamily: "General Sans",
-                        color: ColorValue.kDarkGrey),
-                  ),
-                ),
-                const Divider(
-                  thickness: 1,
-                  indent: 25,
-                  endIndent: 25,
-                  color: ColorValue.kLightGrey,
-                ),
-                Padding(
-                  padding:
+              () => SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 80),
+              child: Center(
+                child: Column(
+                  children: [
+                    Container(
+                      height: height * 0.13,
+                      width: width * 0.32,
+                      decoration: BoxDecoration(
+                          image: DecorationImage(
+                              image: AssetImage("assets/images/banner/pro.png"),
+                              fit: BoxFit.cover
+                          ),
+                          shape: BoxShape.circle),
+                    ),
+
+                    txt(username: profileController.username.value),
+                    txte(email: profileController.email.value),
+                    const Padding(
+                      padding: EdgeInsets.only(right: 280, top: 50),
+                      child: Text(
+                        "Menu",
+                        style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w500,
+                            fontFamily: "General Sans",
+                            color: ColorValue.kDarkGrey),
+                      ),
+                    ),
+                    const Divider(
+                      thickness: 1,
+                      indent: 25,
+                      endIndent: 25,
+                      color: ColorValue.kLightGrey,
+                    ),
+                    Padding(
+                      padding:
                       const EdgeInsets.symmetric(vertical: 20, horizontal: 25),
-                  child: Column(
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          Get.offNamed("/edit");
-                        },
-                        child: Row(
-                          children: [
-                            const Icon(
-                              CupertinoIcons.person_alt_circle,
-                              size: 35,
-                              color: ColorValue.kPrimary,
+                      child: Column(
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              Get.offNamed("/edit");
+                            },
+                            child: Row(
+                              children: [
+                                const Icon(
+                                  CupertinoIcons.person_alt_circle,
+                                  size: 35,
+                                  color: ColorValue.kPrimary,
+                                ),
+                                const Text(
+                                  "Tentang Akun",
+                                  style: TextStyle(fontSize: 16,fontFamily: "General Sans"),
+                                )
+                              ].withSpaceBetween(width: 20),
                             ),
-                            const Text(
-                              "Tentang Akun",
-                              style: TextStyle(fontSize: 16),
-                            )
-                          ].withSpaceBetween(width: 20),
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          Get.offNamed("/cart");
-                        },
-                        child: Row(
-                          children: [
-                            const Icon(
-                              CupertinoIcons.cart,
-                              size: 35,
-                              color: ColorValue.kPrimary,
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              Get.offNamed("/insert");
+                            },
+                            child: Row(
+                              children: [
+                                const Icon(
+                                  Icons.location_on_outlined,
+                                  size: 35,
+                                  color: ColorValue.kPrimary,
+                                ),
+                                const Text(
+                                  "Alamat",
+                                  style: TextStyle(fontSize: 16,fontFamily: "General Sans"),
+                                )
+                              ].withSpaceBetween(width: 20),
                             ),
-                            const Text(
-                              "Keranjang Saya",
-                              style: TextStyle(fontSize: 16),
-                            )
-                          ].withSpaceBetween(width: 20),
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          Get.offNamed("/cs");
-                        },
-                        child: Row(
-                          children: [
-                            const Icon(
-                              Icons.headset_mic_outlined,
-                              size: 35,
-                              color: ColorValue.kPrimary,
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              Get.offNamed("/chat");
+                            },
+                            child: Row(
+                              children: [
+                                const Icon(
+                                  CupertinoIcons.chat_bubble_text,
+                                  size: 35,
+                                  color: ColorValue.kPrimary,
+                                ),
+                                const Text(
+                                  "Pesan",
+                                  style: TextStyle(fontSize: 16,fontFamily: "General Sans"),
+                                )
+                              ].withSpaceBetween(width: 20),
                             ),
-                            const Text(
-                              "Pusat Bantuan",
-                              style: TextStyle(fontSize: 16),
-                            )
-                          ].withSpaceBetween(width: 20),
-                        ),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              Get.offNamed("/cs");
+                            },
+                            child: Row(
+                              children: [
+                                const Icon(
+                                  Icons.headset_mic_outlined,
+                                  size: 35,
+                                  color: ColorValue.kPrimary,
+                                ),
+                                const Text(
+                                  "Pusat Bantuan",
+                                  style: TextStyle(fontSize: 16,fontFamily: "General Sans"),
+                                )
+                              ].withSpaceBetween(width: 20),
+                            ),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              showLogoutConfirmationDialog(context);
+                            },
+                            child: Row(
+                              children: [
+                                const Icon(Icons.output_outlined,
+                                    size: 35, color: ColorValue.kDanger),
+                                const Text(
+                                  "Log Out",
+                                  style: TextStyle(
+                                      fontSize: 16, color: ColorValue.kDanger,fontFamily: "General Sans"),
+                                )
+                              ].withSpaceBetween(width: 20),
+                            ),
+                          ),
+                        ].withSpaceBetween(height: 25),
                       ),
-                      GestureDetector(
-                        onTap: () {
-                          showLogoutConfirmationDialog(context);
-                        },
-                        child: Row(
-                          children: [
-                            const Icon(Icons.output_outlined,
-                                size: 35, color: ColorValue.kDanger),
-                            const Text(
-                              "Log Out",
-                              style: TextStyle(
-                                  fontSize: 16, color: ColorValue.kDanger),
-                            )
-                          ].withSpaceBetween(width: 20),
-                        ),
-                      ),
-                    ].withSpaceBetween(height: 25),
-                  ),
-                )
-              ],
+                    )
+                  ],
+                ),
+              ),
             ),
           ),
-        ),
-      ),
-    ));
+        ));
   }
 }

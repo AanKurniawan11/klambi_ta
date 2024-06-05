@@ -28,7 +28,7 @@ class InsertAddressPageView extends StatelessWidget {
         ),
         leading: IconButton(
           onPressed: () {
-            Get.offAndToNamed("/navbar", arguments: 3);
+            Get.offAndToNamed("/navbar");
           },
           icon: Icon(Icons.arrow_back),
         ),
@@ -46,11 +46,13 @@ class InsertAddressPageView extends StatelessWidget {
               OptionalNote(),
               RegionalProvince(),
               CityPostCode(),
+
+              SizedBox(height: 150,),
               My_Button(
                 onclick: () {
                   Get.toNamed("/payment");
                 },
-                title: 'Lanjutkan',
+                title: 'Konfirmasi',
               ),
             ],
           ),

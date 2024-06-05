@@ -99,7 +99,6 @@ class Register extends StatelessWidget {
                             ctrPassword.text,
                             ctrConfirmPass.text,
                           );
-                          Get.offAllNamed("/navbar");
                         },
                       ),
                       Row(

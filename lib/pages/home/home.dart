@@ -1,7 +1,6 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:klambi_ta/Pages/home/allproductresponsemodel.dart';
 import 'package:klambi_ta/Pages/home/home_controller.dart';
 
 
@@ -12,7 +11,7 @@ import 'components/recomend_product.dart';
 import 'components/search_field.dart';
 import 'package:get/get.dart';
 class HomePageView extends StatelessWidget {
-   HomePageView({super.key});
+  HomePageView({super.key});
 
   final HomeController homeController = Get.put(HomeController());
 
@@ -34,11 +33,7 @@ class HomePageView extends StatelessWidget {
                 SizedBox(height: 10),
                 CategoryTabs(),
                 SizedBox(height: 15),
-                Obx((){
-                  return ProductCard(homeController.productResponeAll,
-                    homeController.productResponeAll
-                  );
-                })
+                Obx(()=> homeController.isLoading.value ?Center(child: CircularProgressIndicator()):ProductCard(homeController.productResponseAll.value))
               ],
             )
           ],

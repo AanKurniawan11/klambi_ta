@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../color.dart';
 
 Widget myText({
@@ -17,6 +16,25 @@ Widget myText({
 }
 
 
+class txte extends StatelessWidget {
+  final String email;
+
+  const txte({
+    super.key,
+    required this.email
+  });
+
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(email, style:TextStyle(
+        fontSize: 16,
+        fontWeight: FontWeight.w500,
+        fontFamily: "General Sans",
+        color: ColorValue.kDarkGrey),
+    );
+  }
+}
 class txt extends StatelessWidget {
   final String username;
 
@@ -29,10 +47,10 @@ class txt extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(username, style:TextStyle(
-        fontSize: 16,
+        fontSize: 20,
         fontWeight: FontWeight.w500,
         fontFamily: "General Sans",
-        color: ColorValue.kDarkGrey),
+        color: ColorValue.kBlack),
          );
   }
 }

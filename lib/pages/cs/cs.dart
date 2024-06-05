@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:klambi_ta/color.dart';
 import 'package:get/get.dart';
-import 'package:klambi_ta/pages/cs/components/text_details.dart';
+
+import 'components/text_details.dart';
 
 class CustomerService extends StatelessWidget {
   const CustomerService({super.key});
@@ -25,7 +26,7 @@ class CustomerService extends StatelessWidget {
         ),
         leading: GestureDetector(
           onTap: () {
-            Get.offAndToNamed("/navbar", arguments: 3);
+            Get.offAndToNamed("/navbar");
           },
           child: Icon(
             Icons.arrow_back,

@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:klambi_ta/color.dart';
 import 'package:klambi_ta/common/routes.dart';
-import 'package:klambi_ta/component/navbar.dart';
+import 'package:klambi_ta/common/navbar.dart';
+import 'package:klambi_ta/shimer/product_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'Pages/Register/register.dart';
@@ -49,12 +50,13 @@ class MyApp extends StatelessWidget {
       ),
       getPages: pageRoutes,
       home: AnimatedSplashScreen(
-        splash: Image.asset("assets/images/banner/klambi_logo.png"),
+        splash: ("assets/images/banner/klambi_logo.png"),
         duration: 300,
         splashTransition: SplashTransition.fadeTransition,
         backgroundColor: ColorValue.kPrimary,
         nextScreen: _getNextScreen(),
       ),
+      // home: NewsPage(),
     );
   }
 
