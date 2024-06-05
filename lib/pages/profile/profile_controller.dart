@@ -8,17 +8,14 @@ class ProfileController extends GetxController{
   RxString username = "".obs;
   RxString email = "".obs;
 
-  void getEmail() {
-    email.value = prefs.getString("email") ?? "";
-  }
   void getUser() {
     username.value = prefs.getString("username") ?? "";
+    email.value = prefs.getString("email") ?? "";
   }
 
   setPreference() async {
     prefs = await SharedPreferences.getInstance();
     getUser();
-    getEmail();
   }
 
   @override
