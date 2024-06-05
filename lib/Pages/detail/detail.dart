@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:klambi_ta/Pages/detail/detail_controller.dart';
+import 'package:klambi_ta/Pages/profile/cart/cart.dart';
+import 'package:klambi_ta/Pages/profile/cart/cart_controllers.dart';
 import 'package:klambi_ta/color.dart';
 import 'package:klambi_ta/component/my_elevatedbutton.dart';
 import 'package:intl/intl.dart';
@@ -10,13 +11,14 @@ import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 import '../../component/size_button.dart';
 import '../../component/size_field.dart';
+import '../../component/sizes.dart';
 import '../home/allproductresponsemodel.dart';
 
 
 class DetailView extends StatelessWidget {
   final Datum item;
-  final controller = Get.put(DetailController());
-   DetailView({super.key, required this.item});
+  final controller = Get.put(CartControllers());
+  DetailView({super.key, required this.item});
   String formatPrice(int price) {
     final format = NumberFormat.currency(locale: 'id_ID', symbol: 'Rp ', decimalDigits: 0,);
     return format.format(price);
@@ -61,8 +63,8 @@ class DetailView extends StatelessWidget {
           children: [
             Container(
                 child: Image.network(
-                  item.imageUrl,
-                  scale: 2.55
+                    item.imageUrl,
+                    scale: 2.55
                 )),
             // Add other content of your detail view here
           ],
@@ -121,27 +123,6 @@ class DetailView extends StatelessWidget {
                     ),maxLines: 2,
                   ),
                 ),
-                // Obx(
-                //       () => GestureDetector(
-                //       onTap: () {
-                //         controller.toggleBookmark();
-                //         // Get.to(WhislistPage(item: item));
-                //         Get.snackbar(
-                //           "Berhasil",
-                //           icon: Icon(CupertinoIcons.checkmark_alt_circle),
-                //           controller.isBookmarkClicked.value
-                //               ? "Dihapus dari whislist anda"
-                //               : "Ditambahkan ke whislist anda",
-                //           colorText: Colors.white,
-                //           backgroundColor: ColorValue.kPrimary,
-                //         );
-                //       },
-                //       child: Icon(Icons.bookmark,
-                //           size: 40,
-                //           color: controller.isBookmarkClicked.value
-                //               ? ColorValue.kLightGrey
-                //               : ColorValue.kPrimary)),
-                // )
               ],
             ),
             SizedBox(height: 10),
@@ -247,7 +228,7 @@ class DetailView extends StatelessWidget {
             ),
             SizedBox(height: 10),
             Text(
-            item.descripsi,
+              item.descripsi,
               style: TextStyle(
                 fontFamily: 'General Sans',
                 fontWeight: FontWeight.w500,
@@ -312,7 +293,7 @@ class DetailView extends StatelessWidget {
             Container(
                 width: width * 0.35,
                 height: height * 0.065,
-                child: My_Button(onclick: () {}, title: "Konfirmasi")),
+                child: SizeButton(onclick: () {}, title: "Konfirmasi")),
             SizedBox(
               height: 50,
             ),
@@ -329,52 +310,9 @@ class DetailView extends StatelessWidget {
               endIndent: 3,
               color: ColorValue.kLightGrey,
             ),
-            Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizeButton(onclick: () {}, title: "S"),
-                    ],
-                  ),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizeButton(onclick: () {}, title: "M"),
-                    ],
-                  ),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizeButton(onclick: () {}, title: "L"),
-                    ],
-                  ),
-                ].withSpaceBetween(width: 15)),
-            SizedBox(
-              height: 10,
-            ),
-            Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizeButton(onclick: () {}, title: "XL"),
-                    ],
-                  ),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizeButton(onclick: () {}, title: "XXL"),
-                    ],
-                  ),
-                ].withSpaceBetween(width: 15)),
+
+            Sizes(),
+
             SizedBox(
               height: 20,
             ),
@@ -399,16 +337,9 @@ class DetailView extends StatelessWidget {
                   height: height * 0.075,
                   child: ElevatedButton(
                     onPressed: () {
-                      Get.snackbar(
-                        "Berhasil",
-                        "Barang berhasil ditambahkan",
-                        icon: Icon(
-                          CupertinoIcons.checkmark_alt_circle_fill,
-                          color: ColorValue.kSecondary,
-                        ),
-                        backgroundColor: ColorValue.kPrimary,
-                        colorText: ColorValue.kSecondary,
-                      );
+                      Get.to(Cart());
+                      // controller.addToCart(context, item);
+
                     },
                     style: ButtonStyle(
                         backgroundColor:

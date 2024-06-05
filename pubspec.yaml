@@ -43,6 +43,8 @@ dependencies:
   dropdown_button2: ^2.3.9
   fluttertoast:
   http: ^1.2.1
+  image_picker: ^1.1.1
+  get_storage: ^2.1.1
 
 
 
@@ -78,6 +80,8 @@ flutter:
   assets:
     - assets/
     - assets/images/
+    - assets/images/design/
+    - assets/icons/
     - assets/images/banner/
     - assets/images/checkout/
     - assets/images/demo_image.png

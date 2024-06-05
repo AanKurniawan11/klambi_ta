@@ -6,7 +6,7 @@ import 'package:klambi_ta/color.dart';
 import 'package:klambi_ta/Pages/profile/cart/components/cart_product.dart';
 import 'package:klambi_ta/component/my_elevatedbutton.dart';
 import 'package:klambi_ta/component/space_extension.dart';
-import 'package:klambi_ta/model/model.dart';
+import 'package:klambi_ta/Pages/home/model.dart';
 
 class Cart extends StatefulWidget {
   const Cart({super.key});
@@ -57,17 +57,19 @@ class _CartState extends State<Cart> {
 
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-            onPressed: () {
-              Get.offAndToNamed("/navbar", arguments: 3);
-            },
-            icon: Icon(Icons.arrow_back)),
         title: Text(
           "Keranjangku",
           textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+          style: TextStyle(fontSize: 24, fontWeight: FontWeight.w500),
         ),
+        leading: IconButton(
+            onPressed: () {
+              // Get.back(closeOverlays: bool.fromEnvironment("/navbar"));
+              Get.back();
+            },
+            icon: Icon(Icons.arrow_back)),
         centerTitle: true,
+        toolbarHeight: height * 0.1,
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -102,10 +104,10 @@ class _CartState extends State<Cart> {
       bottomSheet: Stack(
         children: [
           Container(
-            height: height * 0.22,
+            height: height * 0.2,
             width: double.infinity,
             child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 20),
+              padding: const EdgeInsets.symmetric(vertical: 25),
               child: Column(
                 children: [
                   Row(
@@ -123,13 +125,13 @@ class _CartState extends State<Cart> {
                             fontWeight: FontWeight.w600,
                             color: ColorValue.kSecondary),
                       ),
-                    ].withSpaceBetween(width: 40),
+                    ].withSpaceBetween(width: 30),
                   ),
                   My_Button(
                     onclick: () {},
                     title: "Bayar",
                   ),
-                ].withSpaceBetween(height: 20),
+                ].withSpaceBetween(height: 25),
               ),
             ),
           ),

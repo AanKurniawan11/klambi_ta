@@ -35,10 +35,10 @@ class _SizeButtonState extends State<SizeButton> {
               : ColorValue.kWhite, // Change the color when clicked
         ),
         minimumSize:
-            MaterialStateProperty.all(Size(width * 0.01, height * 0.065)),
+        MaterialStateProperty.all(Size(width * 0.01, height * 0.065)),
         shape: MaterialStateProperty.all<RoundedRectangleBorder>(
           RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12.0),
+              borderRadius: BorderRadius.circular(12.0),
               side: BorderSide(color: ColorValue.kLightGrey)
             // side:  BorderSide(color: Colors.black)
           ),

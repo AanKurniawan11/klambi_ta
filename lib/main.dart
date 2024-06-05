@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:klambi_ta/color.dart';
 import 'package:klambi_ta/common/routes.dart';
-import 'package:klambi_ta/component/navbar.dart';
+import 'package:klambi_ta/common/navbar.dart';
+import 'package:klambi_ta/shimer/product_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
+import 'Pages/Register/register.dart';
 import 'Pages/onboarding/onboarding_view.dart';
 import 'Pages/login/login.dart';
 
@@ -12,8 +14,8 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final prefs = await SharedPreferences.getInstance();
   final onboarding = prefs.getBool("onboarding") ?? false;
-  final isLoggedIn = prefs.containsKey('username');
 
+  final isLoggedIn = prefs.containsKey('username');
   runApp(MyApp(
     onboarding: onboarding,
     isLoggedIn: isLoggedIn,
@@ -54,6 +56,7 @@ class MyApp extends StatelessWidget {
         backgroundColor: ColorValue.kPrimary,
         nextScreen: _getNextScreen(),
       ),
+      // home: NewsPage(),
     );
   }
 

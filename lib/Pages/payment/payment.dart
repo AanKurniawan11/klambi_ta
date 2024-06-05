@@ -30,7 +30,7 @@ class Payment extends StatelessWidget {
         centerTitle: true,
         leading: IconButton(
           onPressed: () {
-            Get.offAndToNamed("/navbar", arguments: 3);
+            Get.offAndToNamed("/design");
           },
           icon: Icon(Icons.arrow_back),
         ),
@@ -309,7 +309,9 @@ class Payment extends StatelessWidget {
                 },
                 title: 'Konfirmasi dan Bayar',
               ),
-            )
+            ),
+            SizedBox(height: 10),
+
           ],
         ),
       ),

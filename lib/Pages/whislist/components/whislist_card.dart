@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:klambi_ta/color.dart';
 import 'package:klambi_ta/component/space_extension.dart';
 import 'package:get/get.dart';
-import '../../../model/model.dart';
 import '../../detail/detail.dart';
 import '../../home/allproductresponsemodel.dart';
 

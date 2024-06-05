@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:klambi_ta/Pages/login/login_response_model.dart';
 import 'package:klambi_ta/Pages/login/toast_message.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
@@ -32,11 +33,22 @@ class LoginController extends GetxController {
       final url = Uri.parse("https://klambi.ta.rplrus.com/api/login");
       final body = {"email": email, "password": password};
       final response = await http.post(url, body: body);
+      print("Login..");
 
       if (response.statusCode == 200) {
 
-        final responseData = response.body;  // Parse JSON if needed
-        await prefs.setString("username", email);
+
+
+        LoginResponseModel loginResponseModel = loginResponseModelFromJson(response.body);
+
+
+        await prefs.setString("username", loginResponseModel.data.name);
+        await prefs.setString("email", loginResponseModel.data.email);
+        await prefs.setString("token", loginResponseModel.data.token);
+
+        await prefs.getString("username");
+        await prefs.getString("email");
+        await prefs.getString("token");
 
 
         ToastMessage.show("berhasil login");
@@ -48,6 +60,7 @@ class LoginController extends GetxController {
     } catch (e) {
       message.value = "An error occurred";
       ToastMessage.show(message.value);
+
       print(e);
     } finally {
       isLoading.value = false;
