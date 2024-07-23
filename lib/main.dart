@@ -1,19 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:klambi_ta/color.dart';
-import 'package:klambi_ta/common/routes.dart';
-import 'package:klambi_ta/common/navbar.dart';
-import 'package:klambi_ta/shimer/product_page.dart';
+import 'package:klambi_ta/Common/colors/color.dart';
+import 'package:klambi_ta/Common/routes/navbar.dart';
+import 'package:klambi_ta/Common/routes/routes.dart';
+import 'package:klambi_ta/Pages/login/page/login.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
-import 'Pages/Register/register.dart';
-import 'Pages/onboarding/onboarding_view.dart';
-import 'Pages/login/login.dart';
+import 'Pages/onboarding/page/onboarding_view.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final prefs = await SharedPreferences.getInstance();
-  final onboarding = prefs.getBool("onboarding") ?? false;
+  final onboarding = prefs.getBool("onboardings") ?? false;
   final isLoggedIn = prefs.containsKey('username');
 
   runApp(MyApp(
@@ -36,6 +34,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
         useMaterial3: true,
+
         appBarTheme: const AppBarTheme(
           surfaceTintColor: Colors.white,
           color: Colors.transparent,
@@ -57,6 +56,7 @@ class MyApp extends StatelessWidget {
         nextScreen: _getNextScreen(),
       ),
       // home: NewsPage(),
+      // home: ShimmerLoadingGrid(),
     );
   }
 

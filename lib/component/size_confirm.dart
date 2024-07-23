@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../color.dart';
+import '../Common/colors/color.dart';
 
 class SizeConfirm extends StatefulWidget {
   final VoidCallback onclick;
