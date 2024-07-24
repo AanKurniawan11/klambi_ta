@@ -1,19 +1,41 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:klambi_ta/Pages/login/login_controller.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:klambi_ta/Pages/login/components/login_controller.dart';
+import 'package:klambi_ta/Pages/login/components/toast_message.dart';
+import 'package:klambi_ta/color.dart';
 import 'package:klambi_ta/component/my_elevatedbutton.dart';
 import 'package:klambi_ta/component/my_textfield.dart';
 import 'package:klambi_ta/component/pass_textfield.dart';
 import 'package:klambi_ta/component/space_extension.dart';
-import '../../color.dart';
 
-class Login extends StatelessWidget {
-  Login({super.key});
+class Login extends StatefulWidget {
+  @override
+  _LoginState createState() => _LoginState();
+}
 
+class _LoginState extends State<Login> {
   final loginController = Get.put(LoginController());
   final TextEditingController ctrEmail = TextEditingController();
   final TextEditingController ctrPassword = TextEditingController();
+
+  Future<void> signinWithGoogle() async {
+    FirebaseAuth auth = FirebaseAuth.instance;
+    final GoogleSignIn googleSignIn = GoogleSignIn();
+    final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
+
+    if (googleUser != null) {
+      final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+      final AuthCredential credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
+
+      final UserCredential userCredential = await auth.signInWithCredential(credential);
+      loginController.setUser(userCredential.user);  // Update the user in the controller
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -117,7 +139,13 @@ class Login extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             GestureDetector(
-                              onTap: () {},
+                              onTap: () {
+                                signinWithGoogle().then((_) {
+                                  if (mounted) {
+                                    return Get.offAllNamed("/navbar");
+                                  }
+                                });
+                              },
                               child: Container(
                                 padding: const EdgeInsets.all(20),
                                 height: height * 0.08,
@@ -134,7 +162,9 @@ class Login extends StatelessWidget {
                               ),
                             ),
                             GestureDetector(
-                              onTap: () {},
+                              onTap: () {
+                                // Handle Facebook Sign-In
+                              },
                               child: Container(
                                 padding: const EdgeInsets.all(20),
                                 height: height * 0.08,

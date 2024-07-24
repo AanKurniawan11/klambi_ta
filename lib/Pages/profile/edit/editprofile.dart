@@ -23,7 +23,7 @@ class EditProfile extends StatelessWidget {
         centerTitle: true,
         leading: GestureDetector(
             onTap: () {
-              Get.offAndToNamed("/navbar",arguments: 3);
+              Get.back();
             },
             child: Icon(
               Icons.arrow_back,

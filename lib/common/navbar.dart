@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:klambi_ta/Pages/history/history.dart';
 import 'package:klambi_ta/Pages/home/home.dart';
-import 'package:klambi_ta/Pages/profile/cart/cart.dart';
 import '../Pages/profile/profile.dart';
 import '../color.dart';
 

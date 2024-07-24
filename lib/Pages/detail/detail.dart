@@ -1,33 +1,33 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:klambi_ta/Pages/profile/cart/cart.dart';
-import 'package:klambi_ta/Pages/profile/cart/cart_controllers.dart';
+import 'package:klambi_ta/Pages/detail/detail_controller.dart';
+import 'package:klambi_ta/Pages/home/allproductresponsemodel.dart';
 import 'package:klambi_ta/color.dart';
 import 'package:klambi_ta/component/my_elevatedbutton.dart';
 import 'package:intl/intl.dart';
+import 'package:klambi_ta/component/sizes.dart';
 import 'package:klambi_ta/component/space_extension.dart';
 import 'package:get/get.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
-import '../../component/size_button.dart';
-import '../../component/size_field.dart';
-import '../../component/sizes.dart';
-import '../home/allproductresponsemodel.dart';
-
 
 class DetailView extends StatelessWidget {
+  final controller = Get.put(DetailController());
   final Datum item;
-  final controller = Get.put(CartControllers());
   DetailView({super.key, required this.item});
   String formatPrice(int price) {
-    final format = NumberFormat.currency(locale: 'id_ID', symbol: 'Rp ', decimalDigits: 0,);
+    final format = NumberFormat.currency(
+      locale: 'id_ID',
+      symbol: 'Rp ',
+      decimalDigits: 0,
+    );
     return format.format(price);
   }
-
   @override
   Widget build(BuildContext context) {
     final Size mediaquery = MediaQuery.of(context).size;
     final double height = mediaquery.height;
     final double width = mediaquery.width;
+    controller.item = item;
 
     return Scaffold(
       backgroundColor: ColorValue.kBackground,
@@ -60,11 +60,7 @@ class DetailView extends StatelessWidget {
         panel: _buildPanel(context),
         body: ListView(
           children: [
-            Container(
-                child: Image.network(
-                    item.imageUrl,
-                    scale: 2.55
-                )),
+            Container(child: Image.network(item.imageUrl, scale: 2.55)),
             // Add other content of your detail view here
           ],
         ),
@@ -119,7 +115,8 @@ class DetailView extends StatelessWidget {
                       fontFamily: 'General Sans',
                       fontSize: 20,
                       fontWeight: FontWeight.w500,
-                    ),maxLines: 2,
+                    ),
+                    maxLines: 2,
                   ),
                 ),
               ],
@@ -215,7 +212,7 @@ class DetailView extends StatelessWidget {
                 color: ColorValue.kBlack,
               ),
             ),
-            SizedBox(height:10),
+            SizedBox(height: 10),
             Text(
               'Deskripsi Produk',
               style: TextStyle(
@@ -240,9 +237,64 @@ class DetailView extends StatelessWidget {
               "Ukuran Baju",
               style: TextStyle(fontSize: 22, fontWeight: FontWeight.w500),
             ),
-            SizedBox(height: 20),
+            // SizedBox(height: 20),
+            // Text(
+            //   "Manual",
+            //   style: TextStyle(
+            //       fontSize: 14,
+            //       fontWeight: FontWeight.w500,
+            //       color: ColorValue.kDarkGrey),
+            // ),
+            // Divider(
+            //   thickness: 1,
+            //   indent: 3,
+            //   endIndent: 3,
+            //   color: ColorValue.kLightGrey,
+            // ),
+            // Row(
+            //     mainAxisAlignment: MainAxisAlignment.start,
+            //     children: [
+            //       Column(
+            //           mainAxisAlignment: MainAxisAlignment.end,
+            //           crossAxisAlignment: CrossAxisAlignment.start,
+            //           children: [
+            //             Text(
+            //               "Lingkar Dada",
+            //               style: TextStyle(
+            //                   fontSize: 14, fontWeight: FontWeight.w500),
+            //             ),
+            //             Container(
+            //                 width: width * 0.18,
+            //                 height: height * 0.05,
+            //                 child: SizeField("Cm"))
+            //           ].withSpaceBetween(height: 5)),
+            //       Column(
+            //           mainAxisAlignment: MainAxisAlignment.end,
+            //           crossAxisAlignment: CrossAxisAlignment.start,
+            //           children: [
+            //             Text(
+            //               "Panjang Baju",
+            //               style: TextStyle(
+            //                   fontSize: 14, fontWeight: FontWeight.w500),
+            //             ),
+            //             Container(
+            //                 width: width * 0.18,
+            //                 height: height * 0.05,
+            //                 child: SizeField("Cm"))
+            //           ].withSpaceBetween(height: 5))
+            //     ].withSpaceBetween(width: 30)),
+            // SizedBox(
+            //   height: 10,
+            // ),
+            // Container(
+            //     width: width * 0.35,
+            //     height: height * 0.065,
+            //     child: SizeButton(onclick: () {}, title: "Konfirmasi")),
+            SizedBox(
+              height: 30,
+            ),
             Text(
-              "Manual",
+              "Pilih Ukuran",
               style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w500,
@@ -254,74 +306,14 @@ class DetailView extends StatelessWidget {
               endIndent: 3,
               color: ColorValue.kLightGrey,
             ),
-            Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Lingkar Dada",
-                          style: TextStyle(
-                              fontSize: 14, fontWeight: FontWeight.w500),
-                        ),
-                        Container(
-                            width: width * 0.18,
-                            height: height * 0.05,
-                            child: SizeField("Cm"))
-                      ].withSpaceBetween(height: 5)),
-                  Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Panjang Baju",
-                          style: TextStyle(
-                              fontSize: 14, fontWeight: FontWeight.w500),
-                        ),
-                        Container(
-                            width: width * 0.18,
-                            height: height * 0.05,
-                            child: SizeField("Cm"))
-                      ].withSpaceBetween(height: 5))
-                ].withSpaceBetween(width: 30)),
-            SizedBox(
-              height: 10,
-            ),
-            Container(
-                width: width * 0.35,
-                height: height * 0.065,
-                child: SizeButton(onclick: () {}, title: "Konfirmasi")),
-            SizedBox(
-              height: 50,
-            ),
-            Text(
-              "Atau Pilih Ukuran",
-              style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                  color: ColorValue.kDarkGrey),
-            ),
-            Divider(
-              thickness: 1,
-              indent: 3,
-              endIndent: 3,
-              color: ColorValue.kLightGrey,
-            ),
-
             Sizes(),
-
             SizedBox(
               height: 20,
             ),
-            Container(
-                width: width * 0.35,
-                height: height * 0.065,
-                child: SizeButton(onclick: () {}, title: "Konfirmasi")),
             SizedBox(
-              height: 40,
+              height: 20,
             ),
+
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
               Container(
                   width: width * 0.58,
@@ -334,33 +326,39 @@ class DetailView extends StatelessWidget {
               Container(
                   width: width * 0.25,
                   height: height * 0.075,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Get.to(Cart());
-                      // controller.addToCart(context, item);
+                  child:
+                  ElevatedButton(
+                    // onPressed: () {
+                    //   // // Add product to cart logic (replace with your actual implementation)
+                    //   // addProductToCart(productId); // Example function call
+                    //   //
+                    //   // // Show notification using ScaffoldMessenger
+                    //   ScaffoldMessenger.of(context).showSnackBar(
+                    //     SnackBar(
+                    //       content: Text('Produk berhasil ditambahkan ke keranjang!'),
+                    //       backgroundColor: Colors.green, // Success color
+                    //       duration: Duration(seconds: 2), // Adjust duration as needed
+                    //     ),
+                    //   );
+                    // },
 
-                    },
+                    onPressed: () {},
                     style: ButtonStyle(
-                        backgroundColor:
-                        MaterialStateProperty.all(ColorValue.kSecondary),
-                        minimumSize: MaterialStateProperty.all(
-                            Size(width * 0.85, height * 0.065)),
-                        shape:
-                        MaterialStateProperty.all<RoundedRectangleBorder>(
-                            RoundedRectangleBorder(
-                                borderRadius:
-                                BorderRadius.circular(12.0)))),
+                      backgroundColor: MaterialStateProperty.all(ColorValue.kSecondary),
+                      minimumSize: MaterialStateProperty.all(Size(width * 0.85, height * 0.065)),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
+                      ),
+                    ),
                     child: Icon(
                       Icons.shopping_cart_checkout_outlined,
                       color: Colors.white,
                     ),
-                  ))
-            ])
+                  )
+              )]),
           ],
         ),
       ),
     );
   }
 }
-
-

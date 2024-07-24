@@ -15,7 +15,7 @@ class HomeController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    loadDataProduct(null);
+    loadDataProduct("All");
     loadCategory();
   }
 

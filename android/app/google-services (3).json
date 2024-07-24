@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "447847723938",
+    "project_id": "klambiauth",
+    "storage_bucket": "klambiauth.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:447847723938:android:465d1dcc0283465502b8fb",
+        "android_client_info": {
+          "package_name": "com.example.klambi_ta"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "447847723938-drj0d1ekb1pikj2131qo23bsv20pq7rd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.klambi_ta",
+            "certificate_hash": "8ce9f21400c055f3d2d521c8dd6dd5d16b1cae5d"
+          }
+        },
+        {
+          "client_id": "447847723938-01er6ntcbmhdca2hd8f17bvr17m9mrgd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAU7Fv7h72DLX2rmYc39ifhckbNN8S_9GI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "447847723938-01er6ntcbmhdca2hd8f17bvr17m9mrgd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,15 +1,13 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:klambi_ta/Pages/home/home_controller.dart';
-
-
-import 'components/carousel.dart';
-import 'components/category_tabs.dart';
-import 'components/header.dart';
-import 'components/recomend_product.dart';
-import 'components/search_field.dart';
 import 'package:get/get.dart';
+import 'package:klambi_ta/Pages/home/components/carousel.dart';
+import 'package:klambi_ta/Pages/home/components/category_tabs.dart';
+import 'package:klambi_ta/Pages/home/components/header.dart';
+import 'package:klambi_ta/Pages/home/components/recomend_product.dart';
+import 'package:klambi_ta/Pages/home/components/search_field.dart';
+import 'package:klambi_ta/Pages/home/home_controller.dart';
+import 'package:klambi_ta/shimer/product_card.dart';
 class HomePageView extends StatelessWidget {
   HomePageView({super.key});
 
@@ -33,7 +31,9 @@ class HomePageView extends StatelessWidget {
                 SizedBox(height: 10),
                 CategoryTabs(),
                 SizedBox(height: 15),
-                Obx(()=> homeController.isLoading.value ?Center(child: CircularProgressIndicator()):ProductCard(homeController.productResponseAll.value))
+                Obx(() => homeController.isLoading.value
+                    ? ShimmerLoadingGrid()
+                    : ProductCard(homeController.productResponseAll.value))
               ],
             )
           ],
