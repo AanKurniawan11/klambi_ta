@@ -42,13 +42,17 @@ dependencies:
   sliding_up_panel: ^2.0.0+1
   dropdown_button2: ^2.3.9
   fluttertoast:
+  shimmer: ^3.0.0
   http: ^1.2.1
   image_picker: ^1.1.1
   get_storage: ^2.1.1
   google_sign_in: ^6.2.1
   firebase_core: ^3.2.0
   firebase_auth: ^5.1.2
-  shimmer:
+  cached_network_image: ^3.2.1
+
+
+
 
 
 
@@ -85,9 +89,10 @@ flutter:
     - assets/images/design/
     - assets/icons/
     - assets/images/banner/
-    - assets/images/checkout/
-    - assets/images/demo_image.png
-    - assets/images/banner/profile.jpg
+    - assets/images/demo/
+    - assets/images/onboarding/
+    - assets/images/address/
+    - assets/images/profile/
 
 
 

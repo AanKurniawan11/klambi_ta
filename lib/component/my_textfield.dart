@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../color.dart';
+import '../Common/colors/color.dart';
 
 Widget MyTextField({
   required String hint,

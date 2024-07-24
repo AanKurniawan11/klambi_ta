@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:klambi_ta/color.dart';
 import 'package:klambi_ta/component/space_extension.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:klambi_ta/component/space_extension.dart';
+import 'package:shimmer/shimmer.dart';
+import 'package:klambi_ta/Common/colors/color.dart';
 
 Widget ShimmerLoadingProduct(BuildContext context) {
   final size = MediaQuery.of(context).size;
-
   return  Shimmer.fromColors(
     baseColor: ColorValue.kLightGrey,
     highlightColor: ColorValue.kWhite!,
@@ -91,7 +92,7 @@ Widget ShimmerLoadingProduct(BuildContext context) {
 }
 Widget ShimmerLoadingGrid() {
   return
-    GridView.builder(
+   GridView.builder(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -107,3 +108,5 @@ Widget ShimmerLoadingGrid() {
       },
     );
 }
+
+

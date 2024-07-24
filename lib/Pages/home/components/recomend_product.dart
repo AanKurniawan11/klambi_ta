@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:klambi_ta/Pages/detail/detail.dart';
-import 'package:klambi_ta/Pages/home/allproductresponsemodel.dart';
-import 'package:klambi_ta/color.dart';
+import 'package:klambi_ta/Pages/detail/page/detail.dart';
+import 'package:klambi_ta/Pages/home/components/allproductresponsemodel.dart';
 import 'package:klambi_ta/component/space_extension.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+
+import '../../../common/colors/color.dart';
 
 Widget RecomendProduct(BuildContext context, Datum item) {
   String formatPrices(int price) {

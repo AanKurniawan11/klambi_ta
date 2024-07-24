@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../color.dart';
+import '../Common/colors/color.dart';
 
 class PassTextField extends StatefulWidget {
   final String hint;
