@@ -1,13 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:klambi_ta/Common/colors/color.dart';
 import 'package:klambi_ta/Pages/onboarding/components/onboarding_item.dart';
+import 'package:klambi_ta/Pages/register/page/register.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:get/get.dart';
-
-import '../../../Common/colors/color.dart';
-import '../../register/page/register.dart';
 
 
 class OnboardingView extends StatefulWidget {
@@ -32,7 +31,7 @@ class _OnboardingViewState extends State<OnboardingView> {
     return Scaffold(
       bottomSheet: SafeArea(
         child: Container(
-          color: Colors.white,
+          color: ColorValue.kWhiteOB,
           height: 160,
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
           child: isLastPage
@@ -41,44 +40,47 @@ class _OnboardingViewState extends State<OnboardingView> {
               getStarted(),
             ],
           )
-              : Column(
-            children: [
-              ElevatedButton(
-                onPressed: () => pageController.nextPage(
-                  duration: const Duration(milliseconds: 600),
-                  curve: Curves.easeIn,
-                ),
-                style: ButtonStyle(
-                  backgroundColor:
-                  MaterialStateProperty.all(ColorValue.kPrimary),
-                  minimumSize: MaterialStateProperty.all(
-                      Size(width * 0.85, height * 0.065)),
-                ),
-                child: const Text(
-                  "Lanjut",
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.w600,
-                    fontSize: 18,
+              : Container(
+            width: double.infinity,
+            child: Column(
+              children: [
+                ElevatedButton(
+                  onPressed: () => pageController.nextPage(
+                    duration: const Duration(milliseconds: 600),
+                    curve: Curves.easeIn,
+                  ),
+                  style: ButtonStyle(
+                    backgroundColor:
+                    MaterialStateProperty.all(ColorValue.kPrimary),
+                    minimumSize: MaterialStateProperty.all(
+                        Size(width * 0.85, height * 0.065)),
+                  ),
+                  child: const Text(
+                    "Lanjut",
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 18,
+                    ),
                   ),
                 ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              SmoothPageIndicator(
-                controller: pageController,
-                count: controller.items.length,
-                onDotClicked: (index) => pageController.animateToPage(
-                    index,
-                    duration: const Duration(milliseconds: 600),
-                    curve: Curves.easeIn),
-                effect: const ExpandingDotsEffect(
-                    dotHeight: 10,
-                    dotWidth: 20,
-                    activeDotColor: ColorValue.kPrimary),
-              ),
-            ],
+                const SizedBox(
+                  height: 20,
+                ),
+                SmoothPageIndicator(
+                  controller: pageController,
+                  count: controller.items.length,
+                  onDotClicked: (index) => pageController.animateToPage(
+                      index,
+                      duration: const Duration(milliseconds: 600),
+                      curve: Curves.easeIn),
+                  effect: const ExpandingDotsEffect(
+                      dotHeight: 10,
+                      dotWidth: 20,
+                      activeDotColor: ColorValue.kPrimary),
+                ),
+              ],
+            ),
           ),
         ),
       ),

@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:klambi_ta/component/space_extension.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:klambi_ta/component/space_extension.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:klambi_ta/Common/colors/color.dart';
 
 Widget ShimmerLoadingProduct(BuildContext context) {
   final size = MediaQuery.of(context).size;
-
   return  Shimmer.fromColors(
-          baseColor: ColorValue.kLightGrey,
-          highlightColor: ColorValue.kWhite!,
+    baseColor: ColorValue.kLightGrey,
+    highlightColor: ColorValue.kWhite!,
     child: Container(
       height: size.height * 0.9,
       width: size.width * 0.5,
@@ -105,6 +106,7 @@ Widget ShimmerLoadingGrid() {
       itemBuilder: (context, index) {
         return ShimmerLoadingProduct(context);
       },
-  );
+    );
 }
+
 

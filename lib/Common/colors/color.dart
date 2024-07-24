@@ -7,6 +7,7 @@ class ColorValue {
   static const kThird = Color(0xFFF3533B);
   static const kFourth = Color(0xFF1B99D3);
   static const kWhite = Color(0xFFFFFFFF);
+  static const kWhiteOB = Color(0xF5FBFB);
   static const kBlack = Color(0xff000000);
   static const kBackground = Color(0xFFFAFAFA);
   static const kDarkGrey = Color(0xFF8B8B8B);

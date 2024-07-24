@@ -5,6 +5,7 @@ import 'package:klambi_ta/Pages/home/page/home.dart';
 import 'package:klambi_ta/Pages/profile/page/profile.dart';
 import '../colors/color.dart';
 
+
 class LandingPageController extends GetxController {
   var tabIndex = 0.obs;
 

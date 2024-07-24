@@ -1,12 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:klambi_ta/component/my_elevatedbutton.dart';
+import 'package:intl/intl.dart';
 import 'package:klambi_ta/Common/colors/color.dart';
 import 'package:klambi_ta/Pages/detail/components/detail_controller.dart';
 import 'package:klambi_ta/Pages/home/components/allproductresponsemodel.dart';
-import 'package:klambi_ta/component/my_elevatedbutton.dart';
-import 'package:intl/intl.dart';
-import 'package:klambi_ta/component/detail/size_button.dart';
-import 'package:klambi_ta/component/detail/size_field.dart';
 import 'package:klambi_ta/component/detail/sizes.dart';
 import 'package:klambi_ta/component/space_extension.dart';
 import 'package:get/get.dart';
@@ -239,59 +237,6 @@ class DetailView extends StatelessWidget {
               "Ukuran Baju",
               style: TextStyle(fontSize: 22, fontWeight: FontWeight.w500),
             ),
-            // SizedBox(height: 20),
-            // Text(
-            //   "Manual",
-            //   style: TextStyle(
-            //       fontSize: 14,
-            //       fontWeight: FontWeight.w500,
-            //       color: ColorValue.kDarkGrey),
-            // ),
-            // Divider(
-            //   thickness: 1,
-            //   indent: 3,
-            //   endIndent: 3,
-            //   color: ColorValue.kLightGrey,
-            // ),
-            // Row(
-            //     mainAxisAlignment: MainAxisAlignment.start,
-            //     children: [
-            //       Column(
-            //           mainAxisAlignment: MainAxisAlignment.end,
-            //           crossAxisAlignment: CrossAxisAlignment.start,
-            //           children: [
-            //             Text(
-            //               "Lingkar Dada",
-            //               style: TextStyle(
-            //                   fontSize: 14, fontWeight: FontWeight.w500),
-            //             ),
-            //             Container(
-            //                 width: width * 0.18,
-            //                 height: height * 0.05,
-            //                 child: SizeField("Cm"))
-            //           ].withSpaceBetween(height: 5)),
-            //       Column(
-            //           mainAxisAlignment: MainAxisAlignment.end,
-            //           crossAxisAlignment: CrossAxisAlignment.start,
-            //           children: [
-            //             Text(
-            //               "Panjang Baju",
-            //               style: TextStyle(
-            //                   fontSize: 14, fontWeight: FontWeight.w500),
-            //             ),
-            //             Container(
-            //                 width: width * 0.18,
-            //                 height: height * 0.05,
-            //                 child: SizeField("Cm"))
-            //           ].withSpaceBetween(height: 5))
-            //     ].withSpaceBetween(width: 30)),
-            // SizedBox(
-            //   height: 10,
-            // ),
-            // Container(
-            //     width: width * 0.35,
-            //     height: height * 0.065,
-            //     child: SizeButton(onclick: () {}, title: "Konfirmasi")),
             SizedBox(
               height: 30,
             ),
@@ -364,3 +309,4 @@ class DetailView extends StatelessWidget {
     );
   }
 }
+

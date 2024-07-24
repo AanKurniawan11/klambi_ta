@@ -1,18 +1,28 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:klambi_ta/Common/colors/color.dart';
 import 'package:klambi_ta/Common/routes/navbar.dart';
-import 'package:klambi_ta/Common/routes/routes.dart';
-import 'package:klambi_ta/Pages/login/page/login.dart';
+import 'package:klambi_ta/common/routes/routes.dart';
+import 'package:klambi_ta/firebase_options.dart';
+import 'package:klambi_ta/shimer/product_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
+import 'Pages/login/page/login.dart';
 import 'Pages/onboarding/page/onboarding_view.dart';
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   final prefs = await SharedPreferences.getInstance();
   final onboarding = prefs.getBool("onboardings") ?? false;
   final isLoggedIn = prefs.containsKey('username');
+
+  // await FirebaseAuth.instance.useAuthEmulator('localhost', 9099);
+
+
 
   runApp(MyApp(
     onboarding: onboarding,
@@ -46,6 +56,11 @@ class MyApp extends StatelessWidget {
           labelStyle: TextStyle(fontSize: 14),
           overlayColor: MaterialStatePropertyAll(Colors.transparent),
         ),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ButtonStyle(
+            backgroundColor: WidgetStatePropertyAll(Colors.red)
+          )
+        )
       ),
       getPages: pageRoutes,
       home: AnimatedSplashScreen(
