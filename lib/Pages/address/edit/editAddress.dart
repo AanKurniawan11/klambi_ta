@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:klambi_ta/Pages/address/insert/components/city_post_code.dart';
 import 'package:klambi_ta/Pages/address/insert/components/kec.dart';
 import 'package:klambi_ta/Pages/address/insert/components/kode_pos.dart';
 import 'package:klambi_ta/Pages/address/insert/components/nama.dart';
+import 'package:klambi_ta/Pages/address/insert/components/optional_note.dart';
+import 'package:klambi_ta/Pages/address/insert/components/regional_province.dart';
 import 'package:klambi_ta/Pages/address/insert/components/telepon.dart';
 import 'package:klambi_ta/color.dart';
+import 'package:klambi_ta/component/EditTextfield.dart';
 import '../showDataController.dart';
-import 'components/city_post_code.dart';
-import 'components/optional_note.dart';
-import 'components/regional_province.dart';
 
-class InsertAddressPageView extends StatelessWidget {
-  const InsertAddressPageView({super.key});
+class EditAddress extends StatelessWidget {
+  const EditAddress({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +22,7 @@ class InsertAddressPageView extends StatelessWidget {
       backgroundColor: ColorValue.kBackground,
       appBar: AppBar(
         title: Text(
-          'Masukkan Alamat',
+          'Edit Alamat',
           style: TextStyle(
             fontFamily: 'General Sans',
             fontWeight: FontWeight.w500,
@@ -31,7 +32,7 @@ class InsertAddressPageView extends StatelessWidget {
         ),
         leading: IconButton(
           onPressed: () {
-            Get.back(); // Go back to the previous page
+            Get.back();
           },
           icon: Icon(Icons.arrow_back),
         ),
@@ -53,7 +54,8 @@ class InsertAddressPageView extends StatelessWidget {
                     child: Text("Kontak", style: TextStyle(fontSize: 15),
                     ),
                   ),
-                  Nama(onChanged: (value) => controller.namaLengkap.value = value),
+                  Nama(onChanged: (value) => controller.namaLengkaps.value),
+                  EditTextfield(hint: "hint", label: "masukkan", controller: controller.namaLengkaps),
                   Telepon(onChanged: (value) => controller.nomorTelepon.value = value),
                 ],
               ),
@@ -78,10 +80,10 @@ class InsertAddressPageView extends StatelessWidget {
               ElevatedButton(
                 style: ButtonStyle(
                   backgroundColor:
-                      MaterialStateProperty.all(ColorValue.kPrimary),
+                  MaterialStateProperty.all(ColorValue.kPrimary),
                 ),
                 onPressed: () {
-                  controller.submitAddress();
+                  controller.EditAddres();
                 },
                 child: Text('Konfirmasi', style: TextStyle(color: Colors.white),
                 ),

@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:klambi_ta/Pages/address/address.dart';
-import 'package:klambi_ta/Pages/address/address_binding.dart';
+import 'package:klambi_ta/Pages/address/Page/add_address.dart';
+import 'package:klambi_ta/Pages/address/Page/address.dart';
+import 'package:klambi_ta/Pages/address/components/address_binding.dart';
 import 'package:klambi_ta/Pages/address/insert/insert.dart';
 import 'package:klambi_ta/Pages/address/insert/insert_binding.dart';
 import 'package:klambi_ta/Pages/chat/chat.dart';
 import 'package:klambi_ta/Pages/chat/chat_binding.dart';
+import 'package:klambi_ta/Pages/cs/components/cs_binding.dart';
+import 'package:klambi_ta/Pages/cs/page/cs.dart';
 import 'package:klambi_ta/Pages/design/design.dart';
 import 'package:klambi_ta/Pages/design/design_binding.dart';
-import 'package:klambi_ta/Pages/detail/detail.dart';
-import 'package:klambi_ta/Pages/detail/detail_binding.dart';
 import 'package:klambi_ta/Pages/history/history.dart';
 import 'package:klambi_ta/Pages/payment/payment.dart';
 import 'package:klambi_ta/Pages/payment/payment_binding.dart';
@@ -62,10 +63,10 @@ List<GetPage> pageRoutes = <GetPage>[
       name: RouteName.cart,
       page: () => Cart(),
       binding: CartBinding()),
-  // GetPage(
-  //     name: RouteName.cs,
-  //     page: () => const CustomerService(),
-  //     binding: CustomerServiceBinding()),
+  GetPage(
+      name: RouteName.cs,
+      page: () => CustomerService(),
+      binding: CustomerServiceBinding()),
   GetPage(
       name: RouteName.address,
       page: () => const AddressPageView(),
@@ -81,6 +82,11 @@ List<GetPage> pageRoutes = <GetPage>[
   GetPage(
     name: RouteName.navbar,
     page: () => LandingPage(),
+    // binding: ProfileBinding()
+  ),
+  GetPage(
+    name: RouteName.addAddress,
+    page: () => AddAddress(),
     // binding: ProfileBinding()
   ),
 ];

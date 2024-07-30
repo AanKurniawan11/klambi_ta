@@ -15,4 +15,5 @@ abstract class RouteName {
   static const cs = "/cs";
   static const payment = "/payment";
   static const design = "/design";
+  static const addAddress = "/addAddress";
 }

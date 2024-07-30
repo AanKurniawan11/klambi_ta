@@ -6,12 +6,14 @@ import 'package:klambi_ta/Pages/login/components/toast_message.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
-class LoginController extends GetxController {
+class   LoginController extends GetxController {
   late final SharedPreferences prefs;
   RxBool isLoading = false.obs;
   RxString message = "".obs;
   var user = Rxn<User>();
   final GoogleSignIn googleSignIn = GoogleSignIn();
+  String? token = "";
+
 
   @override
   void onInit() {
@@ -28,10 +30,14 @@ class LoginController extends GetxController {
 
   Future<void> setPreference() async {
     prefs = await SharedPreferences.getInstance();
+
   }
 
   Future<void> loginAction(String email, String password) async {
     print('LOGIN...');
+    token = await prefs.getString("token");
+     print("token anda" + token.toString());
+
     if (email.isEmpty || password.isEmpty) {
       message.value = "Fields cannot be empty";
       ToastMessage.show(message.value);
@@ -41,10 +47,14 @@ class LoginController extends GetxController {
     try {
       isLoading.value = true;
 
-      final url = Uri.parse("https://klambi.ta.rplrus.com/api/login");
+      // final url = Uri.parse("https://klambi.ta.rplrus.com/api/login");
       final body = {"email": email, "password": password};
-      final response = await http.post(url, body: body);
-      print("Login..");
+
+      final response = await http.post(
+          Uri.parse("https://klambi.ta.rplrus.com/api/login"),
+          body: body,
+      headers:{'Authorization': 'Bearer $token'});
+      print(response.body.toString());
 
       if (response.statusCode == 200) {
         LoginResponseModel loginResponseModel = loginResponseModelFromJson(response.body);
@@ -53,6 +63,8 @@ class LoginController extends GetxController {
         await prefs.setString("email", loginResponseModel.data.email);
         await prefs.setString("token", loginResponseModel.data.token);
 
+        String? savedToken = await prefs.getString("token");
+        print("Token yang disimpan: $savedToken");
         ToastMessage.show("Berhasil login");
         Get.offAllNamed('/navbar');  // Navigate to the main screen
       } else {
@@ -67,10 +79,12 @@ class LoginController extends GetxController {
       isLoading.value = false;
     }
   }
+  void getToken()async{}
+
 
   Future<bool> checkIfLoggedIn() async {
     prefs = await SharedPreferences.getInstance();
-    return prefs.containsKey('username');
+    return prefs.containsKey('username') || FirebaseAuth.instance.currentUser != null;
   }
 
   Future<void> logout() async {
@@ -81,4 +95,6 @@ class LoginController extends GetxController {
     user.value = null;
     Get.offAllNamed('/login');
   }
+
+
 }

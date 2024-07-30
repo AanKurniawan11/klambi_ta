@@ -23,20 +23,24 @@ class _LoginState extends State<Login> {
   Future<void> signinWithGoogle() async {
     FirebaseAuth auth = FirebaseAuth.instance;
     final GoogleSignIn googleSignIn = GoogleSignIn();
-    final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
+    try {
+      final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
 
-    if (googleUser != null) {
-      final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
-      final AuthCredential credential = GoogleAuthProvider.credential(
-        accessToken: googleAuth.accessToken,
-        idToken: googleAuth.idToken,
-      );
+      if (googleUser != null) {
+        final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+        final AuthCredential credential = GoogleAuthProvider.credential(
+          accessToken: googleAuth.accessToken,
+          idToken: googleAuth.idToken,
+        );
 
-      final UserCredential userCredential = await auth.signInWithCredential(credential);
-      loginController.setUser(userCredential.user);  // Update the user in the controller
+        final UserCredential userCredential = await auth.signInWithCredential(credential);
+        loginController.setUser(userCredential.user); // Update the user in the controller
+        Get.offAllNamed("/navbar");
+      }
+    } catch (e) {
+      ToastMessage.show('Login gagal. Silakan coba lagi.');
     }
   }
-
   @override
   Widget build(BuildContext context) {
     final Size mediaquery = MediaQuery.of(context).size;
@@ -140,11 +144,7 @@ class _LoginState extends State<Login> {
                           children: [
                             GestureDetector(
                               onTap: () {
-                                signinWithGoogle().then((_) {
-                                  if (mounted) {
-                                    return Get.offAllNamed("/navbar");
-                                  }
-                                });
+                                signinWithGoogle();
                               },
                               child: Container(
                                 padding: const EdgeInsets.all(20),

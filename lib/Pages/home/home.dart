@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:klambi_ta/Pages/address/showDataController.dart';
 import 'package:klambi_ta/Pages/home/components/carousel.dart';
 import 'package:klambi_ta/Pages/home/components/category_tabs.dart';
 import 'package:klambi_ta/Pages/home/components/header.dart';
@@ -31,7 +32,7 @@ class HomePageView extends StatelessWidget {
                 SizedBox(height: 10),
                 CategoryTabs(),
                 SizedBox(height: 15),
-                Obx(() => homeController.isLoading.value
+                Obx(() =>  homeController.isLoading.value
                     ? ShimmerLoadingGrid()
                     : ProductCard(homeController.productResponseAll.value))
               ],

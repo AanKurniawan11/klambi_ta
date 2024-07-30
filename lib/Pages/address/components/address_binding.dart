@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:klambi_ta/Pages/address/address_controller.dart';
+import 'package:klambi_ta/Pages/address/components/address_controller.dart';
 
 class AddressBinding extends Bindings {
   @override

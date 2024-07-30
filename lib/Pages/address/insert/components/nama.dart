@@ -2,21 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:klambi_ta/color.dart';
 import 'package:klambi_ta/component/custom_textfield2.dart';
 
-class Keterangan extends StatelessWidget {
-   Keterangan({super.key, required this.onChanged});
+class Nama extends StatelessWidget {
   final Function(String) onChanged;
 
+  const Nama({required this.onChanged, super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    return
+      Padding(
       padding: const EdgeInsets.only(bottom: 5),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          CustomTextfield(hintText: 'Keterangan',
+          // SizedBox(height: 10),
+          CustomTextfield(
+            hintText: 'Nama Lengkap',
             onChanged: onChanged,
-          )
+          ),
         ],
       ),
     );

@@ -3,10 +3,10 @@ import 'package:klambi_ta/color.dart';
 import 'package:klambi_ta/component/custom_textfield2.dart';
 import 'package:klambi_ta/component/custom_textfield3.dart';
 
-class Jalan extends StatelessWidget {
-  Jalan({super.key, required this.onChanged});
+class Telepon extends StatelessWidget {
   final Function(String) onChanged;
 
+  const Telepon({required this.onChanged, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -15,20 +15,10 @@ class Jalan extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            'Jalan*',
-            style: TextStyle(
-              fontFamily: 'General Sans',
-              fontWeight: FontWeight.w500,
-              fontSize: 14,
-              color: ColorValue.kBlack,
-            ),
+          CustomTextfield3(
+            hintText: 'No Telephone',
+            onChanged: onChanged,
           ),
-          SizedBox(height: 10),
-          CustomTextfield(
-              hintText: 'Jalan...',
-              onChanged: onChanged,
-          )
         ],
       ),
     );

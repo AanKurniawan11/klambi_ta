@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:klambi_ta/color.dart';
 import 'package:klambi_ta/component/custom_textfield2.dart';
 
-class AddressName extends StatelessWidget {
-  const AddressName({super.key});
+class Alamat extends StatelessWidget {
+  final Function(String) onChanged;
+
+  const Alamat({required this.onChanged, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +24,10 @@ class AddressName extends StatelessWidget {
             ),
           ),
           SizedBox(height: 10),
-          CustomTextfield(hintText: 'Alamat...')
+          CustomTextfield(
+            hintText: 'Alamat...',
+            onChanged: onChanged,
+          ),
         ],
       ),
     );

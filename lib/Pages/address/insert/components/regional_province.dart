@@ -1,35 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:klambi_ta/Pages/address/insert/components/custom_dropdown.dart';
 
-import '../../../../color.dart';
+class Provinsi extends StatelessWidget {
+  final Function(String) onCodeChanged;
 
-class RegionalProvince extends StatelessWidget {
-  const RegionalProvince({super.key});
+  Provinsi({super.key, required this.onCodeChanged});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 20),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      padding: const EdgeInsets.only(bottom: 5),
+      child: Row(
         children: [
-          Text(
-            'Provinsi*',
-            style: TextStyle(
-              fontFamily: 'General Sans',
-              fontWeight: FontWeight.w500,
-              fontSize: 14,
-              color: ColorValue.kBlack,
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                CustomDropdown(
+                  items: ['Jawa Tengah'],
+                  hintText: 'Provinsi',
+                  onChanged: (String? newValue) {
+                    if (newValue != null) {
+                      print('Selected: $newValue');
+                      onCodeChanged(newValue);
+                    }
+                  },
+                )
+              ],
             ),
           ),
-          SizedBox(height: 10),
-          CustomDropdown(
-            items: ['Jawa Tengah', 'Jawa Timur', 'Jawa Barat'],
-            hintText: 'Provinsi...',
-            onChanged: (String? newValue) {
-              print('Selected: $newValue');
-            },
-          )
         ],
       ),
     );

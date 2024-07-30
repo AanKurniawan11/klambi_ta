@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:klambi_ta/Pages/address/showDataController.dart';
 import 'package:klambi_ta/Pages/profile/profile_controller.dart';
 import 'package:klambi_ta/color.dart';
 import 'package:get/get.dart';
@@ -9,6 +10,7 @@ import 'package:klambi_ta/component/space_extension.dart';
 class Profile extends StatelessWidget {
   Profile({super.key});
   final profileController = Get.put(ProfileController());
+  final showDataController = Get.put(Showdatacontroller());
 
   Future<void> showLogoutConfirmationDialog(BuildContext context) async {
     return showDialog<void>(
@@ -143,7 +145,8 @@ class Profile extends StatelessWidget {
                         ),
                         GestureDetector(
                           onTap: () {
-                            Get.offNamed("/insert");
+                            showDataController.ShowData();
+                            Get.offNamed("/addAddress");
                           },
                           child: Row(
                             children: [
@@ -174,7 +177,7 @@ class Profile extends StatelessWidget {
                                 color: ColorValue.kPrimary,
                               ),
                               const Text(
-                                "Pesan",
+                                "Chat",
                                 style: TextStyle(
                                   fontSize: 16,
                                   fontFamily: "General Sans",

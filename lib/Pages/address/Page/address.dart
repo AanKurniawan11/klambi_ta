@@ -60,7 +60,7 @@ class AddressPageView extends StatelessWidget {
             ),
             My_Button(
               onclick: () {
-                Get.offNamed("/insert");
+                Get.offNamed("/payment");
               },
               title: 'Lanjutkan',
             ),

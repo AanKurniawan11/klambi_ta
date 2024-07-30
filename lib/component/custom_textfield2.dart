@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
-
 import '../color.dart';
 
 class CustomTextfield extends StatelessWidget {
   final String hintText;
-  const CustomTextfield({required this.hintText, super.key});
+  final Function(String) onChanged;
+
+  const CustomTextfield({
+    required this.hintText,
+    required this.onChanged,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -12,6 +17,7 @@ class CustomTextfield extends StatelessWidget {
       child: SizedBox(
         height: 50, // Set the height of the TextFormField
         child: TextFormField(
+          onChanged: onChanged,
           decoration: InputDecoration(
             filled: true,
             fillColor: ColorValue.kLightGrey,
