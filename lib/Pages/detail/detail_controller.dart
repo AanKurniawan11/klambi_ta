@@ -41,7 +41,8 @@ class DetailController extends GetxController{
             "size": size,
             "product_id": item.id,
           },
-          headers: {'Authorization': 'Bearer $token'}
+          headers: {
+            'Authorization': 'Bearer $token'}
       );
       if (response.statusCode == 200) {
       } else {

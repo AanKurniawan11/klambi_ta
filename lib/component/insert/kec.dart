@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:klambi_ta/component/insert/custom_dropdown.dart';
 
-class Provinsi extends StatelessWidget {
+class Kec extends StatelessWidget {
   final Function(String) onCodeChanged;
 
-  Provinsi({super.key, required this.onCodeChanged});
+  Kec({super.key, required this.onCodeChanged});
 
   @override
   Widget build(BuildContext context) {
@@ -17,8 +17,8 @@ class Provinsi extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 CustomDropdown(
-                  items: ['Jawa Tengah'],
-                  hintText: 'Provinsi',
+                  items: ['Gebog', 'Gondosari', 'Thekelan','Rendeng','Kandang Mas'],
+                  hintText: 'Kecamatan',
                   onChanged: (String? newValue) {
                     if (newValue != null) {
                       print('Selected: $newValue');

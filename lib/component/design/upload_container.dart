@@ -23,7 +23,7 @@ class UploadContainer extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Design Baju',
+              'Desain Baju',
               style: TextStyle(
                 fontFamily: 'General Sans',
                 fontWeight: FontWeight.w600,

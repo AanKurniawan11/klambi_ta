@@ -89,9 +89,10 @@ flutter:
     - assets/images/design/
     - assets/icons/
     - assets/images/banner/
-    - assets/images/demo/
+    - assets/images/demo_image.png
     - assets/images/onboarding/
     - assets/images/address/
+    - assets/images/checkout/
     - assets/images/profile/
 
 

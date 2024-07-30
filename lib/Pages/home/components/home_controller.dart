@@ -7,7 +7,6 @@ import 'categoryresponsemodel.dart' as category_model;
 class HomeController extends GetxController {
   RxList<product_model.Datum> productResponseAll = <product_model.Datum>[].obs;
   RxList<String> categoryResponseAll = <String>[].obs;
-
   RxInt selectedIndex = 0.obs; // Add this line
 
   RxBool isLoading = false.obs;

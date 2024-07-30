@@ -4,6 +4,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:klambi_ta/Common/colors/color.dart';
 import 'package:klambi_ta/Pages/login/components/login_controller.dart';
+import 'package:klambi_ta/Pages/login/components/toast_message.dart';
 import 'package:klambi_ta/component/my_elevatedbutton.dart';
 import 'package:klambi_ta/component/my_textfield.dart';
 import 'package:klambi_ta/component/pass_textfield.dart';
@@ -22,20 +23,24 @@ class _LoginState extends State<Login> {
   Future<void> signinWithGoogle() async {
     FirebaseAuth auth = FirebaseAuth.instance;
     final GoogleSignIn googleSignIn = GoogleSignIn();
-    final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
+    try {
+      final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
 
-    if (googleUser != null) {
-      final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
-      final AuthCredential credential = GoogleAuthProvider.credential(
-        accessToken: googleAuth.accessToken,
-        idToken: googleAuth.idToken,
-      );
+      if (googleUser != null) {
+        final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+        final AuthCredential credential = GoogleAuthProvider.credential(
+          accessToken: googleAuth.accessToken,
+          idToken: googleAuth.idToken,
+        );
 
-      final UserCredential userCredential = await auth.signInWithCredential(credential);
-      loginController.setUser(userCredential.user);  // Update the user in the controller
+        final UserCredential userCredential = await auth.signInWithCredential(credential);
+        loginController.setUser(userCredential.user); // Update the user in the controller
+        Get.offAllNamed("/navbar");
+      }
+    } catch (e) {
+      ToastMessage.show('Login gagal. Silakan coba lagi.');
     }
   }
-
   @override
   Widget build(BuildContext context) {
     final Size mediaquery = MediaQuery.of(context).size;
@@ -139,11 +144,7 @@ class _LoginState extends State<Login> {
                           children: [
                             GestureDetector(
                               onTap: () {
-                                signinWithGoogle().then((_) {
-                                  if (mounted) {
-                                    return Get.offAllNamed("/navbar");
-                                  }
-                                });
+                                signinWithGoogle();
                               },
                               child: Container(
                                 padding: const EdgeInsets.all(20),
@@ -157,24 +158,6 @@ class _LoginState extends State<Login> {
                                 child: Image.asset(
                                   "assets/images/banner/Google_Icon.png",
                                   height: 10,
-                                ),
-                              ),
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                // Handle Facebook Sign-In
-                              },
-                              child: Container(
-                                padding: const EdgeInsets.all(20),
-                                height: height * 0.08,
-                                width: width * 0.16,
-                                decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.white),
-                                  borderRadius: BorderRadius.circular(16),
-                                  color: Colors.grey[200],
-                                ),
-                                child: Image.asset(
-                                  "assets/images/banner/Facebook_Icon.png",
                                 ),
                               ),
                             ),

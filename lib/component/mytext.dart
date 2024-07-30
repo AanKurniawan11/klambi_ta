@@ -15,6 +15,16 @@ Widget myText({
   );
 }
 
+Widget myTexts({
+  required String text,
+
+}) {
+  return Text(
+    text,
+    style: TextStyle(color: Colors.white,fontFamily: "General Sans",fontSize: 14),maxLines: 3,
+  );
+}
+
 
 class txte extends StatelessWidget {
   final String email;

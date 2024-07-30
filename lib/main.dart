@@ -2,27 +2,24 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:klambi_ta/Common/colors/color.dart';
 import 'package:klambi_ta/Common/routes/navbar.dart';
+import 'package:klambi_ta/Pages/login/components/login_controller.dart';
 import 'package:klambi_ta/common/routes/routes.dart';
 import 'package:klambi_ta/firebase_options.dart';
-import 'package:klambi_ta/shimer/product_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'Pages/login/page/login.dart';
 import 'Pages/onboarding/page/onboarding_view.dart';
-
+import 'common/colors/color.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   final prefs = await SharedPreferences.getInstance();
-  final onboarding = prefs.getBool("onboardings") ?? false;
-  final isLoggedIn = prefs.containsKey('username');
+  final onboarding = prefs.getBool("onboarding") ?? false;
+  final isLoggedIn = prefs.containsKey('username') || FirebaseAuth.instance.currentUser != null;
 
-  // await FirebaseAuth.instance.useAuthEmulator('localhost', 9099);
-
-
+  final controller = Get.put(LoginController());  // Pindahkan ke sini setelah Firebase diinisialisasi
 
   runApp(MyApp(
     onboarding: onboarding,
@@ -42,25 +39,24 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
-        useMaterial3: true,
-
-        appBarTheme: const AppBarTheme(
-          surfaceTintColor: Colors.white,
-          color: Colors.transparent,
-        ),
-        tabBarTheme: TabBarTheme(
-          indicatorColor: Colors.red,
-          labelColor: Colors.red,
-          dividerColor: Colors.transparent,
-          labelStyle: TextStyle(fontSize: 14),
-          overlayColor: MaterialStatePropertyAll(Colors.transparent),
-        ),
-        elevatedButtonTheme: ElevatedButtonThemeData(
-          style: ButtonStyle(
-            backgroundColor: WidgetStatePropertyAll(Colors.red)
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
+          useMaterial3: true,
+          appBarTheme: const AppBarTheme(
+            surfaceTintColor: Colors.white,
+            color: Colors.transparent,
+          ),
+          tabBarTheme: TabBarTheme(
+            indicatorColor: Colors.red,
+            labelColor: Colors.red,
+            dividerColor: Colors.transparent,
+            labelStyle: TextStyle(fontSize: 14),
+            overlayColor: MaterialStatePropertyAll(Colors.transparent),
+          ),
+          elevatedButtonTheme: ElevatedButtonThemeData(
+              style: ButtonStyle(
+                  backgroundColor: MaterialStatePropertyAll(Colors.red)
+              )
           )
-        )
       ),
       getPages: pageRoutes,
       home: AnimatedSplashScreen(
@@ -70,8 +66,6 @@ class MyApp extends StatelessWidget {
         backgroundColor: ColorValue.kPrimary,
         nextScreen: _getNextScreen(),
       ),
-      // home: NewsPage(),
-      // home: ShimmerLoadingGrid(),
     );
   }
 

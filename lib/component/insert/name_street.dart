@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:klambi_ta/Common/colors/color.dart';
 import 'package:klambi_ta/component/insert/custom_textfield2.dart';
 
-class StreetName extends StatelessWidget {
-  const StreetName({super.key});
+
+class Jalan extends StatelessWidget {
+  Jalan({super.key, required this.onChanged});
+  final Function(String) onChanged;
+
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +25,10 @@ class StreetName extends StatelessWidget {
             ),
           ),
           SizedBox(height: 10),
-          CustomTextfield(hintText: 'Jalan...')
+          CustomTextfield(
+              hintText: 'Jalan...',
+              onChanged: onChanged,
+          )
         ],
       ),
     );

@@ -1,76 +1,109 @@
-// import 'package:flutter/material.dart';
-// import 'package:klambi_ta/Pages/home/home_controller.dart';
-// import 'package:klambi_ta/shimer/product_card.dart';
-// import 'package:klambi_ta/shimer/skeleton.dart';
-// import 'package:get/get.dart';
-// import '../Pages/home/allproductresponsemodel.dart';
-// import 'constant.dart';
-//
-// class NewsPage extends StatelessWidget {
-//   final HomeController controller = Get.put(HomeController());
-//
-//   NewsPage({Key? key}) : super(key: key);
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       backgroundColor: Colors.white,
-//       appBar: AppBar(
-//         backgroundColor: Colors.white,
-//         elevation: 0,
-//         title: const Text(
-//           "News App",
-//           style: TextStyle(color: Colors.black),
-//         ),
-//       ),
-//       body: Padding(
-//         padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
-//         child: Obx(() {
-//           if (controller.isLoading.value) {
-//             return ListView.separated(
-//               itemCount: 5,
-//               itemBuilder: (context, index) => const NewsCardSkeleton(),
-//               separatorBuilder: (context, index) => const SizedBox(height: defaultPadding),
-//             );
-//           } else {
-//             return ProductGrid(controller.productResponseAll);
-//           }
-//         }),
-//       ),
-//     );
-//   }
-// }
-//
-// class NewsCardSkeleton extends StatelessWidget {
-//   const NewsCardSkeleton({Key? key}) : super(key: key);
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Row(
-//       children: [
-//         const Skeleton(height: 120, width: 120),
-//         const SizedBox(width: defaultPadding),
-//         Expanded(
-//           child: Column(
-//             crossAxisAlignment: CrossAxisAlignment.start,
-//             children: [
-//               const Skeleton(width: 80),
-//               const SizedBox(height: defaultPadding / 2),
-//               const Skeleton(),
-//               const SizedBox(height: defaultPadding / 2),
-//               const Skeleton(),
-//               const SizedBox(height: defaultPadding / 2),
-//               Row(
-//                 children: const [
-//                   Expanded(child: Skeleton()),
-//                   SizedBox(width: defaultPadding),
-//                   Expanded(child: Skeleton()),
-//                 ],
-//               )
-//             ],
-//           ),
-//         )
-//       ],
-//     );
-//   }
-// }
+import 'package:flutter/material.dart';
+import 'package:klambi_ta/Common/colors/color.dart';
+import 'package:klambi_ta/component/space_extension.dart';
+import 'package:shimmer/shimmer.dart';
+
+Widget ShimmerLoadingCategory(BuildContext context) {
+  final size = MediaQuery.of(context).size;
+
+  return  Shimmer.fromColors(
+    baseColor: ColorValue.kLightGrey,
+    highlightColor: ColorValue.kWhite!,
+    child: Container(
+      height: size.height * 0.9,
+      width: size.width * 0.5,
+      decoration: BoxDecoration(
+        border: Border.all(color: ColorValue.kLightGrey),
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(10),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Stack(
+              children: [
+                Container(
+                  width: size.width * 0.5,
+                  height: size.height * 0.18,
+                  decoration: BoxDecoration(
+                      color: ColorValue.kLightGrey,
+                      borderRadius: BorderRadius.circular(10)
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: size.height * 0.02),
+            Container(
+              width: size.width * 0.2,
+              height: size.height * 0.013,
+              decoration: BoxDecoration(
+                  color: ColorValue.kLightGrey,
+                  borderRadius: BorderRadius.circular(5)
+              ),
+            ),
+            SizedBox(height: size.height * 0.005),
+            Container(
+              width: size.width * 0.15,
+              height: size.height * 0.013,
+              decoration: BoxDecoration(
+                  color: ColorValue.kLightGrey,
+                  borderRadius: BorderRadius.circular(5)
+              ),
+            ),
+            SizedBox(height: size.height * 0.005),
+            Row(
+              children: [
+                Container(
+                  width: size.width * 0.12,
+                  height: size.height * 0.013,
+                  decoration: BoxDecoration(
+                      color: ColorValue.kLightGrey,
+                      borderRadius: BorderRadius.circular(5)
+                  ),
+                ),
+                Container(
+                  width: size.width * 0.12,
+                  height: size.height * 0.013,
+                  decoration: BoxDecoration(
+                      color: ColorValue.kLightGrey,
+                      borderRadius: BorderRadius.circular(5)
+                  ),
+                ),
+                Container(
+                  width: size.width * 0.12,
+                  height: size.height * 0.013,
+                  decoration: BoxDecoration(
+                      color: ColorValue.kLightGrey,
+                      borderRadius: BorderRadius.circular(5)
+                  ),
+                ),
+
+              ].withSpaceBetween(width: 5),
+            ),
+          ].withSpaceBetween(height: 5),
+        ),
+      ),
+    ),
+  );
+
+
+}
+Widget ShimmerLoadingGrid() {
+  return
+    GridView.builder(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        mainAxisSpacing: 10,
+        crossAxisSpacing: 10,
+        childAspectRatio: 1 / 1.55,
+      ),
+      padding: const EdgeInsets.symmetric(horizontal: 10),
+      itemCount: 6, // Adjust based on how many shimmer items you want to show
+      itemBuilder: (context, index) {
+        return ShimmerLoadingCategory(context);
+      },
+    );
+}

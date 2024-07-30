@@ -1,10 +1,9 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:klambi_ta/Common/routes/navbar.dart';
-import 'package:klambi_ta/Common/routes/routes_name.dart';
+import 'package:klambi_ta/Pages/address/Page/add_address.dart';
 import 'package:klambi_ta/Pages/address/components/address_binding.dart';
-import 'package:klambi_ta/Pages/address/page/address.dart';
 import 'package:klambi_ta/Pages/cart/components/cart_binding.dart';
-import 'package:klambi_ta/Pages/cart/page/cart.dart';
 import 'package:klambi_ta/Pages/chat/components/chat_binding.dart';
 import 'package:klambi_ta/Pages/chat/page/chat.dart';
 import 'package:klambi_ta/Pages/cs/components/cs_binding.dart';
@@ -23,9 +22,12 @@ import 'package:klambi_ta/Pages/login/components/login_binding.dart';
 import 'package:klambi_ta/Pages/login/page/login.dart';
 import 'package:klambi_ta/Pages/payment/components/payment_binding.dart';
 import 'package:klambi_ta/Pages/payment/page/payment.dart';
+import 'package:klambi_ta/Pages/profile/cart/page/cart.dart';
 import 'package:klambi_ta/Pages/register/components/register_binding.dart';
 import 'package:klambi_ta/Pages/register/page/register.dart';
+import 'package:klambi_ta/common/routes/routes_name.dart';
 
+import '../../Pages/cart/components/cart_binding.dart';
 
 List<GetPage> pageRoutes = <GetPage>[
   GetPage(
@@ -63,12 +65,12 @@ List<GetPage> pageRoutes = <GetPage>[
       binding: CartBinding()),
   GetPage(
       name: RouteName.cs,
-      page: () => const CustomerService(),
+      page: () => CustomerService(),
       binding: CustomerServiceBinding()),
-  GetPage(
-      name: RouteName.address,
-      page: () => const AddressPageView(),
-      binding: AddressBinding()),
+  // GetPage(
+  //     name: RouteName.address,
+  //     page: () => const AddressPageView(),
+  //     binding: AddressBinding()),
   GetPage(
       name: RouteName.insert,
       page: () => const InsertAddressPageView(),
@@ -80,6 +82,11 @@ List<GetPage> pageRoutes = <GetPage>[
   GetPage(
     name: RouteName.navbar,
     page: () => LandingPage(),
+    // binding: ProfileBinding()
+  ),
+  GetPage(
+    name: RouteName.addAddress,
+    page: () => AddAddress(),
     // binding: ProfileBinding()
   ),
 ];
