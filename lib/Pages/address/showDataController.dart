@@ -112,31 +112,31 @@ class Showdatacontroller extends GetxController{
     }
   }
 
-  Future<void> EditAddres() async{
-    prefs = await SharedPreferences.getInstance();
-    var token = await prefs.getString("token");
-    final response = await http.put(
-      Uri.parse('https://klambi.ta.rplrus.com/api/addresses'),
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer $token'
-      },
-    );
-      if (response.statusCode == 200){
-        EditAddress edit = editAddressFromJson(response.body);
-
-        namaLengkaps.text = edit.data.namaLengkap;
-        noTelepon.text = edit.data.nomorTelepon;
-        Provinsi.text = edit.data.provinsi;
-        Kota.text = edit.data.kota;
-        Kecamatan.text = edit.data.kecamatan;
-        kode.text = edit.data.kodePos.toString();
-        note.text =  edit.data.keterangan;
-
-      }else{
-        print("gagal");
-    }
-  }
+  // Future<void> EditAddres() async{
+  //   prefs = await SharedPreferences.getInstance();
+  //   var token = await prefs.getString("token");
+  //   final response = await http.put(
+  //     Uri.parse('https://klambi.ta.rplrus.com/api/addresses'),
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //       'Authorization': 'Bearer $token'
+  //     },
+  //   );
+  //     if (response.statusCode == 200){
+  //       EditAddress edit = editAddressFromJson(response.body);
+  //
+  //       namaLengkaps.text = edit.data.namaLengkap;
+  //       noTelepon.text = edit.data.nomorTelepon;
+  //       Provinsi.text = edit.data.provinsi;
+  //       Kota.text = edit.data.kota;
+  //       Kecamatan.text = edit.data.kecamatan;
+  //       kode.text = edit.data.kodePos.toString();
+  //       note.text =  edit.data.keterangan;
+  //
+  //     }else{
+  //       print("gagal");
+  //   }
+  // }
 
 
   }

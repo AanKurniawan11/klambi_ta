@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:klambi_ta/Common/colors/color.dart';
 import 'package:klambi_ta/Pages/login/components/login_controller.dart';
 import 'package:klambi_ta/Pages/login/components/toast_message.dart';
-import 'package:klambi_ta/color.dart';
 import 'package:klambi_ta/component/my_elevatedbutton.dart';
 import 'package:klambi_ta/component/my_textfield.dart';
 import 'package:klambi_ta/component/pass_textfield.dart';
@@ -158,24 +158,6 @@ class _LoginState extends State<Login> {
                                 child: Image.asset(
                                   "assets/images/banner/Google_Icon.png",
                                   height: 10,
-                                ),
-                              ),
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                // Handle Facebook Sign-In
-                              },
-                              child: Container(
-                                padding: const EdgeInsets.all(20),
-                                height: height * 0.08,
-                                width: width * 0.16,
-                                decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.white),
-                                  borderRadius: BorderRadius.circular(16),
-                                  color: Colors.grey[200],
-                                ),
-                                child: Image.asset(
-                                  "assets/images/banner/Facebook_Icon.png",
                                 ),
                               ),
                             ),

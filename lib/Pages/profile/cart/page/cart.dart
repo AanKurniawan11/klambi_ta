@@ -2,12 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:klambi_ta/Pages/home/model.dart';
-import 'package:klambi_ta/color.dart';
 import 'package:klambi_ta/component/my_elevatedbutton.dart';
 import 'package:klambi_ta/component/space_extension.dart';
+import 'package:klambi_ta/Common/colors/color.dart';
+import 'package:klambi_ta/component/cart/cart_product.dart';
+import 'package:klambi_ta/component/home/model.dart';
 
-import '../components/cart_product.dart';
 
 class Cart extends StatefulWidget {
   const Cart({super.key});

@@ -2,15 +2,15 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:klambi_ta/Common/routes/navbar.dart';
 import 'package:klambi_ta/Pages/login/components/login_controller.dart';
-import 'package:klambi_ta/color.dart';
-import 'package:klambi_ta/common/routes.dart';
-import 'package:klambi_ta/common/navbar.dart';
+import 'package:klambi_ta/common/routes/routes.dart';
 import 'package:klambi_ta/firebase_options.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
-import 'Pages/onboarding/onboarding_view.dart';
 import 'Pages/login/page/login.dart';
+import 'Pages/onboarding/page/onboarding_view.dart';
+import 'common/colors/color.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

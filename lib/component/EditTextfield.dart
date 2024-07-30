@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:klambi_ta/color.dart';
+
+import '../common/colors/color.dart';
 
 Widget EditTextfield({
   required String hint,

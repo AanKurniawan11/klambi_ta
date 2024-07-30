@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:klambi_ta/Pages/address/insert/components/city_post_code.dart';
-import 'package:klambi_ta/Pages/address/insert/components/kec.dart';
-import 'package:klambi_ta/Pages/address/insert/components/kode_pos.dart';
-import 'package:klambi_ta/Pages/address/insert/components/nama.dart';
-import 'package:klambi_ta/Pages/address/insert/components/optional_note.dart';
-import 'package:klambi_ta/Pages/address/insert/components/regional_province.dart';
-import 'package:klambi_ta/Pages/address/insert/components/telepon.dart';
-import 'package:klambi_ta/color.dart';
+import 'package:klambi_ta/Common/colors/color.dart';
 import 'package:klambi_ta/component/EditTextfield.dart';
+import 'package:klambi_ta/component/insert/city_post_code.dart';
+import 'package:klambi_ta/component/insert/kec.dart';
+import 'package:klambi_ta/component/insert/kode_pos.dart';
+import 'package:klambi_ta/component/insert/nama.dart';
+import 'package:klambi_ta/component/insert/optional_note.dart';
+import 'package:klambi_ta/component/insert/regional_province.dart';
+import 'package:klambi_ta/component/insert/telepon.dart';
 import '../showDataController.dart';
 
 class EditAddress extends StatelessWidget {
@@ -83,7 +83,7 @@ class EditAddress extends StatelessWidget {
                   MaterialStateProperty.all(ColorValue.kPrimary),
                 ),
                 onPressed: () {
-                  controller.EditAddres();
+                  // controller.EditAddres();
                 },
                 child: Text('Konfirmasi', style: TextStyle(color: Colors.white),
                 ),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:klambi_ta/color.dart';
+import 'package:klambi_ta/Common/colors/color.dart';
 import 'package:klambi_ta/component/space_extension.dart';
 import 'package:shimmer/shimmer.dart';
 

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:klambi_ta/color.dart';
+import 'package:klambi_ta/Common/colors/color.dart';
 import 'package:klambi_ta/pages/cs/components/text_details.dart';
 
 class CustomerService extends StatelessWidget {

@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:klambi_ta/Common/colors/color.dart';
 import 'package:klambi_ta/Pages/address/edit/editAddress.dart';
 import 'package:klambi_ta/Pages/address/showDataController.dart';
-import 'package:klambi_ta/color.dart';
 import 'package:klambi_ta/Pages/address/components/address_controller.dart';
 import 'package:klambi_ta/component/mytext.dart';
 import 'package:klambi_ta/component/space_extension.dart';

@@ -43,11 +43,11 @@ class   LoginController extends GetxController {
       ToastMessage.show(message.value);
       return;
     }
-
     try {
       isLoading.value = true;
 
       // final url = Uri.parse("https://klambi.ta.rplrus.com/api/login");
+      final url = Uri.parse("https://klambi.ta.rplrus.com/api/login");
       final body = {"email": email, "password": password};
 
       final response = await http.post(
@@ -58,6 +58,7 @@ class   LoginController extends GetxController {
 
       if (response.statusCode == 200) {
         LoginResponseModel loginResponseModel = loginResponseModelFromJson(response.body);
+            loginResponseModelFromJson(response.body);
 
         await prefs.setString("username", loginResponseModel.data.name);
         await prefs.setString("email", loginResponseModel.data.email);
@@ -67,6 +68,12 @@ class   LoginController extends GetxController {
         print("Token yang disimpan: $savedToken");
         ToastMessage.show("Berhasil login");
         Get.offAllNamed('/navbar');  // Navigate to the main screen
+        await prefs.getString("username");
+        await prefs.getString("email");
+        await prefs.getString("token");
+
+        ToastMessage.show("berhasil login");
+        Get.offAllNamed('/navbar'); // Navigate to the main screen
       } else {
         message.value = "Username atau Password salah : ${response.statusCode}";
         ToastMessage.show(message.value);
