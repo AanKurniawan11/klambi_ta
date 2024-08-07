@@ -39,9 +39,6 @@ class Datum {
   String namaLengkap;
   String keterangan;
   String provinsi;
-  String kota;
-  String kecamatan;
-  int kodePos;
   DateTime createdAt;
   DateTime updatedAt;
 
@@ -52,9 +49,6 @@ class Datum {
     required this.namaLengkap,
     required this.keterangan,
     required this.provinsi,
-    required this.kota,
-    required this.kecamatan,
-    required this.kodePos,
     required this.createdAt,
     required this.updatedAt,
   });
@@ -66,9 +60,6 @@ class Datum {
     namaLengkap: json["nama_lengkap"],
     keterangan: json["keterangan"],
     provinsi: json["provinsi"],
-    kota: json["kota"],
-    kecamatan: json["kecamatan"],
-    kodePos: json["kode_pos"],
     createdAt: DateTime.parse(json["created_at"]),
     updatedAt: DateTime.parse(json["updated_at"]),
   );
@@ -80,9 +71,6 @@ class Datum {
     "nama_lengkap": namaLengkap,
     "keterangan": keterangan,
     "provinsi": provinsi,
-    "kota": kota,
-    "kecamatan": kecamatan,
-    "kode_pos": kodePos,
     "created_at": createdAt.toIso8601String(),
     "updated_at": updatedAt.toIso8601String(),
   };

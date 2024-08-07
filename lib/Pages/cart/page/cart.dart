@@ -1,56 +1,18 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:klambi_ta/component/my_elevatedbutton.dart';
-import 'package:klambi_ta/component/space_extension.dart';
-
+import 'package:klambi_ta/Pages/address/Page/Address.dart';
+import 'package:klambi_ta/Pages/address/showDataController.dart';
+import 'package:klambi_ta/Pages/profile/cart/showcartmodel.dart';
+import 'package:klambi_ta/component/cart/cart_controllers.dart';
 import 'package:klambi_ta/Common/colors/color.dart';
-import 'package:klambi_ta/component/cart/cart_product.dart';
-import 'package:klambi_ta/component/home/model.dart';
-import 'package:klambi_ta/component/my_elevatedbutton.dart';
 import 'package:klambi_ta/component/space_extension.dart';
 
-class Cart extends StatefulWidget {
-  const Cart({super.key});
+class Cart extends StatelessWidget {
+  Cart({super.key});
 
-  @override
-  _CartState createState() => _CartState();
-}
-
-class _CartState extends State<Cart> {
-  List<Product> products = List.from(demoProducts);
-  List<int> quantities = List<int>.filled(demoProducts.length, 3);
-
-  String formatRupiah(double amount) {
-    final NumberFormat formatter = NumberFormat.currency(
-      locale: 'id_ID',
-      symbol: 'Rp ',
-      decimalDigits: 0,
-    );
-    return formatter.format(amount);
-  }
-
-  double get totalPrice {
-    double total = 0;
-    for (int i = 0; i < products.length; i++) {
-      total += products[i].price * quantities[i];
-    }
-    return total;
-  }
-
-  void _handleDelete(int index) {
-    setState(() {
-      products.removeAt(index);
-      quantities.removeAt(index);
-    });
-  }
-
-  void _handleQuantityChange(int index, int quantity) {
-    setState(() {
-      quantities[index] = quantity;
-    });
-  }
+  final CartControllers controllers = Get.put(CartControllers());
+  final Showdatacontroller Showcontroller = Get.put(Showdatacontroller());
 
   @override
   Widget build(BuildContext context) {
@@ -61,85 +23,255 @@ class _CartState extends State<Cart> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Keranjangku",
-          textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 24, fontWeight: FontWeight.w500),
+          'Keranjang Saya',
+          style: TextStyle(
+            fontFamily: 'General Sans',
+            fontWeight: FontWeight.w500,
+            fontSize: 23,
+          ),
         ),
         leading: IconButton(
             onPressed: () {
-              // Get.back(closeOverlays: bool.fromEnvironment("/navbar"));
               Get.back();
             },
-            icon: Icon(Icons.arrow_back)),
+            icon: Icon(Icons.arrow_back_outlined)),
         centerTitle: true,
-        toolbarHeight: height * 0.1,
+        backgroundColor: Colors.transparent,
+        elevation: 0, // Remove appbar shadow,
       ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          scrollDirection: Axis.vertical,
-          child: Column(
-            children: [
-              ListView.builder(
-                itemCount: products.length,
-                physics: NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                scrollDirection: Axis.vertical,
-                itemBuilder: (context, index) {
-                  return CartProduct(
-                    item: products[index],
-                    onDelete: () {
-                      _handleDelete(index);
-                    },
-                    onQuantityChanged: (quantity) {
-                      _handleQuantityChange(index, quantity);
-                    },
-                    formatRupiah: formatRupiah,
-                  );
-                },
+      body: Obx(() {
+        if (controllers.Cartdata.isEmpty) {
+          return Padding(
+            padding: const EdgeInsets.symmetric(vertical: 150),
+            child: Center(
+              child: Column(
+                children: [
+                  Container(
+                    height: height * 0.3,
+                    width: width * 0.8,
+                    foregroundDecoration: BoxDecoration(
+                        image: DecorationImage(
+                            image: AssetImage("assets/cartEmpty.png"))),
+                  ),
+                  Text("Tidak ada barang di keranjang")
+                ],
               ),
-              SizedBox(
-                height: 150,
+            ),
+          );
+        }
+        return ListView.builder(
+          padding: EdgeInsets.only(bottom: 100),
+          shrinkWrap: true,
+          scrollDirection: Axis.vertical,
+          itemCount: controllers.Cartdata.length,
+          itemBuilder: (context, index) {
+            final item = controllers.Cartdata[index];
+            return Dismissible(
+              key: Key(item.productId.toString()), // Ensure each item has a unique key
+              direction: DismissDirection.endToStart,
+              onDismissed: (direction) {
+                controllers.DeleteCartItem({
+                  "products_id": item.productId,
+                  "quantity": item.quantity,
+                  "size": item.size,
+                });
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text('${item.productTitle} dihapus dari keranjang')),
+                );
+              },
+              background: Container(
+                color: Colors.red,
+                alignment: Alignment.centerRight,
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                child: Icon(
+                  Icons.delete,
+                  color: Colors.white,
+                ),
+              ),
+              child: Container(
+                height: height * 0.2,
+                width: double.infinity,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 45, left: 20),
+                      child: Container(
+                        height: height * 0.12,
+                        width: width * 0.18,
+                        foregroundDecoration: BoxDecoration(
+                            image: DecorationImage(
+                                image: NetworkImage(item.imageUrl),
+                                fit: BoxFit.cover)),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10),
+                      child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              width: width * 0.58,
+                              child: Text(
+                                "${item.productTitle}",
+                                style: TextStyle(fontFamily: "General Sans"),
+                              ),
+                            ),
+                            Text(
+                              "Ukuran : ${item.size}",
+                              style: TextStyle(fontFamily: "General Sans"),
+                            ),
+                            Text(
+                              NumberFormat.currency(
+                                  locale: 'id_ID',
+                                  symbol: 'Rp ',
+                                  decimalDigits: 0)
+                                  .format(item.productPrice),
+                              style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600,
+                                  color: ColorValue.kSecondary,
+                                  fontFamily: "General Sans"),
+                            ),
+                            GetBuilder<CartControllers>(
+                                builder: (tx) => Text(
+                                    "Jumlah : ${NumberFormat.currency(locale: 'id_ID', symbol: 'Rp ', decimalDigits: 0).format(tx.Cartdata[index].quantity * tx.Cartdata[index].productPrice)}")),
+                            Container(
+                              // width: width * 0.26,
+                              // height: height * 0.04,
+                              // color: Colors.red,
+                              child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    GestureDetector(
+                                      onTap: () {
+                                        print(item.quantity);
+
+                                        if (item.quantity > 0) {
+                                          item.quantity--;
+                                          controllers.update();
+                                        }
+                                      },
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                            shape: BoxShape.rectangle,
+                                            border: Border.fromBorderSide(BorderSide(
+                                                color: ColorValue.kPrimary)),
+                                            borderRadius: BorderRadius.circular(6)),
+                                        child: Icon(
+                                          Icons.remove,
+                                          size: 18,
+                                        ),
+                                      ),
+                                    ),
+                                    GetBuilder<CartControllers>(
+                                        builder: (tx) => Text(
+                                          tx.Cartdata[index].quantity.toString(),
+                                          style: TextStyle(fontSize: 16),
+                                        )),
+                                    GestureDetector(
+                                      onTap: () {
+                                        item.quantity++;
+                                        controllers.update();
+                                      },
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                            shape: BoxShape.rectangle,
+                                            border: Border.fromBorderSide(BorderSide(
+                                                color: ColorValue.kPrimary)),
+                                            borderRadius: BorderRadius.circular(6)),
+                                        child: Icon(
+                                          Icons.add,
+                                          size: 18,
+                                        ),
+                                      ),
+                                    ),
+                                  ].withSpaceBetween(width: 8)
+                              ),
+                            ),
+                          ].withSpaceBetween(height: 2)),
+                    ),
+                    Column(
+                      children: [
+                        Obx(
+                              () => Checkbox(
+                            value: controllers.selectedItems.contains(item),
+                            checkColor: ColorValue.kWhite,
+                            activeColor: ColorValue.kSecondary,
+                            side: BorderSide(color: ColorValue.kSecondary),
+                            onChanged: (bool? value) {
+                              controllers.toggleSelection(item);
+                              controllers.selectedCart(
+                                  item.id, value ?? false, item.quantity);
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            );
+          },
+        );
+      }),
+      bottomSheet: Obx(() {
+        final totalPrice = controllers.selectedItems
+            .fold(0, (sum, item) => sum + (item.quantity * item.productPrice));
+        return Container(
+          padding: EdgeInsets.all(5),
+          height: height * 0.13,
+          color: Colors.white,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text("Total:",
+                        style: TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.w600)),
+                    Text(
+                      NumberFormat.currency(
+                          locale: 'id_ID', symbol: 'Rp ', decimalDigits: 0)
+                          .format(totalPrice),
+                      style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w600,
+                          color: ColorValue.kSecondary),
+                    ),
+                  ],
+                ),
+              ),
+              GestureDetector(
+                onTap: () {
+                  if (Showcontroller.Show.isNotEmpty) {
+                    Get.offNamed("/payment");
+                  } else {
+                    Get.to(AddressPageView());
+                  }
+                },
+                child: Container(
+                  width: width * 0.9,
+                  height: height * 0.055,
+                  decoration: BoxDecoration(
+                    color: ColorValue.kPrimary,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Center(
+                    child: Text(
+                      "Beli",
+                      style: TextStyle(fontFamily: "General Sans"),
+                    ),
+                  ),
+                ),
               ),
             ],
           ),
-        ),
-      ),
-      bottomSheet: Stack(
-        children: [
-          Container(
-            height: height * 0.2,
-            width: double.infinity,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 25),
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Text(
-                        "Total :",
-                        style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.w600),
-                      ),
-                      Text(
-                        formatRupiah(totalPrice),
-                        style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w600,
-                            color: ColorValue.kSecondary),
-                      ),
-                    ].withSpaceBetween(width: 30),
-                  ),
-                  My_Button(
-                    onclick: () {},
-                    title: "Bayar",
-                  ),
-                ].withSpaceBetween(height: 25),
-              ),
-            ),
-          ),
-        ],
-      ),
+        );
+      }),
     );
   }
 }

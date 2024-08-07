@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:klambi_ta/Common/colors/color.dart';
+import 'package:klambi_ta/Pages/cart/page/cart.dart';
 import 'package:klambi_ta/Pages/profile/components/profile_controller.dart';
-import 'package:klambi_ta/Pages/profile/cart/page/cart.dart';
+import 'package:klambi_ta/component/cart/cart_controllers.dart';
 
 class Header extends StatelessWidget {
   Header({super.key});
@@ -24,6 +25,7 @@ class Header extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(ProfileController());
+    final controllerCart = Get.put(CartControllers());
 
     return Padding(
       padding: const EdgeInsets.only(left: 25),
@@ -95,7 +97,7 @@ class Header extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 30),
             child: GestureDetector(
               onTap: () {
-                Get.to(Cart());
+                Get.to(() => Cart());
               },
               child: const Icon(
                 Icons.shopping_cart_outlined,

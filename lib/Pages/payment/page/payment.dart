@@ -2,6 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:klambi_ta/Common/colors/color.dart';
+import 'package:klambi_ta/Pages/address/components/show_addressModel.dart';
+import 'package:klambi_ta/Pages/address/showDataController.dart';
+import 'package:klambi_ta/component/mytext.dart';
 import 'package:klambi_ta/component/payment/DeliverOpsi.dart';
 import 'package:klambi_ta/component/payment/listdown.dart';
 
@@ -11,7 +14,8 @@ import 'package:klambi_ta/component/space_extension.dart';
 
 
 class Payment extends StatelessWidget {
-  const Payment({super.key});
+   Payment({super.key});
+  final Showdatacontroller Showcontroller = Get.put(Showdatacontroller());
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +37,7 @@ class Payment extends StatelessWidget {
         centerTitle: true,
         leading: IconButton(
           onPressed: () {
-            Get.offAndToNamed("/design");
+            Get.back();
           },
           icon: Icon(Icons.arrow_back),
         ),
@@ -46,7 +50,7 @@ class Payment extends StatelessWidget {
                 padding: const EdgeInsets.all(8.0),
                 child: Container(
                   width: width * 0.85,
-                  height: height * 0.26,
+                  height: height * 0.33,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(12),
                     color: ColorValue.kPrimary,
@@ -72,14 +76,28 @@ class Payment extends StatelessWidget {
                           children: [
                             Icon(Icons.add_location_sharp,
                                 size: 55, color: ColorValue.kWhite),
-                            Container(
-                              width: width * 0.45,
-                              child: Text(
-                                "Kost Pororo, Besito, Gebog, Kudus, Jawa Tengah, 33089",
-                                style: TextStyle(
-                                    fontSize: 18, fontWeight: FontWeight.w500),
-                                maxLines: 3,
-                              ),
+                            Column(
+                              crossAxisAlignment:CrossAxisAlignment.start ,
+                              children: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    myTexts(text: "Kontak :"),
+                                    myTexts(text: "${Showcontroller.Show[0].namaLengkap}",),
+                                    myTexts(text: "${Showcontroller.Show[0].nomorTelepon}"),
+                                  ],
+                                ),
+                                SizedBox(height: 20,),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    myTexts(text: "Alamat :"),
+                                    Container(
+                                        width: width * 0.55,
+                                        child: Text("${Showcontroller.Show[0].provinsi}" + " ${Showcontroller.Show[0].keterangan}",maxLines: 3,style: TextStyle(color: ColorValue.kWhite,fontFamily: "General Sans"),)),
+                                  ],
+                                ),
+                              ],
                             ),
                           ],
                         ),

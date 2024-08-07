@@ -48,15 +48,13 @@ class RegisterController extends GetxController {
       print(response.body);
 
       if (response.statusCode == 200) {
-        final responseData = registerResponseModelFromJson(response.body);
+        // final responseData = registerResponseModelFromJson(response.body);
         // message.value = responseData.message;
 
         SharedPreferences prefs = await SharedPreferences.getInstance();
         await prefs.setString('name', username);
         await prefs.setString('email', email);
         print(response.statusCode);
-        // If there's a token in the response, save it too
-        // await prefs.setString('token', responseData.token);
 
         isLoading.value = false;
         ToastMessage.show("Register berhasil");

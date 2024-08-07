@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:klambi_ta/Pages/address/showDataController.dart';
+import 'package:klambi_ta/component/cart/cart_controllers.dart';
 import 'package:klambi_ta/component/my_elevatedbutton.dart';
 import 'package:intl/intl.dart';
 import 'package:klambi_ta/Common/colors/color.dart';
@@ -8,12 +10,18 @@ import 'package:klambi_ta/Pages/home/components/allproductresponsemodel.dart';
 import 'package:klambi_ta/component/detail/sizes.dart';
 import 'package:klambi_ta/component/space_extension.dart';
 import 'package:get/get.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class DetailView extends StatelessWidget {
   final controller = Get.put(DetailController());
+  final cartcontroller = Get.put(CartControllers());
+  final Showdatacontroller Showcontroller = Get.put(Showdatacontroller());
+
   final Datum item;
+
   DetailView({super.key, required this.item});
+
   String formatPrice(int price) {
     final format = NumberFormat.currency(
       locale: 'id_ID',
@@ -22,6 +30,7 @@ class DetailView extends StatelessWidget {
     );
     return format.format(price);
   }
+
   @override
   Widget build(BuildContext context) {
     final Size mediaquery = MediaQuery.of(context).size;
@@ -44,10 +53,8 @@ class DetailView extends StatelessWidget {
         elevation: 0, // Remove appbar shadow
       ),
       body: SlidingUpPanel(
-        minHeight: height * 0.42,
-        // maxHeight: height * 1,
+        minHeight: height * 0.4,
         panelSnapping: true,
-        // backdropEnabled: true,
         backdropOpacity: 0.5,
         backdropTapClosesPanel: true,
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
@@ -73,7 +80,7 @@ class DetailView extends StatelessWidget {
     final double height = mediaquery.height;
     final double width = mediaquery.width;
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 25),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.only(
@@ -134,31 +141,32 @@ class DetailView extends StatelessWidget {
                     ),
                   ),
                   child: Row(
-                      children: [
-                    Icon(
-                      CupertinoIcons.star_fill,
-                      color: ColorValue.kPrimary,
-                      size: 12,
-                    ),
-                    Text(
-                      item.rate.toString(),
-                      style: TextStyle(
-                        fontFamily: "General Sans",
-                        fontWeight: FontWeight.w500,
-                        fontSize: 12,
-                        color: ColorValue.kDarkGrey,
+                    children: [
+                      Icon(
+                        CupertinoIcons.star_fill,
+                        color: ColorValue.kPrimary,
+                        size: 12,
                       ),
-                    ),
-                    Text(
-                      "(15)",
-                      style: TextStyle(
-                        fontFamily: "General Sans",
-                        fontWeight: FontWeight.w500,
-                        fontSize: 12,
-                        color: ColorValue.kDarkGrey,
+                      Text(
+                        item.rate.toString(),
+                        style: TextStyle(
+                          fontFamily: "General Sans",
+                          fontWeight: FontWeight.w500,
+                          fontSize: 12,
+                          color: ColorValue.kDarkGrey,
+                        ),
                       ),
-                    ),
-                  ].withSpaceBetween(width: 2)),
+                      Text(
+                        "(15)",
+                        style: TextStyle(
+                          fontFamily: "General Sans",
+                          fontWeight: FontWeight.w500,
+                          fontSize: 12,
+                          color: ColorValue.kDarkGrey,
+                        ),
+                      ),
+                    ].withSpaceBetween(width: 2),
+                  ),
                 ),
                 SizedBox(width: 5),
                 Container(
@@ -232,81 +240,209 @@ class DetailView extends StatelessWidget {
                 color: ColorValue.kBlack,
               ),
             ),
-            SizedBox(height: 10),
-            Text(
-              "Ukuran Baju",
-              style: TextStyle(fontSize: 22, fontWeight: FontWeight.w500),
-            ),
             SizedBox(
-              height: 30,
+              height:40,
             ),
-            Text(
-              "Pilih Ukuran",
-              style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                  color: ColorValue.kDarkGrey),
-            ),
-            Divider(
-              thickness: 1,
-              indent: 3,
-              endIndent: 3,
-              color: ColorValue.kLightGrey,
-            ),
-            Sizes(),
-            SizedBox(
-              height: 20,
-            ),
-            SizedBox(
-              height: 20,
-            ),
-
-            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-              Container(
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
                   width: width * 0.58,
                   height: height * 0.075,
                   child: My_Button(
-                      onclick: () {
-                        Get.offNamed("/address");
-                      },
-                      title: "Langsung Beli")),
-              Container(
+                    onclick: () {
+
+                      if(Showcontroller.Show.isNotEmpty){
+                        Get.offNamed("/payment");
+                      }else{
+                        Get.toNamed("/address");
+                      }
+                    },
+                    title: "Langsung Beli",
+                  ),
+                ),
+                Container(
                   width: width * 0.25,
                   height: height * 0.075,
-                  child:
-                  ElevatedButton(
-                    // onPressed: () {
-                    //   // // Add product to cart logic (replace with your actual implementation)
-                    //   // addProductToCart(productId); // Example function call
-                    //   //
-                    //   // // Show notification using ScaffoldMessenger
-                    //   ScaffoldMessenger.of(context).showSnackBar(
-                    //     SnackBar(
-                    //       content: Text('Produk berhasil ditambahkan ke keranjang!'),
-                    //       backgroundColor: Colors.green, // Success color
-                    //       duration: Duration(seconds: 2), // Adjust duration as needed
-                    //     ),
-                    //   );
-                    // },
+                  child: ElevatedButton(
+                    onPressed: () {
+                      showMaterialModalBottomSheet(
+                        context: context,
+                        builder: (context) => SingleChildScrollView(
+                          controller: ModalScrollController.of(context),
+                          child:
+                          Container(
+                            height: height * 0.53,
+                            // width: 100,
+                            color: ColorValue.kWhite,
+                            child: Padding(
+                              padding: const EdgeInsets.all(15),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  GestureDetector(
+                                    onTap: (){
+                                      Get.back();
+                                    },
+                                    child: Align(
+                                        alignment: Alignment.topRight,
+                                        child: Icon(Icons.close)),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Row(
+                                      children: [
+                                        Container(
+                                          height: 100,
+                                          width:100,
+                                          foregroundDecoration: BoxDecoration(
+                                              image: DecorationImage(image: NetworkImage(item.imageUrl))
+                                          ),
+                                        ),
+                                        SizedBox(width: 10,),
+                                        Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Container(
+                                                width: width*0.6,
+                                                child: Text(item.title,style: TextStyle(fontFamily: "General Sans"),maxLines: 2,)),
+                                            Text("Rp." + item.price.toString(),style: TextStyle(fontFamily: "General Sans",fontSize: 16,color: ColorValue.kSecondary),)
 
-                    onPressed: () {},
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                  SizedBox(height: 20),
+
+                                  Text(
+                                    "Pilih Ukuran",
+                                    style: TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w500,
+                                        color: ColorValue.kDarkGrey),
+                                  ),
+                                  Divider(
+                                    thickness: 1,
+                                    indent: 3,
+                                    endIndent: 3,
+                                    color: ColorValue.kLightGrey,
+                                  ),
+                                  Sizes(onChanged: (value) {
+                                    cartcontroller.size.value = value;
+                                  }),
+                                  SizedBox(height: 10),
+                                  Divider(
+                                    thickness: 1,
+                                    indent: 3,
+                                    endIndent: 3,
+                                    color: ColorValue.kLightGrey,
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          "Jumlah",
+                                          style: TextStyle(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w500,
+                                              color: ColorValue.kDarkGrey),
+                                        ),
+                                        Obx(() {
+                                          return Container(
+                                            width: width * 0.26,
+                                            height: height* 0.04,
+                                            decoration: BoxDecoration(
+                                                color: ColorValue.kLightGrey,
+                                                border: Border.fromBorderSide(BorderSide(color: ColorValue.kDarkGrey),
+                                                ),
+                                                borderRadius: BorderRadius.circular(10)
+                                            ),
+                                            child: Row(
+                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              children: [
+                                                IconButton(
+                                                  icon: Icon(Icons.remove,size: 10,),
+                                                  onPressed: () {
+                                                    if (cartcontroller.quantity.value > 0) {
+                                                      cartcontroller.quantity.value--;
+                                                    }
+                                                  },
+                                                ),
+                                                Text(cartcontroller.quantity.value.toString(),style: TextStyle(fontSize: 10),),
+                                                IconButton(
+                                                  icon: Icon(Icons.add,size: 10,),
+                                                  onPressed: () {
+                                                    cartcontroller.quantity.value++;
+                                                  },
+                                                ),
+                                              ],
+                                            ),
+                                          );
+                                        }),
+
+                                      ].withSpaceBetween(height: 20)
+                                    ),
+                                  ),
+                                  SizedBox(height: 20,),
+                                  Center(
+                                    child: GestureDetector(
+                                      onTap: (){
+                                        if(cartcontroller.quantity.value  == 0){
+                                          ScaffoldMessenger.of(context).showSnackBar(
+                                            SnackBar(
+                                              content: Text("Tidak ada barang untuk ditambahkan ke keranjang"),
+                                              behavior: SnackBarBehavior.floating,
+                                              margin: EdgeInsets.only(bottom: 700.0, left: 20.0, right: 20.0), // Margin untuk menempatkan SnackBar di atas
+                                            ),
+                                          );
+                                        }else{
+                                          cartcontroller.addToCart(item.id);
+                                          Get.toNamed("/cart");
+                                        }
+                                      },
+                                      child: Container(
+                                        width: width * 0.8,
+                                        height: height* 0.06,
+                                        decoration: BoxDecoration(
+                                            color: ColorValue.kPrimary,
+                                            borderRadius: BorderRadius.circular(10)
+                                        ),
+                                        child: Center(child: Text("Tambahkan ke Keranjang",style: TextStyle(fontFamily: "General Sans"),)),
+                                      ),
+                                    ),
+                                  ),
+
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      );
+                    },
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all(ColorValue.kSecondary),
                       minimumSize: MaterialStateProperty.all(Size(width * 0.85, height * 0.065)),
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12.0),
+                        ),
                       ),
                     ),
                     child: Icon(
                       Icons.shopping_cart_checkout_outlined,
                       color: Colors.white,
                     ),
-                  )
-              )]),
+                  ),
+                )
+              ],
+            ),
           ],
         ),
       ),
     );
   }
 }
-

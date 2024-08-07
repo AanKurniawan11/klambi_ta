@@ -5,7 +5,6 @@ import 'package:klambi_ta/Pages/home/page/home.dart';
 import 'package:klambi_ta/Pages/profile/page/profile.dart';
 import '../colors/color.dart';
 
-
 class LandingPageController extends GetxController {
   var tabIndex = 0.obs;
 
@@ -18,9 +17,8 @@ class LandingPageController extends GetxController {
 class LandingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final LandingPageController landingPageController =
-        Get.put(LandingPageController(), permanent: false);
-    //
+    final LandingPageController landingPageController = Get.put(LandingPageController());
+
     final args = Get.arguments;
     if (args != null && args is int) {
       print("Received argument: $args");
@@ -34,8 +32,7 @@ class LandingPage extends StatelessWidget {
 
     return SafeArea(
       child: Scaffold(
-        bottomNavigationBar:
-            buildBottomNavigationMenu(context, landingPageController),
+        bottomNavigationBar: buildBottomNavigationMenu(context, landingPageController),
         body: Obx(() {
           print("Current Tab Index: ${landingPageController.tabIndex.value}");
           return IndexedStack(
@@ -53,34 +50,34 @@ class LandingPage extends StatelessWidget {
 
   buildBottomNavigationMenu(context, landingPageController) {
     return Obx(() => MediaQuery(
-          data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
-          child: SizedBox(
-            height: 70,
-            child: BottomNavigationBar(
-              currentIndex: landingPageController.tabIndex.value,
-              onTap: (index) {
-                print("Bottom Navigation Item Clicked: $index");
-                landingPageController.changeTabIndex(index);
-              },
-              items: const [
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.home),
-                  label: 'Home',
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.receipt_long_sharp),
-                  label: 'Riwayat',
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.person),
-                  label: 'Profile',
-                ),
-              ],
-              iconSize: 30,
-              selectedItemColor: ColorValue.kPrimary,
-              unselectedItemColor: ColorValue.kLightGrey,
+      data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+      child: SizedBox(
+        height: 70,
+        child: BottomNavigationBar(
+          currentIndex: landingPageController.tabIndex.value,
+          onTap: (index) {
+            print("Bottom Navigation Item Clicked: $index");
+            landingPageController.changeTabIndex(index);
+          },
+          items: const [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: 'Home',
             ),
-          ),
-        ));
+            BottomNavigationBarItem(
+              icon: Icon(Icons.receipt_long_sharp),
+              label: 'Riwayat',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.person),
+              label: 'Profile',
+            ),
+          ],
+          iconSize: 30,
+          selectedItemColor: ColorValue.kPrimary,
+          unselectedItemColor: ColorValue.kLightGrey,
+        ),
+      ),
+    ));
   }
 }

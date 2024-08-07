@@ -12,9 +12,7 @@ class CategoryTabs extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 25),
       child: Obx(() {
-        // Cek apakah data sudah dimuat atau belum
         if (homeController.categoryResponseAll.isEmpty) {
-          // Jika data belum dimuat, tampilkan shimmer loading
           return Shimmer.fromColors(
             baseColor: ColorValue.kLightGrey,
             highlightColor: ColorValue.kWhite,

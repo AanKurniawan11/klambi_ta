@@ -26,7 +26,7 @@ class Product {
 List<Product> demoProducts = [
   Product(
     id: 1,
-    image: 'assets/images/demo/demo_image.png',
+    image: 'assets/images/demo_image.png',
     title: 'Custom Baju Warna Hitam Polos',
     category: 'Lengan Pendek',
     price: 99000,
@@ -39,7 +39,7 @@ List<Product> demoProducts = [
   ),
   Product(
     id: 2,
-    image: 'assets/images/demo/demo_image.png',
+    image: 'assets/images/demo_image.png',
     title: 'Custom Baju Warna Hitam Polos',
     category: 'Lengan Pendek',
     price: 199000,
@@ -52,7 +52,7 @@ List<Product> demoProducts = [
   ),
   Product(
     id: 3,
-    image: 'assets/images/demo/demo_image.png',
+    image: 'assets/images/demo_image.png',
     title: 'Custom Baju Warna Hitam Polos',
     category: 'Oversize',
     price: 119000,
@@ -65,7 +65,7 @@ List<Product> demoProducts = [
   ),
   Product(
     id: 4,
-    image: 'assets/images/demo/demo_image.png',
+    image: 'assets/images/demo_image.png',
     title: 'Custom Baju Warna Hitam Polos',
     category: 'Lengan Panjang',
     price: 129000,

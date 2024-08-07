@@ -16,6 +16,7 @@ class ProfileController extends GetxController {
   void getUser() {
     username.value = prefs.getString("username") ?? "";
     email.value = prefs.getString("email") ?? "";
+    print(email.value.obs);
   }
 
   void setUser(User? firebaseUser) {
