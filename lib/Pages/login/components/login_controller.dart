@@ -30,7 +30,6 @@ class   LoginController extends GetxController {
 
   Future<void> setPreference() async {
     prefs = await SharedPreferences.getInstance();
-
   }
 
   Future<void> loginAction(String email, String password) async {
@@ -88,6 +87,10 @@ class   LoginController extends GetxController {
   }
   void getToken()async{}
 
+  Future<void> saveUserId(int userId) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setInt('user_id', userId);
+  }
 
   Future<bool> checkIfLoggedIn() async {
     prefs = await SharedPreferences.getInstance();

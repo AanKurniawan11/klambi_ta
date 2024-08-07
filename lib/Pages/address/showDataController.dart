@@ -12,20 +12,17 @@ class Showdatacontroller extends GetxController{
   RxList<Datum> Show = <Datum>[].obs;
   var keterangan = ''.obs;
   var provinsi = ''.obs;
-  var kota = ''.obs;
-  var kodePos = ''.obs;
   var categoryId = '1'.obs;
-  var kecamatan = ''.obs;
   var nomorTelepon = ''.obs;
   var namaLengkap = ''.obs;
 
-  final TextEditingController namaLengkaps =TextEditingController();
-  final TextEditingController noTelepon  =TextEditingController();
-  final TextEditingController  Provinsi =TextEditingController();
-  final TextEditingController  Kota =TextEditingController();
-  final TextEditingController  Kecamatan =TextEditingController();
-  final TextEditingController  kode =TextEditingController();
-  final TextEditingController  note =TextEditingController();
+  // final TextEditingController namaLengkaps =TextEditingController();
+  // final TextEditingController noTelepon  =TextEditingController();
+  // final TextEditingController  Provinsi =TextEditingController();
+  // final TextEditingController  Kota =TextEditingController();
+  // final TextEditingController  Kecamatan =TextEditingController();
+  // final TextEditingController  kode =TextEditingController();
+  // final TextEditingController  note =TextEditingController();
 
 
 
@@ -34,23 +31,19 @@ class Showdatacontroller extends GetxController{
   void onInit() {
     super.onInit();
     setPreference();
-    ShowData();
   }
 
   Future<void> setPreference() async {
     prefs = await SharedPreferences.getInstance();
-
+    ShowData();
   }
 
-  Future<void> submitAddress() async {
+  Future<void>  submitAddress() async {
     var token = await prefs.getString("token");
     final address = Address(
       keterangan: keterangan.value,
       provinsi: provinsi.value,
-      kota: kota.value,
-      kodePos: kodePos.value,
       categoryId: categoryId.value,
-      kecamatan: kecamatan.value,
       nomorTelepon: nomorTelepon.value,
       namaLengkap: namaLengkap.value,
     );

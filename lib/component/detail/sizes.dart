@@ -5,7 +5,10 @@ import '../../Common/colors/color.dart';
 
 class Sizes extends StatelessWidget {
   final List<String> sizeList = ["S", "M", "L", "XL", "XXL"];
+  final Function(String) onChanged;
   final DetailController sizeController = Get.find(); // Use Get.find() to get the existing instance
+
+  Sizes({required this.onChanged, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +29,7 @@ class Sizes extends StatelessWidget {
                   return GestureDetector(
                     onTap: () {
                       sizeController.selectSize(index);
+                      onChanged(sizeList[index]); // Call onChanged with the selected size
                     },
                     child: Container(
                       margin: EdgeInsets.all(5),

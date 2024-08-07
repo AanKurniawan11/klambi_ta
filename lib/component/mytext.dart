@@ -37,7 +37,8 @@ class txte extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(email, style:TextStyle(
+    return Text(
+      email, style:TextStyle(
         fontSize: 16,
         fontWeight: FontWeight.w500,
         fontFamily: "General Sans",

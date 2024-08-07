@@ -3,20 +3,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 class Address {
   String keterangan;
   String provinsi;
-  String kota;
-  String kodePos;
   String categoryId;
-  String kecamatan;
   String nomorTelepon;
   String namaLengkap;
 
   Address({
     required this.keterangan,
     required this.provinsi,
-    required this.kota,
-    required this.kodePos,
     required this.categoryId,
-    required this.kecamatan,
     required this.nomorTelepon,
     required this.namaLengkap,
   });
@@ -26,10 +20,7 @@ class Address {
     return Address(
       keterangan: json['keterangan'],
       provinsi: json['provinsi'],
-      kota: json['kota'],
-      kodePos: json['kode_pos'],
       categoryId: json['category_id'],
-      kecamatan: json['kecamatan'],
       nomorTelepon: json['nomor_telepon'],
       namaLengkap: json['nama_lengkap'],
     );
@@ -40,10 +31,7 @@ class Address {
     return {
       'keterangan': keterangan,
       'provinsi': provinsi,
-      'kota': kota,
-      'kode_pos': kodePos,
       'category_id': categoryId,
-      'kecamatan': kecamatan,
       'nomor_telepon': nomorTelepon,
       'nama_lengkap': namaLengkap,
     };
@@ -55,10 +43,7 @@ class Address {
 
     await prefs.setString('keterangan', keterangan);
     await prefs.setString('provinsi', provinsi);
-    await prefs.setString('kota', kota);
-    await prefs.setString('kodePos', kodePos);
     await prefs.setString('categoryId', categoryId);
-    await prefs.setString('kecamatan', kecamatan);
     await prefs.setString('nomorTelepon', nomorTelepon);
     await prefs.setString('namaLengkap', namaLengkap);
   }
@@ -87,10 +72,7 @@ class Address {
       return Address(
         keterangan: keterangan,
         provinsi: provinsi,
-        kota: kota,
-        kodePos: kodePos,
         categoryId: categoryId,
-        kecamatan: kecamatan,
         nomorTelepon: nomorTelepon,
         namaLengkap: namaLengkap,
       );

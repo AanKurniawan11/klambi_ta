@@ -43,10 +43,7 @@ class AddressController extends GetxController {
     final address = Address(
       keterangan: keterangan.value,
       provinsi: provinsi.value,
-      kota: kota.value,
-      kodePos: kodePos.value,
       categoryId: categoryId.value,
-      kecamatan: kecamatan.value,
       nomorTelepon: nomorTelepon.value,
       namaLengkap: namaLengkap.value,
     );

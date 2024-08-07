@@ -50,6 +50,9 @@ dependencies:
   firebase_core: ^3.2.0
   firebase_auth: ^5.1.2
   cached_network_image: ^3.2.1
+  modal_bottom_sheet: ^3.0.0
+  pull_to_refresh_flutter3: ^2.0.2
+  smartrefresh: ^0.0.2
 
 
 

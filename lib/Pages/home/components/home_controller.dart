@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 import 'allproductresponsemodel.dart' as product_model;
 import 'categoryresponsemodel.dart' as category_model;
 
 class HomeController extends GetxController {
+  final RefreshController refreshController = RefreshController(initialRefresh: false);
   RxList<product_model.Datum> productResponseAll = <product_model.Datum>[].obs;
   RxList<String> categoryResponseAll = <String>[].obs;
-  RxInt selectedIndex = 0.obs; // Add this line
+  RxInt selectedIndex = 0.obs;
 
   RxBool isLoading = false.obs;
 
@@ -22,14 +24,11 @@ class HomeController extends GetxController {
     try {
       isLoading.value = true;
 
-      final response = await http
-          .get(Uri.parse("https://klambi.ta.rplrus.com/api/category"));
+      final response = await http.get(Uri.parse("https://klambi.ta.rplrus.com/api/category"));
 
       if (response.statusCode == 200) {
-        final allCategoryResponse =
-            category_model.categoryResponseModelFromJson(response.body);
+        final allCategoryResponse = category_model.categoryResponseModelFromJson(response.body);
         categoryResponseAll.value = allCategoryResponse.data;
-        print(response.body);
       } else {
         print("Status code: " + response.statusCode.toString());
       }
@@ -54,8 +53,7 @@ class HomeController extends GetxController {
       final response = await http.get(Uri.parse("https://klambi.ta.rplrus.com/api/$newTemp"));
 
       if (response.statusCode == 200) {
-        final allProductResponse =
-            product_model.allproductResponseModelFromJson(response.body);
+        final allProductResponse = product_model.allproductResponseModelFromJson(response.body);
         productResponseAll.value = allProductResponse.data;
       } else {
         print("Status code: " + response.statusCode.toString());
@@ -66,5 +64,10 @@ class HomeController extends GetxController {
     } finally {
       isLoading.value = false;
     }
+  }
+
+  void refreshList() async {
+    await loadDataProduct(selectedIndex.value == 0 ? null : categoryResponseAll[selectedIndex.value]);
+    refreshController.refreshCompleted();
   }
 }

@@ -105,15 +105,9 @@ class AddAddress extends StatelessWidget {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     color: ColorValue.kSecondary,
-                    // boxShadow: [
-                    //   BoxShadow(
-                    //     color: ColorValue.kLightGrey,
-                    //     offset: Offset(5, 5),
-                    //   ),
-                    // ],
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.all(10.0),
+                    padding: const EdgeInsets.all(8.0),
                     child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -141,16 +135,9 @@ class AddAddress extends StatelessWidget {
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       myTexts(text: "Alamat :"),
-                                      Row(
-                                        mainAxisAlignment: MainAxisAlignment.start,
-                                        children: [
-                                          myTexts(text: "${Showcontroller.Show[0].provinsi}"),
-                                          myTexts(text: ",${Showcontroller.Show[0].kota}"),
-                                          myTexts(text: ",${Showcontroller.Show[0].kecamatan}"),
-                                          myTexts(text: ",${Showcontroller.Show[0].kodePos}"),
-                                        ],
-                                      ),
-                                      myTexts(text: "Keterangan: ${Showcontroller.Show[0].keterangan}"),
+                                      Container(
+                                          width: width * 0.68,
+                                          child: Text("${Showcontroller.Show[0].provinsi}" + " ${Showcontroller.Show[0].keterangan}",maxLines: 3,style: TextStyle(color: ColorValue.kWhite,fontFamily: "General Sans"),)),
                                     ],
                                   ),
                                 ],
@@ -163,7 +150,7 @@ class AddAddress extends StatelessWidget {
                           children: [
                             GestureDetector(
                               onTap: (){
-                                Get.to(EditAddress());
+                                // Get.to(EditAddress());
                               },
                                 child: Text("Ubah",style: TextStyle(color: ColorValue.kWhite,decoration: TextDecoration.underline,decorationThickness: 1.5,decorationColor: ColorValue.kWhite,fontFamily: "General Sans"),)),
                             IconButton(
@@ -174,7 +161,6 @@ class AddAddress extends StatelessWidget {
                             ),
                           ].withSpaceBetween(width: 200)
                         )
-
                       ],
                     ),
                   ),

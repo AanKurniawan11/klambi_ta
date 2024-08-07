@@ -56,7 +56,15 @@ class MyApp extends StatelessWidget {
               style: ButtonStyle(
                   backgroundColor: MaterialStatePropertyAll(Colors.red)
               )
-          )
+          ),
+        // checkboxTheme: CheckboxThemeData(
+        //   fillColor: MaterialStateProperty.resolveWith((Set<MaterialState> states) {
+        //     if (states.contains(MaterialState.selected)) {
+        //       return Colors.red; // Warna kotak centang dicentang
+        //     }
+        //     return Colors.white; // Warna kotak centang tidak dicentang
+        //   }),
+        // )
       ),
       getPages: pageRoutes,
       home: AnimatedSplashScreen(
