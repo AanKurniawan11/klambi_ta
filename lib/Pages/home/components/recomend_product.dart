@@ -4,6 +4,7 @@ import 'package:klambi_ta/Pages/home/components/allproductresponsemodel.dart';
 import 'package:klambi_ta/component/space_extension.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:shimmer/shimmer.dart';
 
 import '../../../common/colors/color.dart';
 
@@ -12,11 +13,12 @@ Widget RecomendProduct(BuildContext context, Datum item) {
     final format = NumberFormat.currency(locale: 'id_ID', symbol: 'Rp ', decimalDigits: 0);
     return format.format(price);
   }
+
   final size = MediaQuery.of(context).size;
 
   return GestureDetector(
     onTap: () {
-      Get.to(DetailView(item: item));
+      Get.to(()=>DetailView(item: item));
     },
     child: Container(
       height: size.height * 0.9,
@@ -38,15 +40,15 @@ Widget RecomendProduct(BuildContext context, Datum item) {
                   child: Image.network(
                     item.imageUrl,
                     fit: BoxFit.fill,
-                    loadingBuilder: (BuildContext context, Widget child,
-                        ImageChunkEvent? loadingProgress) {
+                    loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
                       if (loadingProgress == null) return child;
-                      return Center(
-                        child: CircularProgressIndicator(
-                          value: loadingProgress.expectedTotalBytes != null
-                              ? loadingProgress.cumulativeBytesLoaded /
-                              loadingProgress.expectedTotalBytes!
-                              : null,
+                      return Shimmer.fromColors(
+                        baseColor: Colors.grey[300]!,
+                        highlightColor: Colors.grey[100]!,
+                        child: Container(
+                          width: size.width * 0.5,
+                          height: size.height * 0.18,
+                          color: Colors.white,
                         ),
                       );
                     },

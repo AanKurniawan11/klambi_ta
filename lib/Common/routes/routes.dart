@@ -1,35 +1,33 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:klambi_ta/Common/routes/navbar.dart';
-import 'package:klambi_ta/Pages/address/Page/Address.dart';
-import 'package:klambi_ta/Pages/address/Page/add_address.dart';
-import 'package:klambi_ta/Pages/address/components/address_binding.dart';
-import 'package:klambi_ta/Pages/cart/components/cart_binding.dart';
 import 'package:klambi_ta/Pages/cart/page/cart.dart';
-import 'package:klambi_ta/Pages/chat/components/chat_binding.dart';
-import 'package:klambi_ta/Pages/chat/page/chat.dart';
-import 'package:klambi_ta/Pages/cs/components/cs_binding.dart';
-import 'package:klambi_ta/Pages/cs/page/cs.dart';
-import 'package:klambi_ta/Pages/design/components/design_binding.dart';
+import 'package:klambi_ta/Pages/design/controller/design_binding.dart';
 import 'package:klambi_ta/Pages/design/page/design.dart';
-import 'package:klambi_ta/Pages/edit/components/edit_binding.dart';
-import 'package:klambi_ta/Pages/edit/page/editprofile.dart';
 import 'package:klambi_ta/Pages/history/components/history_binding.dart';
 import 'package:klambi_ta/Pages/history/page/history.dart';
 import 'package:klambi_ta/Pages/home/components/home_binding.dart';
 import 'package:klambi_ta/Pages/home/page/home.dart';
-import 'package:klambi_ta/Pages/insert/components/insert_binding.dart';
+import 'package:klambi_ta/Pages/insert/controller/insert_binding.dart';
 import 'package:klambi_ta/Pages/insert/page/insert.dart';
-import 'package:klambi_ta/Pages/login/components/login_binding.dart';
-import 'package:klambi_ta/Pages/login/page/login.dart';
-import 'package:klambi_ta/Pages/payment/components/payment_binding.dart';
+import 'package:klambi_ta/Pages/menuprofile/pages/address/Page/ReqAddress.dart';
+import 'package:klambi_ta/Pages/menuprofile/pages/address/Page/add_address.dart';
+import 'package:klambi_ta/Pages/menuprofile/pages/address/controller/address_binding.dart';
+import 'package:klambi_ta/Pages/menuprofile/pages/chat/controller/chat_binding.dart';
+import 'package:klambi_ta/Pages/menuprofile/pages/chat/page/chat.dart';
+import 'package:klambi_ta/Pages/menuprofile/pages/cs/controller/cs_binding.dart';
+import 'package:klambi_ta/Pages/menuprofile/pages/cs/page/cs.dart';
+import 'package:klambi_ta/Pages/menuprofile/pages/edit/controller/edit_binding.dart';
+import 'package:klambi_ta/Pages/menuprofile/pages/edit/page/editprofile.dart';
+import 'package:klambi_ta/Pages/menuprofile/user/user.dart';
+import 'package:klambi_ta/Pages/payment/controller/payment_binding.dart';
 import 'package:klambi_ta/Pages/payment/page/payment.dart';
-import 'package:klambi_ta/Pages/profile/cart/page/cart.dart';
-import 'package:klambi_ta/Pages/register/components/register_binding.dart';
-import 'package:klambi_ta/Pages/register/page/register.dart';
+import 'package:klambi_ta/Pages/user/login/components/login_binding.dart';
+import 'package:klambi_ta/Pages/user/login/page/login.dart';
+import 'package:klambi_ta/Pages/user/register/components/register_binding.dart';
+import 'package:klambi_ta/Pages/user/register/page/register.dart';
 import 'package:klambi_ta/common/routes/routes_name.dart';
+import 'package:klambi_ta/Pages/cart/controller/cart_binding.dart';
 
-import '../../Pages/cart/components/cart_binding.dart';
 
 List<GetPage> pageRoutes = <GetPage>[
   GetPage(
@@ -71,7 +69,7 @@ List<GetPage> pageRoutes = <GetPage>[
       binding: CustomerServiceBinding()),
   GetPage(
       name: RouteName.address,
-      page: () => const AddressPageView(),
+      page: () => const ReqAddres(),
       binding: AddressBinding()),
   GetPage(
       name: RouteName.insert,
@@ -88,6 +86,11 @@ List<GetPage> pageRoutes = <GetPage>[
   GetPage(
     name: RouteName.addAddress,
     page: () => AddAddress(),
+    // binding: ProfileBinding()
+  ),
+  GetPage(
+    name: RouteName.user,
+    page: () => UserView(),
     // binding: ProfileBinding()
   ),
 ];

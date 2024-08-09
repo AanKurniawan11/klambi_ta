@@ -2,10 +2,11 @@ abstract class RouteName {
   static const login = "/login";
   static const register = "/register";
   static const home = "/home";
+  static const user = "/user";
   static const history = "/history";
   static const whislist = "/whislist";
   static const chat = "/chat";
-  static const profile = "/profile";
+  static const profile = "/menuprofile";
   static const navbar = "/navbar";
   static const edit = "/edit";
   static const cart = "/cart";

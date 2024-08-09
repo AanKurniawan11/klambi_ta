@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:klambi_ta/Pages/history/page/history.dart';
 import 'package:klambi_ta/Pages/home/page/home.dart';
-import 'package:klambi_ta/Pages/profile/page/profile.dart';
+import 'package:klambi_ta/Pages/menuprofile/components/profile_controller.dart';
+import 'package:klambi_ta/Pages/menuprofile/pages/menu_profile.dart';
 import '../colors/color.dart';
 
 class LandingPageController extends GetxController {
@@ -15,6 +16,8 @@ class LandingPageController extends GetxController {
 }
 
 class LandingPage extends StatelessWidget {
+  final profileController = Get.put(ProfileController());
+
   @override
   Widget build(BuildContext context) {
     final LandingPageController landingPageController = Get.put(LandingPageController());
@@ -49,6 +52,8 @@ class LandingPage extends StatelessWidget {
   }
 
   buildBottomNavigationMenu(context, landingPageController) {
+
+
     return Obx(() => MediaQuery(
       data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
       child: SizedBox(
@@ -67,6 +72,7 @@ class LandingPage extends StatelessWidget {
             BottomNavigationBarItem(
               icon: Icon(Icons.receipt_long_sharp),
               label: 'Riwayat',
+
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.person),
