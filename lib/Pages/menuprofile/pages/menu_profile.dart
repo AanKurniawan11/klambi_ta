@@ -101,6 +101,7 @@ class Profile extends StatelessWidget {
                             ),
                           ),
                         ),
+                        SizedBox(height: 10),
                         txt(username: controller.ctrName.text.isNotEmpty ? controller.ctrName.text : controller.userProfile.value.name),
                         txt(username: profileController.email.value),
                       ],

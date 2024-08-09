@@ -25,7 +25,9 @@ class EditController extends GetxController {
   void onInit() {
     super.onInit();
     loadUserProfile();
+    loadImageFromPrefs();
   }
+
 
   Future<void> pickImage() async {
     final picker = ImagePicker();
@@ -34,6 +36,9 @@ class EditController extends GetxController {
     if (pickedFile != null) {
       pickedImage.value = File(pickedFile.path);
       imageUrl.value = null;
+
+      // Simpan jalur file gambar ke SharedPreferences
+      await prefs.setString('userImage', pickedFile.path);
     }
   }
 
@@ -96,12 +101,18 @@ class EditController extends GetxController {
         email: userProfile.value.email,
         image: updatedData.image,
       );
-      print(responseData.body);
       print('Profile updated successfully');
-      Get.offAllNamed("/user");
     } else {
       print('Failed to update profile');
     }
     isLoading(false);
+  }
+
+  void loadImageFromPrefs() async {
+    prefs = await SharedPreferences.getInstance();
+    var savedImagePath = prefs.getString('userImage');
+    if (savedImagePath != null && savedImagePath.isNotEmpty) {
+      pickedImage.value = File(savedImagePath);
+    }
   }
 }

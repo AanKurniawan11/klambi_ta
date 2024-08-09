@@ -30,13 +30,14 @@ class Cart extends StatelessWidget {
           ),
         ),
         leading: IconButton(
-            onPressed: () {
-              Get.back();
-            },
-            icon: Icon(Icons.arrow_back_outlined)),
+          onPressed: () {
+            Get.back();
+          },
+          icon: Icon(Icons.arrow_back_outlined),
+        ),
         centerTitle: true,
         backgroundColor: Colors.transparent,
-        elevation: 0, // Remove appbar shadow,
+        elevation: 0,
       ),
       body: Obx(() {
         if (controllers.Cartdata.isEmpty) {
@@ -49,10 +50,12 @@ class Cart extends StatelessWidget {
                     height: height * 0.3,
                     width: width * 0.8,
                     foregroundDecoration: BoxDecoration(
-                        image: DecorationImage(
-                            image: AssetImage("assets/cartEmpty.png"))),
+                      image: DecorationImage(
+                        image: AssetImage("assets/cartEmpty.png"),
+                      ),
+                    ),
                   ),
-                  Text("Tidak ada barang di keranjang")
+                  Text("Tidak ada barang di keranjang"),
                 ],
               ),
             ),
@@ -65,8 +68,9 @@ class Cart extends StatelessWidget {
           itemCount: controllers.Cartdata.length,
           itemBuilder: (context, index) {
             final item = controllers.Cartdata[index];
+
             return Dismissible(
-              key: Key(item.productId.toString()), // Ensure each item has a unique key
+              key: Key(item.productId.toString()),
               direction: DismissDirection.endToStart,
               onDismissed: (direction) {
                 controllers.DeleteCartItem({
@@ -74,6 +78,8 @@ class Cart extends StatelessWidget {
                   "quantity": item.quantity,
                   "size": item.size,
                 });
+                controllers.Cartdata.removeAt(index);
+
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(content: Text('${item.productTitle} dihapus dari keranjang')),
                 );
@@ -99,96 +105,94 @@ class Cart extends StatelessWidget {
                         height: height * 0.12,
                         width: width * 0.18,
                         foregroundDecoration: BoxDecoration(
-                            image: DecorationImage(
-                                image: NetworkImage(item.imageUrl),
-                                fit: BoxFit.cover)),
+                          image: DecorationImage(
+                            image: NetworkImage(item.imageUrl),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
                       ),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10),
                       child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              width: width * 0.58,
-                              child: Text(
-                                "${item.productTitle}",
-                                style: TextStyle(fontFamily: "General Sans"),
-                              ),
-                            ),
-                            Text(
-                              "Ukuran : ${item.size}",
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            width: width * 0.58,
+                            child: Text(
+                              "${item.productTitle}",
                               style: TextStyle(fontFamily: "General Sans"),
                             ),
-                            Text(
-                              NumberFormat.currency(
-                                  locale: 'id_ID',
-                                  symbol: 'Rp ',
-                                  decimalDigits: 0)
-                                  .format(item.productPrice),
-                              style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w600,
-                                  color: ColorValue.kSecondary,
-                                  fontFamily: "General Sans"),
+                          ),
+                          Text(
+                            "Ukuran : ${item.size}",
+                            style: TextStyle(fontFamily: "General Sans"),
+                          ),
+                          Text(
+                            NumberFormat.currency(
+                              locale: 'id_ID',
+                              symbol: 'Rp ',
+                              decimalDigits: 0,
+                            ).format(item.productPrice),
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                              color: ColorValue.kSecondary,
+                              fontFamily: "General Sans",
                             ),
-                            GetBuilder<CartControllers>(
-                                builder: (tx) => Text(
-                                    "Jumlah : ${NumberFormat.currency(locale: 'id_ID', symbol: 'Rp ', decimalDigits: 0).format(tx.Cartdata[index].quantity * tx.Cartdata[index].productPrice)}")),
-                            Container(
-                              // width: width * 0.26,
-                              // height: height * 0.04,
-                              // color: Colors.red,
-                              child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    GestureDetector(
-                                      onTap: () {
-                                        print(item.quantity);
-
-                                        if (item.quantity > 0) {
-                                          item.quantity--;
-                                          controllers.update();
-                                        }
-                                      },
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                            shape: BoxShape.rectangle,
-                                            border: Border.fromBorderSide(BorderSide(
-                                                color: ColorValue.kPrimary)),
-                                            borderRadius: BorderRadius.circular(6)),
-                                        child: Icon(
-                                          Icons.remove,
-                                          size: 18,
-                                        ),
-                                      ),
-                                    ),
-                                    GetBuilder<CartControllers>(
-                                        builder: (tx) => Text(
-                                          tx.Cartdata[index].quantity.toString(),
-                                          style: TextStyle(fontSize: 16),
-                                        )),
-                                    GestureDetector(
-                                      onTap: () {
-                                        item.quantity++;
-                                        controllers.update();
-                                      },
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                            shape: BoxShape.rectangle,
-                                            border: Border.fromBorderSide(BorderSide(
-                                                color: ColorValue.kPrimary)),
-                                            borderRadius: BorderRadius.circular(6)),
-                                        child: Icon(
-                                          Icons.add,
-                                          size: 18,
-                                        ),
-                                      ),
-                                    ),
-                                  ].withSpaceBetween(width: 8)
-                              ),
+                          ),
+                          GetBuilder<CartControllers>(
+                            builder: (tx) => Text(
+                              "Jumlah : ${NumberFormat.currency(locale: 'id_ID', symbol: 'Rp ', decimalDigits: 0).format(tx.Cartdata[index].quantity * tx.Cartdata[index].productPrice)}",
                             ),
-                          ].withSpaceBetween(height: 2)),
+                          ),
+                          Container(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                GestureDetector(
+                                  onTap: () {
+                                    if (item.quantity > 0) {
+                                      item.quantity--;
+                                      controllers.update();
+                                      controllers.updateTotalPrice();
+                                    }
+                                  },
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.rectangle,
+                                      border: Border.fromBorderSide(BorderSide(color: ColorValue.kPrimary)),
+                                      borderRadius: BorderRadius.circular(6),
+                                    ),
+                                    child: Icon(Icons.remove, size: 18),
+                                  ),
+                                ),
+                                GetBuilder<CartControllers>(
+                                  builder: (tx) => Text(
+                                    tx.Cartdata[index].quantity.toString(),
+                                    style: TextStyle(fontSize: 16),
+                                  ),
+                                ),
+                                GestureDetector(
+                                  onTap: () {
+                                    item.quantity++;
+                                    controllers.update();
+                                    controllers.updateTotalPrice();
+                                  },
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.rectangle,
+                                      border: Border.fromBorderSide(BorderSide(color: ColorValue.kPrimary)),
+                                      borderRadius: BorderRadius.circular(6),
+                                    ),
+                                    child: Icon(Icons.add, size: 18),
+                                  ),
+                                ),
+                              ].withSpaceBetween(width: 8),
+                            ),
+                          ),
+                        ].withSpaceBetween(height: 2),
+                      ),
                     ),
                     Column(
                       children: [
@@ -200,8 +204,7 @@ class Cart extends StatelessWidget {
                             side: BorderSide(color: ColorValue.kSecondary),
                             onChanged: (bool? value) {
                               controllers.toggleSelection(item);
-                              controllers.selectedCart(
-                                  item.id, value ?? false, item.quantity);
+                              controllers.selectedCart(item.id, value ?? false, item.quantity);
                             },
                           ),
                         ),
@@ -215,8 +218,9 @@ class Cart extends StatelessWidget {
         );
       }),
       bottomSheet: Obx(() {
-        final totalPrice = controllers.selectedItems
-            .fold(0, (sum, item) => sum + (item.quantity * item.productPrice));
+        final totalPrice = controllers.totalPrice.value;
+        final hasSelectedItems = controllers.selectedItems.isNotEmpty;
+
         return Container(
           padding: EdgeInsets.all(5),
           height: height * 0.13,
@@ -229,40 +233,42 @@ class Cart extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("Total:",
-                        style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.w600)),
+                    Text("Total:", style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600)),
                     Text(
-                      NumberFormat.currency(
-                          locale: 'id_ID', symbol: 'Rp ', decimalDigits: 0)
-                          .format(totalPrice),
-                      style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w600,
-                          color: ColorValue.kSecondary),
+                      NumberFormat.currency(locale: 'id_ID', symbol: 'Rp ', decimalDigits: 0).format(totalPrice),
+                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600, color: ColorValue.kSecondary),
                     ),
                   ],
                 ),
               ),
               GestureDetector(
                 onTap: () {
-                  if (Showcontroller.Show.isNotEmpty) {
-                    Get.offNamed("/payment");
+                  if (hasSelectedItems) {
+                    if (Showcontroller.Show.isNotEmpty) {
+                      Get.offNamed("/payment");
+                    } else {
+                      Get.to(ReqAddres());
+                    }
                   } else {
-                    Get.to(ReqAddres());
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text('Silakan pilih item terlebih dahulu')),
+                    );
                   }
                 },
                 child: Container(
                   width: width * 0.9,
                   height: height * 0.055,
                   decoration: BoxDecoration(
-                    color: ColorValue.kPrimary,
+                    color: hasSelectedItems ? ColorValue.kPrimary : ColorValue.kDarkGrey,
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Center(
                     child: Text(
                       "Beli",
-                      style: TextStyle(fontFamily: "General Sans"),
+                      style: TextStyle(
+                        fontFamily: "General Sans",
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                 ),
