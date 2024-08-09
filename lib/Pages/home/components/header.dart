@@ -25,7 +25,8 @@ class Header extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final editController = Get.put(EditController());
-    final cartController = Get.put(CartControllers());
+    final double height = MediaQuery.of(context).size.height;
+    final double width = MediaQuery.of(context).size.width;
 
     return Padding(
       padding: const EdgeInsets.only(left: 25),
@@ -46,12 +47,18 @@ class Header extends StatelessWidget {
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        '${greeting()}$username',
-                        style: TextStyle(
-                          fontFamily: 'General Sans',
-                          fontWeight: FontWeight.w600,
-                          fontSize: 22,
+                      Container(
+                        width: width * 0.7,
+                        child: FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: Text(
+                            '${greeting()}$username',
+                            style: TextStyle(
+                              fontFamily: 'General Sans',
+                              fontWeight: FontWeight.w600,
+                              fontSize: 22,
+                            ),
+                          ),
                         ),
                       ),
                       Text(

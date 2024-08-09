@@ -2,11 +2,12 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:klambi_ta/Pages/menuprofile/pages/address/components/addres.model.dart';
+import 'package:klambi_ta/Pages/menuprofile/pages/address/components/editaddressmodel.dart';
 import 'package:klambi_ta/Pages/menuprofile/pages/address/components/show_addressModel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../components/addres.model.dart';
 
-class AddressController extends GetxController{
+class AddressController extends GetxController {
   late final SharedPreferences prefs;
   RxList<Datum> Show = <Datum>[].obs;
 
@@ -28,8 +29,8 @@ class AddressController extends GetxController{
     ShowData();
   }
 
-  Future<void>  submitAddress() async {
-    var token = await prefs.getString("token");
+  Future<void> submitAddress() async {
+    var token = prefs.getString("token");
     final address = Address(
       keterangan: keterangan.value,
       provinsi: provinsi.value,
@@ -42,41 +43,38 @@ class AddressController extends GetxController{
       Uri.parse('https://klambi.ta.rplrus.com/api/addresses'),
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer $token'
+        'Authorization': 'Bearer $token',
       },
       body: jsonEncode(address.toJson()),
     );
 
     if (response.statusCode == 201) {
       isLoading(true);
-      print('Response body: ${response.body}'); //
       ShowData();
       Get.toNamed("/addAddress");
     } else {
-      print("gagal kirim");
-      print('Token: $token'); // Debugging untuk memastikan token ada
-      print('Response body: ${response.body}'); // Debugging untuk memeriksa respon
+      print("Gagal mengirim alamat");
+      print('Response body: ${response.body}');
     }
   }
 
-  Future <void> ShowData() async{
-    var token = await prefs.getString("token");
+  Future<void> ShowData() async {
+    var token = prefs.getString("token");
     final response = await http.get(
       Uri.parse('https://klambi.ta.rplrus.com/api/addresses'),
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer $token'
+        'Authorization': 'Bearer $token',
       },
     );
 
     if (response.statusCode == 200) {
-      isLoading(true);
+      isLoading(false);
       ShowAddress tes = showAddressFromJson(response.body);
       Show.value = tes.data;
-      print('Token: $token'); // Debugging untuk memastikan token ada
     } else {
-      print('Token: $token');
-      print(response.body);
+      print("Gagal mengambil data alamat");
+      print('Response body: ${response.body}');
     }
   }
 
@@ -89,42 +87,39 @@ class AddressController extends GetxController{
         'Authorization': 'Bearer $token'
       },
     );
-      if (response.statusCode == 200){
-        Show.clear();
-      }else{
-
+    if (response.statusCode == 200){
+      Show.clear();
+      print(response.body);
+    }else{
+      print("Gagal Maneng");
+      print(response.body);
     }
   }
+  Future<void> updateAddress(int id) async {
+    var token = prefs.getString("token");
+    final address = Addresss(
+      keterangan: keterangan.value,
+      provinsi: provinsi.value,
+      categoryId: categoryId.value,
+      nomorTelepon: nomorTelepon.value,
+      namaLengkap: namaLengkap.value,
+    );
 
-  // Future<void> UpdateAddress()async{
-  //   var token = await prefs.getString("token");
-  //
-  //   final response = await http.post(
-  //     Uri.parse('https://klambi.ta.rplrus.com/api/addresses'),
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //       'Authorization': 'Bearer $token'
-  //     },
-  //     body: jsonEncode(address.toJson()),
-  //   );
-  //
-  //   if (response.statusCode == 201) {
-  //     isLoading(true);
-  //     print('Response body: ${response.body}'); //
-  //     ShowData();
-  //     Get.toNamed("/addAddress");
-  //   } else {
-  //     print("gagal kirim");
-  //     print('Token: $token'); // Debugging untuk memastikan token ada
-  //     print('Response body: ${response.body}'); // Debugging untuk memeriksa respon
-  //   }
-  //
-  // }
+    final response = await http.put(
+      Uri.parse('https://klambi.ta.rplrus.com/api/addresses/$id'),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+      body: jsonEncode(address.toJson()),
+    );
 
-
-
+    if (response.statusCode == 200) {
+      ShowData();
+      Get.toNamed("/addAddress");
+      print(response.body);
+    } else {
+      print("Gagal memperbarui alamat");
+    }
   }
-
-
-
-
+}

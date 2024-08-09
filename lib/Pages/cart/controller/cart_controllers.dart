@@ -169,4 +169,5 @@ class CartControllers extends GetxController {
     final total = selectedItems.fold(0, (sum, item) => sum + (item.quantity * item.productPrice));
     totalPrice.value = total;
   }
+
 }
