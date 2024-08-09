@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:klambi_ta/component/design/upload_container.dart';
+import 'package:klambi_ta/Pages/design/components/upload_container.dart';
 import 'package:klambi_ta/Common/colors/color.dart';
 import 'package:klambi_ta/component/my_elevatedbutton.dart';
 

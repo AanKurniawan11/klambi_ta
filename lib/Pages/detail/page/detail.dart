@@ -1,22 +1,23 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:klambi_ta/Pages/address/showDataController.dart';
-import 'package:klambi_ta/component/cart/cart_controllers.dart';
+import 'package:klambi_ta/Pages/cart/controller/cart_controllers.dart';
+import 'package:klambi_ta/Pages/detail/controller/detail_controller.dart';
+import 'package:klambi_ta/Pages/menuprofile/pages/address/controller/address_controller.dart';
 import 'package:klambi_ta/component/my_elevatedbutton.dart';
 import 'package:intl/intl.dart';
 import 'package:klambi_ta/Common/colors/color.dart';
-import 'package:klambi_ta/Pages/detail/components/detail_controller.dart';
 import 'package:klambi_ta/Pages/home/components/allproductresponsemodel.dart';
-import 'package:klambi_ta/component/detail/sizes.dart';
+import 'package:klambi_ta/Pages/detail/components/sizes.dart';
 import 'package:klambi_ta/component/space_extension.dart';
 import 'package:get/get.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
+import 'package:shimmer/shimmer.dart';
 
 class DetailView extends StatelessWidget {
   final controller = Get.put(DetailController());
   final cartcontroller = Get.put(CartControllers());
-  final Showdatacontroller Showcontroller = Get.put(Showdatacontroller());
+  final AddressController Showcontroller = Get.put(AddressController());
 
   final Datum item;
 
@@ -49,6 +50,7 @@ class DetailView extends StatelessWidget {
             fontSize: 23,
           ),
         ),
+        leading: IconButton(onPressed: (){Get.offAllNamed("/navbar");}, icon: Icon(CupertinoIcons.arrow_left)),
         backgroundColor: Colors.transparent,
         elevation: 0, // Remove appbar shadow
       ),
@@ -67,7 +69,9 @@ class DetailView extends StatelessWidget {
         panel: _buildPanel(context),
         body: ListView(
           children: [
-            Container(child: Image.network(item.imageUrl, scale: 2.55)),
+            Container(
+              child: ShimmerImage(imageUrl: item.imageUrl),
+            ),
             // Add other content of your detail view here
           ],
         ),
@@ -241,7 +245,7 @@ class DetailView extends StatelessWidget {
               ),
             ),
             SizedBox(
-              height:40,
+              height: 40,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -251,10 +255,9 @@ class DetailView extends StatelessWidget {
                   height: height * 0.075,
                   child: My_Button(
                     onclick: () {
-
-                      if(Showcontroller.Show.isNotEmpty){
+                      if (Showcontroller.Show.isNotEmpty) {
                         Get.offNamed("/payment");
-                      }else{
+                      } else {
                         Get.toNamed("/address");
                       }
                     },
@@ -270,8 +273,7 @@ class DetailView extends StatelessWidget {
                         context: context,
                         builder: (context) => SingleChildScrollView(
                           controller: ModalScrollController.of(context),
-                          child:
-                          Container(
+                          child: Container(
                             height: height * 0.53,
                             // width: 100,
                             color: ColorValue.kWhite,
@@ -282,7 +284,7 @@ class DetailView extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   GestureDetector(
-                                    onTap: (){
+                                    onTap: () {
                                       Get.back();
                                     },
                                     child: Align(
@@ -295,27 +297,42 @@ class DetailView extends StatelessWidget {
                                       children: [
                                         Container(
                                           height: 100,
-                                          width:100,
+                                          width: 100,
                                           foregroundDecoration: BoxDecoration(
-                                              image: DecorationImage(image: NetworkImage(item.imageUrl))
-                                          ),
+                                              image: DecorationImage(
+                                                  image: NetworkImage(
+                                                      item.imageUrl))),
                                         ),
-                                        SizedBox(width: 10,),
+                                        SizedBox(
+                                          width: 10,
+                                        ),
                                         Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                           children: [
                                             Container(
-                                                width: width*0.6,
-                                                child: Text(item.title,style: TextStyle(fontFamily: "General Sans"),maxLines: 2,)),
-                                            Text("Rp." + item.price.toString(),style: TextStyle(fontFamily: "General Sans",fontSize: 16,color: ColorValue.kSecondary),)
-
+                                                width: width * 0.6,
+                                                child: Text(
+                                                  item.title,
+                                                  style: TextStyle(
+                                                      fontFamily:
+                                                      "General Sans"),
+                                                  maxLines: 2,
+                                                )),
+                                            Text(
+                                              "Rp." + item.price.toString(),
+                                              style: TextStyle(
+                                                  fontFamily: "General Sans",
+                                                  fontSize: 16,
+                                                  color:
+                                                  ColorValue.kSecondary),
+                                            )
                                           ],
                                         )
                                       ],
                                     ),
                                   ),
                                   SizedBox(height: 20),
-
                                   Text(
                                     "Pilih Ukuran",
                                     style: TextStyle(
@@ -342,80 +359,113 @@ class DetailView extends StatelessWidget {
                                   Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          "Jumlah",
-                                          style: TextStyle(
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w500,
-                                              color: ColorValue.kDarkGrey),
-                                        ),
-                                        Obx(() {
-                                          return Container(
-                                            width: width * 0.26,
-                                            height: height* 0.04,
-                                            decoration: BoxDecoration(
-                                                color: ColorValue.kLightGrey,
-                                                border: Border.fromBorderSide(BorderSide(color: ColorValue.kDarkGrey),
-                                                ),
-                                                borderRadius: BorderRadius.circular(10)
-                                            ),
-                                            child: Row(
-                                              mainAxisAlignment: MainAxisAlignment.center,
-                                              children: [
-                                                IconButton(
-                                                  icon: Icon(Icons.remove,size: 10,),
-                                                  onPressed: () {
-                                                    if (cartcontroller.quantity.value > 0) {
-                                                      cartcontroller.quantity.value--;
-                                                    }
-                                                  },
-                                                ),
-                                                Text(cartcontroller.quantity.value.toString(),style: TextStyle(fontSize: 10),),
-                                                IconButton(
-                                                  icon: Icon(Icons.add,size: 10,),
-                                                  onPressed: () {
-                                                    cartcontroller.quantity.value++;
-                                                  },
-                                                ),
-                                              ],
-                                            ),
-                                          );
-                                        }),
-
-                                      ].withSpaceBetween(height: 20)
-                                    ),
+                                        mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            "Jumlah",
+                                            style: TextStyle(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w500,
+                                                color: ColorValue.kDarkGrey),
+                                          ),
+                                          Obx(() {
+                                            return Container(
+                                              width: width * 0.26,
+                                              height: height * 0.04,
+                                              decoration: BoxDecoration(
+                                                  color: ColorValue.kLightGrey,
+                                                  border: Border.fromBorderSide(
+                                                    BorderSide(
+                                                        color: ColorValue
+                                                            .kDarkGrey),
+                                                  ),
+                                                  borderRadius:
+                                                  BorderRadius.circular(
+                                                      10)),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                                children: [
+                                                  IconButton(
+                                                    icon: Icon(
+                                                      Icons.remove,
+                                                      size: 10,
+                                                    ),
+                                                    onPressed: () {
+                                                      if (cartcontroller
+                                                          .quantity.value >
+                                                          0) {
+                                                        cartcontroller
+                                                            .quantity.value--;
+                                                      }
+                                                    },
+                                                  ),
+                                                  Text(
+                                                    cartcontroller.quantity
+                                                        .value
+                                                        .toString(),
+                                                    style: TextStyle(
+                                                        fontSize: 10),
+                                                  ),
+                                                  IconButton(
+                                                    icon: Icon(
+                                                      Icons.add,
+                                                      size: 10,
+                                                    ),
+                                                    onPressed: () {
+                                                      cartcontroller
+                                                          .quantity.value++;
+                                                    },
+                                                  ),
+                                                ],
+                                              ),
+                                            );
+                                          }),
+                                        ].withSpaceBetween(height: 20)),
                                   ),
-                                  SizedBox(height: 20,),
+                                  SizedBox(
+                                    height: 20,
+                                  ),
                                   Center(
                                     child: GestureDetector(
-                                      onTap: (){
-                                        if(cartcontroller.quantity.value  == 0){
-                                          ScaffoldMessenger.of(context).showSnackBar(
+                                      onTap: () {
+                                        if (cartcontroller.quantity.value ==
+                                            0) {
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
                                             SnackBar(
-                                              content: Text("Tidak ada barang untuk ditambahkan ke keranjang"),
-                                              behavior: SnackBarBehavior.floating,
-                                              margin: EdgeInsets.only(bottom: 700.0, left: 20.0, right: 20.0), // Margin untuk menempatkan SnackBar di atas
+                                              content: Text(
+                                                  "Tidak ada barang untuk ditambahkan ke keranjang"),
+                                              behavior:
+                                              SnackBarBehavior.floating,
+                                              margin: EdgeInsets.only(
+                                                  bottom: 700.0,
+                                                  left: 20.0,
+                                                  right: 20.0), // Margin untuk menempatkan SnackBar di atas
                                             ),
                                           );
-                                        }else{
+                                        } else {
                                           cartcontroller.addToCart(item.id);
                                           Get.toNamed("/cart");
                                         }
                                       },
                                       child: Container(
                                         width: width * 0.8,
-                                        height: height* 0.06,
+                                        height: height * 0.06,
                                         decoration: BoxDecoration(
                                             color: ColorValue.kPrimary,
-                                            borderRadius: BorderRadius.circular(10)
-                                        ),
-                                        child: Center(child: Text("Tambahkan ke Keranjang",style: TextStyle(fontFamily: "General Sans"),)),
+                                            borderRadius:
+                                            BorderRadius.circular(10)),
+                                        child: Center(
+                                            child: Text(
+                                              "Tambahkan ke Keranjang",
+                                              style: TextStyle(
+                                                  fontFamily: "General Sans"),
+                                            )),
                                       ),
                                     ),
                                   ),
-
                                 ],
                               ),
                             ),
@@ -424,8 +474,10 @@ class DetailView extends StatelessWidget {
                       );
                     },
                     style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(ColorValue.kSecondary),
-                      minimumSize: MaterialStateProperty.all(Size(width * 0.85, height * 0.065)),
+                      backgroundColor:
+                      MaterialStateProperty.all(ColorValue.kSecondary),
+                      minimumSize: MaterialStateProperty.all(
+                          Size(width * 0.85, height * 0.065)),
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                         RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12.0),
@@ -443,6 +495,53 @@ class DetailView extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+class ShimmerImage extends StatelessWidget {
+  final String imageUrl;
+
+  ShimmerImage({required this.imageUrl});
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        Shimmer.fromColors(
+          baseColor: Colors.grey[300]!,
+          highlightColor: Colors.grey[100]!,
+          child: Container(
+            height: 450.0,
+            color: Colors.white,
+          ),
+          period: Duration(seconds: 2),
+        ),
+        Positioned.fill(
+          child: Image.network(
+            imageUrl,
+            fit: BoxFit.cover,
+            loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
+              if (loadingProgress == null) {
+                return child;
+              } else {
+                return Center(
+                  child: CircularProgressIndicator(
+                    value: loadingProgress.expectedTotalBytes != null
+                        ? loadingProgress.cumulativeBytesLoaded / (loadingProgress.expectedTotalBytes ?? 1)
+                        : null,
+                  ),
+                );
+              }
+            },
+            errorBuilder: (context, error, stackTrace) {
+              return Center(
+                child: Icon(Icons.error),
+              );
+            },
+          ),
+        ),
+      ],
     );
   }
 }

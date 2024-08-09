@@ -1,19 +1,7 @@
 import 'package:flutter/material.dart';
 import '../Common/colors/color.dart';
 
-Widget myText({
-  required String text,
-  required String username,
-  TextStyle? style,
-  TextAlign? textAlign,
-  Color? color,
-}) {
-  return Text(
-    '$username: $text',
-    style: style?.copyWith(color: color),
-    textAlign: textAlign,
-  );
-}
+
 
 Widget myTexts({
   required String text,
@@ -58,7 +46,7 @@ class txt extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(username, style:TextStyle(
-        fontSize: 20,
+        fontSize: 18,
         fontWeight: FontWeight.w500,
         fontFamily: "General Sans",
         color: ColorValue.kBlack),

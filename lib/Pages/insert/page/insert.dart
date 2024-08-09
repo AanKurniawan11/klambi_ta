@@ -2,24 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:klambi_ta/Common/colors/color.dart';
 import 'package:get/get.dart';
-import 'package:klambi_ta/Pages/address/showDataController.dart';
-import 'package:klambi_ta/component/insert/city_post_code.dart';
-import 'package:klambi_ta/component/insert/kec.dart';
-import 'package:klambi_ta/component/insert/kode_pos.dart';
-import 'package:klambi_ta/component/insert/nama.dart';
-import 'package:klambi_ta/component/insert/name_address.dart';
-import 'package:klambi_ta/component/insert/name_street.dart';
-import 'package:klambi_ta/component/insert/optional_note.dart';
-import 'package:klambi_ta/component/insert/regional_province.dart';
-import 'package:klambi_ta/component/insert/telepon.dart';
-import '../../../../component/my_elevatedbutton.dart';
+import 'package:klambi_ta/Pages/insert/components/nama.dart';
+import 'package:klambi_ta/Pages/insert/components/optional_note.dart';
+import 'package:klambi_ta/Pages/insert/components/telepon.dart';
+import 'package:klambi_ta/Pages/menuprofile/pages/address/controller/address_controller.dart';
+import 'package:klambi_ta/Pages/insert/components/regional_province.dart';
+
 
 class InsertAddressPageView extends StatelessWidget {
   const InsertAddressPageView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final Showdatacontroller controller = Get.put(Showdatacontroller());
+    final AddressController controller = Get.put(AddressController());
 
     return Scaffold(
       backgroundColor: ColorValue.kBackground,
@@ -35,7 +30,7 @@ class InsertAddressPageView extends StatelessWidget {
         ),
         leading: IconButton(
           onPressed: () {
-            Get.back(); // Go back to the previous page
+            Get.back(); // Go back to the previous pages
           },
           icon: Icon(Icons.arrow_back),
         ),

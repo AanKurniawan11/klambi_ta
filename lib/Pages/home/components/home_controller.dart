@@ -50,6 +50,8 @@ class HomeController extends GetxController {
       } else if (category != null) {
         newTemp = "category/$category";
       }
+
+
       final response = await http.get(Uri.parse("https://klambi.ta.rplrus.com/api/$newTemp"));
 
       if (response.statusCode == 200) {
