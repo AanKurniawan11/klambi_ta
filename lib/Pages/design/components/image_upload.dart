@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
+import 'package:get/get.dart';
 
 import 'package:klambi_ta/Common/colors/color.dart';
+import 'package:klambi_ta/Pages/design/controller/design_controller.dart';
 
 class ImageUpload extends StatefulWidget {
   const ImageUpload({super.key});
@@ -13,6 +15,7 @@ class ImageUpload extends StatefulWidget {
 
 class _ImageUploadState extends State<ImageUpload> {
   File? _image;
+  final ImageUploadController imageUploadController = Get.put(ImageUploadController());
 
   Future<void> _pickImage() async {
     final picker = ImagePicker();
@@ -22,6 +25,9 @@ class _ImageUploadState extends State<ImageUpload> {
       setState(() {
         _image = File(pickedFile.path);
       });
+
+      // Panggil method uploadImage dari controller ketika gambar dipilih
+      imageUploadController.uploadImage(_image!);
     }
   }
 
@@ -50,10 +56,11 @@ class _ImageUploadState extends State<ImageUpload> {
             Text(
               'Unggah File (PNG)',
               style: TextStyle(
-                  fontFamily: 'General Sans',
-                  fontWeight: FontWeight.w500,
-                  fontSize: 12,
-                  color: ColorValue.kBlack),
+                fontFamily: 'General Sans',
+                fontWeight: FontWeight.w500,
+                fontSize: 12,
+                color: ColorValue.kBlack,
+              ),
             ),
           ],
         )
