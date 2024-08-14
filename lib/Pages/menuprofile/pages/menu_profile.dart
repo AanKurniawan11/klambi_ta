@@ -1,11 +1,12 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:klambi_ta/Common/colors/color.dart';
 import 'package:get/get.dart';
+import 'package:klambi_ta/Common/colors/color.dart';
 import 'package:klambi_ta/Pages/menuprofile/components/profile_controller.dart';
 import 'package:klambi_ta/Pages/menuprofile/pages/address/controller/address_controller.dart';
 import 'package:klambi_ta/Pages/menuprofile/pages/edit/controller/edit_controller.dart';
-import 'package:klambi_ta/Pages/menuprofile/user/user.dart';
 import 'package:klambi_ta/component/mytext.dart';
 import 'package:klambi_ta/component/space_extension.dart';
 
@@ -39,10 +40,8 @@ class Profile extends StatelessWidget {
             TextButton(
               child: Text('Log Out'),
               onPressed: () async {
-                // Perform logout action here
                 profileController.logoutg();
 
-                // Check if the context is still valid before popping
                 if (Navigator.of(context).canPop()) {
                   Navigator.of(context).pop();
                 }
@@ -68,17 +67,19 @@ class Profile extends StatelessWidget {
             child: Center(
               child: Column(
                 children: [
-                  if (profileController.user.value != null)
+                  if (controller.username.value.isNotEmpty)
                     Column(
                       children: [
                         CircleAvatar(
-                          backgroundImage: NetworkImage(profileController.user.value?.photoURL ?? ''),
+                          backgroundImage:
+                              FileImage(controller.pickedImage.value as File),
                           radius: 50,
                         ),
                         txt(
-                          username:profileController.user.value?.displayName ?? '',),
+                          username: profileController.username.value,
+                        ),
                         txt(
-                          username:profileController.user.value?.email ?? '',
+                          username: profileController.email.value,
                         ),
                       ],
                     )
@@ -102,7 +103,7 @@ class Profile extends StatelessWidget {
                           ),
                         ),
                         SizedBox(height: 10),
-                        txt(username: controller.ctrName.text.isNotEmpty ? controller.ctrName.text : controller.userProfile.value.name),
+                        txt(username: controller.userProfile.value.name),
                         txt(username: profileController.email.value),
                       ],
                     ),
@@ -133,18 +134,17 @@ class Profile extends StatelessWidget {
                       children: [
                         GestureDetector(
                           onTap: () {
-                            // Get.offNamed("/user");
-                            Get.to(UserView());
+                            Get.offAllNamed("/edit");
                           },
                           child: Row(
                             children: [
                               const Icon(
-                                CupertinoIcons.person_alt_circle,
-                                size: 35,
+                                Icons.edit,
+                                size: 30,
                                 color: ColorValue.kPrimary,
                               ),
                               const Text(
-                                "Tentang Akun",
+                                "Edit Profile",
                                 style: TextStyle(
                                   fontSize: 16,
                                   fontFamily: "General Sans",
@@ -184,7 +184,7 @@ class Profile extends StatelessWidget {
                               const Icon(
                                 CupertinoIcons.chat_bubble_text,
                                 size: 35,
-                                color: ColorValue.kPrimary,
+                                color: ColorValue.kSecondary,
                               ),
                               const Text(
                                 "Chat",

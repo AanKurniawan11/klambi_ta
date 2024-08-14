@@ -11,12 +11,14 @@ class AddressController extends GetxController {
   late final SharedPreferences prefs;
   RxList<Datum> Show = <Datum>[].obs;
 
+
   var keterangan = ''.obs;
   var provinsi = ''.obs;
   var categoryId = '1'.obs;
   var nomorTelepon = ''.obs;
   var namaLengkap = ''.obs;
   var isLoading = true.obs;
+
 
   @override
   void onInit() {
@@ -28,6 +30,9 @@ class AddressController extends GetxController {
     prefs = await SharedPreferences.getInstance();
     ShowData();
   }
+
+
+
 
   Future<void> submitAddress() async {
     var token = prefs.getString("token");

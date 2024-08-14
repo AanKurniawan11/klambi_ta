@@ -290,10 +290,10 @@ class Payment extends StatelessWidget {
               child: PayList(),
             ),
             SizedBox(height: 20),
-            Container(
-              width: width * 0.88,
-              child: DeliverOpsi(),
-            ),
+            // Container(
+            //   width: width * 0.88,
+            //   child: DeliverOpsi(),
+            // ),
             SizedBox(height: 40),
             Container(
               width: width * 0.9,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:klambi_ta/Pages/detail/page/detail.dart';
 import 'package:klambi_ta/Pages/home/components/allproductresponsemodel.dart';
+import 'package:klambi_ta/Pages/home/components/home_controller.dart';
 import 'package:klambi_ta/component/space_extension.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -9,12 +10,14 @@ import 'package:shimmer/shimmer.dart';
 import '../../../common/colors/color.dart';
 
 Widget RecomendProduct(BuildContext context, Datum item) {
+  final controller = Get.put(HomeController());
   String formatPrices(int price) {
     final format = NumberFormat.currency(locale: 'id_ID', symbol: 'Rp ', decimalDigits: 0);
     return format.format(price);
   }
-
   final size = MediaQuery.of(context).size;
+
+
 
   return GestureDetector(
     onTap: () {
@@ -38,21 +41,10 @@ Widget RecomendProduct(BuildContext context, Datum item) {
                   width: size.width * 0.5,
                   height: size.height * 0.18,
                   child: Image.network(
-                    item.imageUrl,
-                    fit: BoxFit.fill,
-                    loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
-                      if (loadingProgress == null) return child;
-                      return Shimmer.fromColors(
-                        baseColor: Colors.grey[300]!,
-                        highlightColor: Colors.grey[100]!,
-                        child: Container(
-                          width: size.width * 0.5,
-                          height: size.height * 0.18,
-                          color: Colors.white,
-                        ),
-                      );
-                    },
+                    controller.imageUrl(item.imagee),
+                    fit: BoxFit.cover,
                   ),
+
                 ),
                 Positioned(
                   right: 0,
@@ -66,7 +58,7 @@ Widget RecomendProduct(BuildContext context, Datum item) {
                     ),
                     child: Center(
                       child: Text(
-                        item.category,
+                        item.category.displayName,
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 9,
@@ -104,6 +96,7 @@ Widget RecomendProduct(BuildContext context, Datum item) {
               children: [
                 Row(
                   children: [
+
                     Icon(
                       Icons.star,
                       size: 14,
@@ -128,7 +121,7 @@ Widget RecomendProduct(BuildContext context, Datum item) {
                   ),
                 ),
                 Text(
-                  "Stock 20",
+                  "Stock ${item.stock.toString()}",
                   style: TextStyle(
                     fontSize: 12,
                     color: ColorValue.kDarkGrey,
@@ -176,4 +169,18 @@ Widget ProductCard(List<Datum> itemList) {
       return RecomendProduct(context, itemList[index]);
     },
   );
+}
+extension CategoryExtension on Category {
+  String get displayName {
+    switch (this) {
+      case Category.LENGAN_PANJANG:
+        return "Lengan Panjang";
+      case Category.LENGAN_PENDEK:
+        return "Lengan Pendek";
+      case Category.OVERSIZE:
+        return "Oversize";
+      default:
+        return "";
+    }
+  }
 }

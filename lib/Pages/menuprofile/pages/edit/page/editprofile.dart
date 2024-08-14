@@ -125,7 +125,7 @@ class EditProfile extends StatelessWidget {
                         controllerEdit.ctrName.text,
                         controllerEdit.pickedImage.value,
                       );
-                      Get.offAllNamed("/user");
+                      Get.offAllNamed("/navbar");
                     },
                     title: "Simpan",
                   ),

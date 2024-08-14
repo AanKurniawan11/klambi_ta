@@ -9,6 +9,7 @@ import '../colors/color.dart';
 class LandingPageController extends GetxController {
   var tabIndex = 0.obs;
 
+
   void changeTabIndex(int index) {
     print("Changing Tab Index to: $index");
     tabIndex.value = index;
@@ -52,8 +53,6 @@ class LandingPage extends StatelessWidget {
   }
 
   buildBottomNavigationMenu(context, landingPageController) {
-
-
     return Obx(() => MediaQuery(
       data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
       child: SizedBox(

@@ -13,7 +13,7 @@ class EditController extends GetxController {
   final controller = Get.put(ProfileController());
   late SharedPreferences prefs;
   var pickedImage = Rxn<File>();
-  var imageUrl = Rxn<String>();
+    var imageUrl = Rxn<String>();
   RxString username = "".obs;
 
   var isLoading = false.obs;
@@ -56,12 +56,14 @@ class EditController extends GetxController {
     );
 
     if (response.statusCode == 200) {
+      print(token);
       var data = ShowProfileResponse.fromJson(jsonDecode(response.body)).data;
       userProfile.value = data;
       print(response.body);
     } else {
       print(response.body);
       print('Failed to load profile');
+      print(ctrName.value);
 
     }
     isLoading(false);
@@ -112,7 +114,7 @@ class EditController extends GetxController {
     prefs = await SharedPreferences.getInstance();
     var savedImagePath = prefs.getString('userImage');
     if (savedImagePath != null && savedImagePath.isNotEmpty) {
-      pickedImage.value = File(savedImagePath);
+      pickedImage.value = File(savedImagePath); // Load image from file
     }
   }
-}
+  }

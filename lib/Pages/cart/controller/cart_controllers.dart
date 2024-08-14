@@ -16,7 +16,6 @@ class CartControllers extends GetxController {
   var quantity = 0.obs;
   var productTitle = ''.obs;
   var productPrice = '1'.obs;
-  var imageUrl = ''.obs;
   var productId = 0.obs;
   var cartId = 0.obs;
   var selecteds = true;
@@ -126,7 +125,6 @@ class CartControllers extends GetxController {
       updateTotalPrice();
     } else {
       Cartdata.clear();
-      print('Gagal');
       print('Token: $token');
       print(response.body);
     }
