@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:klambi_ta/Pages/cart/controller/cart_controllers.dart';
 import 'package:klambi_ta/Common/colors/color.dart';
+import 'package:klambi_ta/Pages/home/components/home_controller.dart';
 import 'package:klambi_ta/Pages/menuprofile/pages/address/Page/ReqAddress.dart';
 import 'package:klambi_ta/Pages/menuprofile/pages/address/controller/address_controller.dart';
 import 'package:klambi_ta/component/space_extension.dart';
@@ -11,6 +12,7 @@ class Cart extends StatelessWidget {
   Cart({super.key});
 
   final CartControllers controllers = Get.put(CartControllers());
+  final HomeController homecontroller = Get.put(HomeController());
   final AddressController Showcontroller = Get.put(AddressController());
 
   @override
@@ -77,12 +79,15 @@ class Cart extends StatelessWidget {
                   "products_id": item.productId,
                   "quantity": item.quantity,
                   "size": item.size,
-                });
-                controllers.Cartdata.removeAt(index);
+                }).then((_) {
+                  // Hapus item dari tampilan setelah dihapus
+                  controllers.Cartdata.removeAt(index);
+                  controllers.update(); // Memastikan bahwa pembaruan state dilakukan
 
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text('${item.productTitle} dihapus dari keranjang')),
-                );
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('${item.productTitle} dihapus dari keranjang')),
+                  );
+                });
               },
               background: Container(
                 color: Colors.red,
@@ -256,6 +261,7 @@ class Cart extends StatelessWidget {
                   }
                 },
                 child: Container(
+                  margin: EdgeInsets.only(bottom: 4),
                   width: width * 0.9,
                   height: height * 0.055,
                   decoration: BoxDecoration(

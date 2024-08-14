@@ -24,7 +24,7 @@ class HomeController extends GetxController {
     try {
       isLoading.value = true;
 
-      final response = await http.get(Uri.parse("https://klambi.ta.rplrus.com/api/category"));
+      final response = await http.get(Uri.parse("https://klambi.ta.rplrus.com/api/products/category/all"));
 
       if (response.statusCode == 200) {
         final allCategoryResponse = category_model.categoryResponseModelFromJson(response.body);
@@ -52,7 +52,7 @@ class HomeController extends GetxController {
       }
 
 
-      final response = await http.get(Uri.parse("https://klambi.ta.rplrus.com/api/$newTemp"));
+      final response = await http.get(Uri.parse("https://klambi.ta.rplrus.com/api/products/$newTemp"));
 
       if (response.statusCode == 200) {
         final allProductResponse = product_model.allproductResponseModelFromJson(response.body);
@@ -71,5 +71,10 @@ class HomeController extends GetxController {
   void refreshList() async {
     await loadDataProduct(selectedIndex.value == 0 ? null : categoryResponseAll[selectedIndex.value]);
     refreshController.refreshCompleted();
+  }
+
+  String imageUrl(String path) {
+    final baseUrl = 'https://klambi.ta.rplrus.com/storage/';
+    return '$baseUrl$path';
   }
 }

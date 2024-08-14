@@ -48,9 +48,10 @@ class Header extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
-                        width: width * 0.7,
+                        width: width * 0.6,
+                        height: height *0.03,
                         child: FittedBox(
-                          fit: BoxFit.scaleDown,
+                          fit: BoxFit.fitWidth,
                           child: Text(
                             '${greeting()}$username',
                             style: TextStyle(

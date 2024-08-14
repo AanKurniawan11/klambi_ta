@@ -18,7 +18,7 @@ import 'package:klambi_ta/Pages/menuprofile/pages/cs/controller/cs_binding.dart'
 import 'package:klambi_ta/Pages/menuprofile/pages/cs/page/cs.dart';
 import 'package:klambi_ta/Pages/menuprofile/pages/edit/controller/edit_binding.dart';
 import 'package:klambi_ta/Pages/menuprofile/pages/edit/page/editprofile.dart';
-import 'package:klambi_ta/Pages/menuprofile/user/user.dart';
+import 'package:klambi_ta/Pages/menuprofile/pages/menu_profile.dart';
 import 'package:klambi_ta/Pages/payment/controller/payment_binding.dart';
 import 'package:klambi_ta/Pages/payment/page/payment.dart';
 import 'package:klambi_ta/Pages/user/login/components/login_binding.dart';
@@ -89,8 +89,8 @@ List<GetPage> pageRoutes = <GetPage>[
     // binding: ProfileBinding()
   ),
   GetPage(
-    name: RouteName.user,
-    page: () => UserView(),
+    name: RouteName.profile,
+    page: () => Profile(),
     // binding: ProfileBinding()
   ),
 ];

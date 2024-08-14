@@ -17,8 +17,8 @@ class Provinsi extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 CustomDropdown(
-                  items: ['Jawa Tengah'],
-                  hintText: 'Provinsi',
+                  items: ['Kudus'],
+                  hintText: 'Kota',
                   onChanged: (String? newValue) {
                     if (newValue != null) {
                       print('Selected: $newValue');
