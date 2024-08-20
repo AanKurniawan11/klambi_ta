@@ -2,26 +2,28 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:klambi_ta/Common/colors/color.dart';
+import 'package:klambi_ta/Pages/home/components/allproductresponsemodel.dart';
 import 'package:klambi_ta/Pages/menuprofile/pages/address/controller/address_controller.dart';
-
+import 'package:klambi_ta/Pages/payment/controller/payment_controller.dart';
 import 'package:klambi_ta/component/mytext.dart';
-import 'package:klambi_ta/Pages/payment/components/DeliverOpsi.dart';
 import 'package:klambi_ta/Pages/payment/components/listdown.dart';
-
-
 import 'package:klambi_ta/component/my_elevatedbutton.dart';
 import 'package:klambi_ta/component/space_extension.dart';
 
 
 class Payment extends StatelessWidget {
-   Payment({super.key});
+  Payment({super.key});
   final AddressController Showcontroller = Get.put(AddressController());
+  final PaymentController controller = Get.put(PaymentController());
 
   @override
   Widget build(BuildContext context) {
     final Size mediaquery = MediaQuery.of(context).size;
     final double height = mediaquery.height;
     final double width = mediaquery.width;
+     Datum item;
+
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -142,7 +144,7 @@ class Payment extends StatelessWidget {
                                   color: ColorValue.kDarkGrey),
                             ),
                           ].withSpaceBetween(width: 10),
-                            ),
+                        ),
                       ],
                     ),
                   ),
@@ -163,7 +165,7 @@ class Payment extends StatelessWidget {
                           foregroundDecoration: BoxDecoration(
                             image: DecorationImage(
                                 image:
-                                    AssetImage("assets/images/demo/demo_image.png")),
+                                AssetImage("assets/images/demo/demo_image.png")),
                           ),
                         ),
                         Column(
@@ -264,7 +266,7 @@ class Payment extends StatelessWidget {
                   SizedBox(height: 20),
                   Padding(
                     padding:
-                        const EdgeInsets.symmetric(vertical: 1, horizontal: 20),
+                    const EdgeInsets.symmetric(vertical: 1, horizontal: 20),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -299,13 +301,12 @@ class Payment extends StatelessWidget {
               width: width * 0.9,
               child: My_Button(
                 onclick: () {
-                  Get.offAndToNamed("/design");
+                  controller.addOrder();
                 },
                 title: 'Konfirmasi dan Bayar',
               ),
             ),
             SizedBox(height: 10),
-
           ],
         ),
       ),

@@ -82,7 +82,7 @@ class CartControllers extends GetxController {
         },
         body: jsonEncode(carts.toJson()),
       );
-      // print(response.body);
+      print(response.body);
 
       if (response.statusCode == 200) {
         // print('Token: $token');

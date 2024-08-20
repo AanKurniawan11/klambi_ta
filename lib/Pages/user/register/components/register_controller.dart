@@ -57,12 +57,13 @@ class RegisterController extends GetxController {
         ToastMessage.show("Register berhasil");
         Get.offAllNamed('/login');  // Navigate to the main screen
       } else {
+        print(response.statusCode);
         message.value = "Registration failed: ${response.statusCode}";
         ToastMessage.show(message.value);
         isLoading.value = false;
       }
     } catch (e) {
-      message.value = "An error occurred";
+      message.value = "No Internet";
       ToastMessage.show(message.value);
       print(e);
       isLoading.value = false;

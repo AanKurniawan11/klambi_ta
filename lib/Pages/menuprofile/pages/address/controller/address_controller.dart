@@ -31,8 +31,15 @@ class AddressController extends GetxController {
     ShowData();
   }
 
+  Future<void> setSelectedAddress(int id) async {
+    prefs = await SharedPreferences.getInstance();
+    await prefs.setInt("selected_address_id", id);
+  }
 
-
+  Future<int?> getSelectedAddressId() async {
+    prefs = await SharedPreferences.getInstance();
+    return prefs.getInt("selected_address_id");
+  }
 
   Future<void> submitAddress() async {
     var token = prefs.getString("token");

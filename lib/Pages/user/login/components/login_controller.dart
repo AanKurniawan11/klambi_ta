@@ -14,7 +14,7 @@ class LoginController extends GetxController {
   var user = Rxn<User>();
   final GoogleSignIn googleSignIn = GoogleSignIn();
   String? token = "";
-  final profilcontroller = Get.put(ProfileController());
+  final profileController = Get.put(ProfileController());
 
   @override
   void onInit() {
@@ -59,7 +59,6 @@ class LoginController extends GetxController {
       if (response.statusCode == 200) {
         LoginResponseModel loginResponseModel = loginResponseModelFromJson(response.body);
 
-        // Call the onLoginSuccess method when login is successful
         onLoginSuccess(loginResponseModel);
       } else {
         message.value = "Username atau Password salah : ${response.statusCode}";
@@ -74,17 +73,18 @@ class LoginController extends GetxController {
     }
   }
 
-  // Method to handle successful login actions
   void onLoginSuccess(LoginResponseModel loginResponseModel) async {
     await prefs.setString("username", loginResponseModel.data.name);
     await prefs.setString("email", loginResponseModel.data.email);
     await prefs.setString("token", loginResponseModel.data.token);
 
+    profileController.setUser(user.value);
+
     String? savedToken = await prefs.getString("token");
     print("Token yang disimpan: $savedToken");
     ToastMessage.show("Berhasil login");
 
-    Get.offAllNamed('/navbar'); // Navigate to the main screen
+    Get.offAllNamed('/navbar');
   }
 
   Future<void> saveUserId(int userId) async {
@@ -101,7 +101,7 @@ class LoginController extends GetxController {
     prefs = await SharedPreferences.getInstance();
     await prefs.clear();
     await FirebaseAuth.instance.signOut();
-    await googleSignIn.signOut(); // Sign out from Google account
+    await googleSignIn.signOut();
     user.value = null;
     Get.offAllNamed('/login');
   }
