@@ -12,9 +12,10 @@ import 'package:klambi_ta/component/space_extension.dart';
 
 class Profile extends StatelessWidget {
   Profile({super.key});
+
   final profileController = Get.put(ProfileController());
-  final controller = Get.put(EditController());
-  final showDataController = Get.put(AddressController());
+  final editController = Get.put(EditController());
+  final addressController = Get.put(AddressController());
 
   Future<void> showLogoutConfirmationDialog(BuildContext context) async {
     return showDialog<void>(
@@ -40,8 +41,7 @@ class Profile extends StatelessWidget {
             TextButton(
               child: Text('Log Out'),
               onPressed: () async {
-                profileController.logoutg();
-
+                await profileController.logoutg();
                 if (Navigator.of(context).canPop()) {
                   Navigator.of(context).pop();
                 }
@@ -67,20 +67,17 @@ class Profile extends StatelessWidget {
             child: Center(
               child: Column(
                 children: [
-                  if (controller.username.value.isNotEmpty)
+                  if (editController.username.value.isNotEmpty)
                     Column(
                       children: [
                         CircleAvatar(
-                          backgroundImage:
-                              FileImage(controller.pickedImage.value as File),
+                          backgroundImage: profileController.imageUrl.value.isNotEmpty
+                              ? NetworkImage(profileController.imageUrl.value)
+                              : AssetImage("assets/images/banner/pro.png") as ImageProvider,
                           radius: 50,
                         ),
-                        txt(
-                          username: profileController.username.value,
-                        ),
-                        txt(
-                          username: profileController.email.value,
-                        ),
+                        txt(username: profileController.username.value),
+                        txt(username: profileController.email.value),
                       ],
                     )
                   else
@@ -92,10 +89,10 @@ class Profile extends StatelessWidget {
                             width: width * 0.3,
                             decoration: BoxDecoration(
                               image: DecorationImage(
-                                image: controller.pickedImage.value != null
-                                    ? FileImage(controller.pickedImage.value!)
-                                    : controller.imageUrl.value != null
-                                    ? NetworkImage(controller.imageUrl.value!)
+                                image: editController.pickedImage.value != null
+                                    ? FileImage(editController.pickedImage.value!)
+                                    : editController.imageUrl.value != null
+                                    ? NetworkImage(editController.imageUrl.value!)
                                     : AssetImage("assets/images/banner/pro.png") as ImageProvider,
                                 fit: BoxFit.cover,
                               ),
@@ -103,7 +100,7 @@ class Profile extends StatelessWidget {
                           ),
                         ),
                         SizedBox(height: 10),
-                        txt(username: controller.userProfile.value.name),
+                        txt(username: editController.userProfile.value.name),
                         txt(username: profileController.email.value),
                       ],
                     ),
@@ -155,7 +152,7 @@ class Profile extends StatelessWidget {
                         ),
                         GestureDetector(
                           onTap: () {
-                            showDataController.ShowData();
+                            addressController.ShowData();
                             Get.offNamed("/addAddress");
                           },
                           child: Row(

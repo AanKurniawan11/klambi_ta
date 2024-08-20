@@ -9,27 +9,42 @@ class ProfileController extends GetxController {
   late final SharedPreferences prefs;
   RxString username = "".obs;
   RxString email = "".obs;
+  RxString imageUrl = "".obs;
+
   final GoogleSignIn googleSignIn = GoogleSignIn();
   var user = Rxn<User>();
-  var selectedImage = ''.obs; // Menggunakan RxString untuk gambar yang dipilih
-  var name = "".obs;
-  var image = "".obs;
-
+  var selectedImage = ''.obs;
   final ImagePicker _picker = ImagePicker();
   RxBool isLoading = false.obs;
 
   void getUser() {
     username.value = prefs.getString("username") ?? "";
     email.value = prefs.getString("email") ?? "";
+    imageUrl.value = prefs.getString("imageUrl") ?? "";
   }
 
   void setUser(User? firebaseUser) {
     user.value = firebaseUser;
+    if (firebaseUser != null) {
+      username.value = firebaseUser.displayName ?? "";
+      email.value = firebaseUser.email ?? "";
+
+      prefs.setString("username", username.value);
+      prefs.setString("email", email.value);
+
+      if (firebaseUser.photoURL != null) {
+        imageUrl.value = firebaseUser.photoURL!;
+        prefs.setString("imageUrl", imageUrl.value);
+      }
+
+      update();
+    }
   }
 
   setPreference() async {
     prefs = await SharedPreferences.getInstance();
     getUser();
+    update();
   }
 
   @override
@@ -37,44 +52,37 @@ class ProfileController extends GetxController {
     super.onInit();
     setPreference();
     FirebaseAuth.instance.authStateChanges().listen((User? firebaseUser) {
-      user.value = firebaseUser;
       if (firebaseUser != null) {
-        // Set user details after login
-        username.value = firebaseUser.displayName ?? "";
-        email.value = firebaseUser.email ?? "";
+        setUser(firebaseUser);
       }
     });
   }
 
   Future<void> logoutg() async {
     try {
-      isLoading(true); // Menampilkan indikator loading
+      isLoading(true);
 
-      // Logout dari Firebase dan Google
       await FirebaseAuth.instance.signOut();
       await googleSignIn.signOut();
 
-      // Hapus data pengguna dari SharedPreferences
       await prefs.clear();
 
-      // Reset state pengguna
       user.value = null;
       username.value = "";
       email.value = "";
-      selectedImage.value = "";
+      imageUrl.value = "";
 
-      // Memuat ulang halaman login
+      update();
+
       Get.offAllNamed("/login");
     } catch (e) {
       print("Error during logout: $e");
     } finally {
-      isLoading(false); // Sembunyikan indikator loading setelah logout
+      isLoading(false);
     }
   }
 
-  // Tambahkan metode untuk memuat ulang data profil
   void reloadProfile() async {
     setPreference();
-    update();
   }
 }

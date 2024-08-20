@@ -4,6 +4,9 @@ import 'package:klambi_ta/Common/colors/color.dart';
 import 'package:klambi_ta/Pages/cart/page/cart.dart';
 import 'package:klambi_ta/Pages/cart/controller/cart_controllers.dart';
 import 'package:klambi_ta/Pages/menuprofile/pages/edit/controller/edit_controller.dart';
+import 'package:klambi_ta/component/space_extension.dart';
+import 'package:klambi_ta/shimer/product_page.dart';
+import 'package:shimmer/shimmer.dart';
 
 class Header extends StatelessWidget {
   Header({super.key});
@@ -38,7 +41,33 @@ class Header extends StatelessWidget {
             children: [
               Obx(() {
                 if (editController.isLoading.value) {
-                  return CircularProgressIndicator();
+                  return Shimmer.fromColors(
+                    baseColor: Colors.grey[300]!,
+                    highlightColor: Colors.grey[100]!,
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                      Container(
+                        height: height * 0.035,
+                        width: width * 0.7,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: Colors.grey[300],
+                        ),
+                      ),
+                      Container(
+                        height: height * 0.03,
+                        width: width * 0.5,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: Colors.grey[300],
+                        ),
+                      ),
+                    ].withSpaceBetween(height: 5)
+                    )
+
+
+                  );
                 } else {
                   final username = editController.ctrName.text.isNotEmpty
                       ? editController.ctrName.text

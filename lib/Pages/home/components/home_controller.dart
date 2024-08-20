@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
@@ -7,11 +8,16 @@ import 'categoryresponsemodel.dart' as category_model;
 
 class HomeController extends GetxController {
   final RefreshController refreshController = RefreshController(initialRefresh: false);
+
   RxList<product_model.Datum> productResponseAll = <product_model.Datum>[].obs;
+
+  RxList<product_model.Datum> searchResult = <product_model.Datum>[].obs;
+
   RxList<String> categoryResponseAll = <String>[].obs;
   RxInt selectedIndex = 0.obs;
 
   RxBool isLoading = false.obs;
+  var searchText = ''.obs;
 
   @override
   void onInit() {
@@ -51,12 +57,13 @@ class HomeController extends GetxController {
         newTemp = "category/$category";
       }
 
-
       final response = await http.get(Uri.parse("https://klambi.ta.rplrus.com/api/products/$newTemp"));
 
       if (response.statusCode == 200) {
         final allProductResponse = product_model.allproductResponseModelFromJson(response.body);
         productResponseAll.value = allProductResponse.data;
+
+        searchResult.assignAll(productResponseAll);
       } else {
         print("Status code: " + response.statusCode.toString());
         print(response.body);
@@ -65,6 +72,18 @@ class HomeController extends GetxController {
       print("Error: " + e.toString());
     } finally {
       isLoading.value = false;
+    }
+  }
+
+  searchProducts(String query) {
+    searchText.value = query;
+
+    if (query.isEmpty) {
+      searchResult.assignAll(productResponseAll);
+    } else {
+      searchResult.assignAll(productResponseAll.where((product) {
+        return product.title.toLowerCase().contains(query.toLowerCase());
+      }).toList());
     }
   }
 

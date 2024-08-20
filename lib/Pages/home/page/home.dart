@@ -1,20 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:klambi_ta/Common/colors/color.dart';
 import 'package:klambi_ta/Pages/home/components/header.dart';
 import 'package:klambi_ta/Pages/home/components/home_controller.dart';
 import 'package:klambi_ta/Pages/home/components/recomend_product.dart';
 import 'package:klambi_ta/Pages/home/components/carousel.dart';
 import 'package:klambi_ta/Pages/home/components/category_tabs.dart';
 import 'package:klambi_ta/Pages/home/components/search_field.dart';
-
 import 'package:klambi_ta/shimer/product_card.dart';
-import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 
 class HomePageView extends StatelessWidget {
   HomePageView({super.key});
 
   final HomeController homeController = Get.put(HomeController());
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,13 +24,36 @@ class HomePageView extends StatelessWidget {
             SizedBox(height: 25),
             Carousel(),
             SizedBox(height: 25),
-            SearchField(),
+            SearchField(
+              onChanged: (String value) {
+                homeController.searchProducts(value);
+              },
+            ),
             SizedBox(height: 10),
             CategoryTabs(),
             SizedBox(height: 15),
-            Obx(() => homeController.isLoading.value
-                ? ShimmerLoadingGrid()
-                : ProductCard(homeController.productResponseAll.value)),
+            Obx(() {
+              if (homeController.isLoading.value) {
+                return ShimmerLoadingGrid();
+              }
+              if (homeController.searchResult.isNotEmpty) {
+                return ProductCard(homeController.searchResult);
+              }
+
+              if (homeController.searchText.isNotEmpty && homeController.searchResult.isEmpty) {
+                return Padding(
+                  padding: const EdgeInsets.only(top: 50),
+                  child: Center(
+                    child: Text(
+                      "Produk tidak ditemukan",
+                      style: TextStyle(fontSize: 16, color: ColorValue.kLightGrey,fontFamily: "General Sans"),
+                    ),
+                  ),
+                );
+              }
+
+              return ProductCard(homeController.productResponseAll.value);
+            }),
           ],
         ),
       ),
