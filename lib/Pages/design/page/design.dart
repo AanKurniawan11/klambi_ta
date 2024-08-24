@@ -14,7 +14,7 @@ class DesignPageView extends StatelessWidget {
       appBar: AppBar(
         leading: IconButton(
             onPressed: () {
-              Get.offAndToNamed("/payments");
+              Get.offAllNamed("/navbar");
             },
             icon: Icon(Icons.arrow_back)),
         title: Text(

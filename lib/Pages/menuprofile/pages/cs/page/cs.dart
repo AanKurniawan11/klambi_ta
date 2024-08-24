@@ -15,24 +15,25 @@ class CustomerService extends StatelessWidget {
           'Pusat Bantuan',
           style: TextStyle(
             fontFamily: 'General Sans',
-            fontWeight: FontWeight.w500,
+            fontWeight: FontWeight.w600,
             fontSize: 24,
             color: ColorValue.kBlack,
           ),
         ),
+        backgroundColor: ColorValue.kSecondary,
         leading: GestureDetector(
           onTap: () {
             Get.offAndToNamed("/navbar");
           },
           child: Icon(
             Icons.arrow_back,
+            color: Colors.white,
           ),
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 20),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
         child: TextDetails(),
       ),
     );
-  }
-}
+  }}

@@ -27,150 +27,144 @@ class AddAddress extends StatelessWidget {
         ),
         title: Text("Alamat", style: TextStyle(fontSize: 24, fontFamily: "General Sans")),
         centerTitle: true,
+        elevation: 0,
+        backgroundColor: Colors.transparent,
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 45),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
         child: Column(
           children: [
             Obx(() {
               if (controller.Show.isEmpty) {
-                return
-                  Column(
+                return Expanded(
+                  child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Center(
-                        child: Image.asset(
-                          'assets/images/checkout/add1.png',
-                          width: width * 0.8,
-                          height: height * 0.4,
-                        ),
+                      Image.asset(
+                        'assets/images/checkout/add1.png',
+                        width: width * 0.7,
+                        height: height * 0.3,
                       ),
-                      SizedBox(height: 10),
+                      SizedBox(height: 20),
                       Text(
                         'Masukkan Alamat Rumahmu',
                         style: TextStyle(
                           fontFamily: 'General Sans',
-                          fontWeight: FontWeight.w600,
-                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 22,
                           color: ColorValue.kBlack,
                         ),
+                        textAlign: TextAlign.center,
                       ),
+                      SizedBox(height: 10),
                       Text(
                         'Satu langkah lagi untuk mengirimkan barangmu',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontFamily: 'General Sans',
-                          fontWeight: FontWeight.w500,
-                          fontSize: 14,
+                          fontWeight: FontWeight.normal,
+                          fontSize: 16,
                           color: ColorValue.kBlack,
                         ),
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'ke tujuan',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontFamily: 'General Sans',
-                              fontWeight: FontWeight.w500,
-                              fontSize: 14,
-                              color: ColorValue.kBlack,
-                            ),
+                      SizedBox(height: 20),
+                      GestureDetector(
+                        onTap: () async {
+                          Get.toNamed("/insert");
+                        },
+                        child: Text(
+                          "Masukkan Alamat",
+                          style: TextStyle(
+                            color: ColorValue.kSecondary,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            decoration: TextDecoration.underline,
                           ),
-                          GestureDetector(
-                            onTap: () async {
-                              Get.toNamed("/insert");
-                            },
-                            child: const Text(
-                              " Masukkan Alamat",
-                              style: TextStyle(
-                                color: ColorValue.kSecondary,
-                                fontSize: 14,
-                              ),
-                            ),
-                          )
-                        ],
+                        ),
                       ),
                     ],
-                  );
+                  ),
+                );
               } else {
                 return Expanded(
-                  child:
-                  ListView.builder(
+                  child: ListView.builder(
                     itemCount: controller.Show.length,
                     itemBuilder: (context, index) {
                       final data = controller.Show[index];
-                      return
-                        Container(
-                          width: double.infinity,
-                          height: height * 0.31,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: ColorValue.kSecondary,
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(vertical: 15),
-                                  child: Row(
-                                    children: [
-                                      Align(
-                                        child: Icon(Icons.add_location_sharp,
-                                            size: 60, color: ColorValue.kWhite),
-                                      ),
-                                      Column(
-                                        crossAxisAlignment:CrossAxisAlignment.start ,
-                                        children: [
-                                          Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: [
-                                              myTexts(text: "Kontak :"),
-                                              myTexts(text: "${data.namaLengkap}",),
-                                              myTexts(text: "${data.nomorTelepon}"),
-                                            ],
-                                          ),
-                                          SizedBox(height: 20,),
-                                          Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: [
-                                              myTexts(text: "Alamat :"),
-                                              Container(
-                                                  width: width * 0.65,
-                                                  child: Text("${data.provinsi}" + " ${data.keterangan}",style: TextStyle(color: ColorValue.kWhite,fontFamily: "General Sans"
-                                                  ),maxLines: 3,)),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      GestureDetector(
-                                          onTap: (){
-                                            Get.to(EditAddressView(addressId: data.id,));
-                                          },
-                                          child: Text("Ubah",style: TextStyle(color: ColorValue.kWhite,decoration: TextDecoration.underline,decorationThickness: 1.5,decorationColor: ColorValue.kWhite,fontFamily: "General Sans"),)),
-                                      IconButton(
-                                        icon: Icon(Icons.delete, color: ColorValue.kLightGrey,size: 20,),
-                                        onPressed: () async {
-                                          controller.DeleteAddress();
-                                        },
-                                      ),
-                                    ].withSpaceBetween(width: 200)
-                                )
-                              ],
+                      return Container(
+                        width: double.infinity,
+                        margin: EdgeInsets.symmetric(vertical: 8),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12),
+                          color: ColorValue.kSecondary,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.1),
+                              spreadRadius: 2,
+                              blurRadius: 4,
                             ),
+                          ],
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Icon(Icons.add_location_sharp, size: 50, color: ColorValue.kWhite),
+                                  SizedBox(width: 16),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        myTexts(text: "Kontak :"),
+                                        myTexts(text: "${data.namaLengkap}"),
+                                        myTexts(text: "${data.nomorTelepon}"),
+                                        SizedBox(height: 16),
+                                        myTexts(text: "Alamat :"),
+                                        Text(
+                                          "${data.provinsi} ${data.keterangan}",
+                                          style: TextStyle(color: ColorValue.kWhite, fontFamily: "General Sans"),
+                                          maxLines: 3,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: 16),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  GestureDetector(
+                                    onTap: () {
+                                      Get.to(EditAddressView(addressId: data.id));
+                                    },
+                                    child: Text(
+                                      "Ubah",
+                                      style: TextStyle(
+                                        color: ColorValue.kWhite,
+                                        decoration: TextDecoration.underline,
+                                        fontFamily: "General Sans",
+                                      ),
+                                    ),
+                                  ),
+                                  IconButton(
+                                    icon: Icon(Icons.delete, color: ColorValue.kLightGrey, size: 20),
+                                    onPressed: () async {
+                                      controller.DeleteAddress();
+                                    },
+                                  ),
+                                ],
+                              ),
+                            ],
                           ),
-                        );
-                      },
+                        ),
+                      );
+                    },
                   ),
                 );
               }

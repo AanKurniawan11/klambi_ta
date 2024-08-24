@@ -6,6 +6,7 @@ import 'package:klambi_ta/Common/colors/color.dart';
 import 'package:klambi_ta/Pages/home/components/home_controller.dart';
 import 'package:klambi_ta/Pages/menuprofile/pages/address/Page/ReqAddress.dart';
 import 'package:klambi_ta/Pages/menuprofile/pages/address/controller/address_controller.dart';
+import 'package:klambi_ta/Pages/payment/controller/payment_controller.dart';
 import 'package:klambi_ta/component/space_extension.dart';
 
 class Cart extends StatelessWidget {
@@ -14,6 +15,7 @@ class Cart extends StatelessWidget {
   final CartControllers controllers = Get.put(CartControllers());
   final HomeController homecontroller = Get.put(HomeController());
   final AddressController Showcontroller = Get.put(AddressController());
+  final PaymentController controller = Get.put(PaymentController());
 
   @override
   Widget build(BuildContext context) {
@@ -250,6 +252,7 @@ class Cart extends StatelessWidget {
                 onTap: () {
                   if (hasSelectedItems) {
                     if (Showcontroller.Show.isNotEmpty) {
+                      controller.orderfromCart();
                       Get.offNamed("/payment");
                     } else {
                       Get.to(ReqAddres());

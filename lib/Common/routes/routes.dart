@@ -75,10 +75,10 @@ List<GetPage> pageRoutes = <GetPage>[
       name: RouteName.insert,
       page: () => const InsertAddressPageView(),
       binding: InserAddressBinding()),
-  // GetPage(
-  //     name: RouteName.payment,
-  //     page: () =>  Payment(),
-  //     binding: PaymentBinding()),
+  GetPage(
+      name: RouteName.payment,
+      page: () =>  Payment(),
+      binding: PaymentBinding()),
   GetPage(
     name: RouteName.navbar,
     page: () => LandingPage(),

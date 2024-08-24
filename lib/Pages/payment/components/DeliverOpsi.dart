@@ -19,9 +19,9 @@ class _DeliverOpsiState extends State<DeliverOpsi> {
   String image = "";
 
   List<DeliverMethod> paymentMethods = [
-    DeliverMethod(name: 'Hemat', imagePath: 'assets/gopay.png'),
-    DeliverMethod(name: 'Reguler', imagePath: 'assets/sicepat.png'),
-    DeliverMethod(name: 'Instant', imagePath: 'assets/lgo1.png'),
+    DeliverMethod(name: 'Cash On Delivery', imagePath: 'assets/gopay.png'),
+    // DeliverMethod(name: 'Reguler', imagePath: 'assets/sicepat.png'),
+    // DeliverMethod(name: 'Instant', imagePath: 'assets/lgo1.png'),
   ];
 
   @override

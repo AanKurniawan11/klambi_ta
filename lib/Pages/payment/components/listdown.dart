@@ -8,6 +8,10 @@ class PaymentMethod {
 }
 
 class PayList extends StatefulWidget {
+  final void Function(String, String) onPaymentMethodSelected;
+
+  PayList({required this.onPaymentMethodSelected});
+
   @override
   _PayListState createState() => _PayListState();
 }
@@ -19,7 +23,6 @@ class _PayListState extends State<PayList> {
   String image = "";
 
   List<PaymentMethod> paymentMethods = [
-    PaymentMethod(name: 'Gopay', imagePath: 'assets/gopay.png'),
     PaymentMethod(name: 'Cash on Delivery', imagePath: 'assets/cod.png'),
   ];
 
@@ -28,6 +31,7 @@ class _PayListState extends State<PayList> {
     final Size mediaquery = MediaQuery.of(context).size;
     final double height = mediaquery.height;
     final double width = mediaquery.width;
+
     return Column(
       children: [
         GestureDetector(
@@ -72,7 +76,7 @@ class _PayListState extends State<PayList> {
                         width: width * 0.13,
                         height: height * 0.033,
                         foregroundDecoration: BoxDecoration(
-                          image: DecorationImage(image: AssetImage(paymentMethods[index].imagePath),fit:BoxFit.cover)
+                            image: DecorationImage(image: AssetImage(paymentMethods[index].imagePath), fit: BoxFit.cover)
                         ),
                       )
                     ],
@@ -85,6 +89,9 @@ class _PayListState extends State<PayList> {
                       title = paymentMethods[index].name;
                       image = paymentMethods[index].imagePath;
                       isDropdownOpen = false;
+
+                      // Call the callback function to update the payment method
+                      widget.onPaymentMethodSelected(title, image);
                     });
                   },
                 );

@@ -8,7 +8,7 @@ import 'package:get/get.dart';
 
 class DetailOrder extends StatelessWidget {
   DetailOrder({super.key});
-  final HistoryController controller = Get.find<HistoryController>();
+  final HistoryController controller = Get.put(HistoryController());
 
   String formatPrice(double price) {
     final format = NumberFormat.currency(
