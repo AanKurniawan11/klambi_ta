@@ -27,13 +27,10 @@ class LandingPage extends StatelessWidget {
     if (args != null && args is int) {
       print("Received argument: $args");
       landingPageController.changeTabIndex(args);
-
-      // Clear arguments after using them
       Future.delayed(Duration.zero, () {
         Get.offNamed("/navbar");
       });
     }
-
     return SafeArea(
       child: Scaffold(
         bottomNavigationBar: buildBottomNavigationMenu(context, landingPageController),

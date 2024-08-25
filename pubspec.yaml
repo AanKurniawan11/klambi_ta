@@ -36,6 +36,8 @@ dependencies:
   cupertino_icons: ^1.0.2
   shared_preferences: ^2.2.2
   build_runner:
+  connectivity_plus:
+  loading_animation_widget: ^1.2.1
   json_annotation:
   json_serializable:
   smooth_page_indicator: ^1.1.0

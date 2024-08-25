@@ -35,7 +35,6 @@ class PaymentController extends GetxController {
   void selectSize(int index) {
     selectedIndex.value = index;
   }
-
   Future<void> addOrder(int id) async {
     var token = await prefs.getString("token");
     final ordersData = AddresponseModel(
@@ -63,7 +62,6 @@ class PaymentController extends GetxController {
       print('Error: $e');
     }
   }
-
   Future<void> addPay() async {
     if (orderId == null) {
       print('Order ID is not available');
@@ -87,8 +85,9 @@ class PaymentController extends GetxController {
 
       if (response.statusCode == 200) {
         print('Payment method updated: ${response.body}');
-        // Fetch updated order data to reflect any changes
         await fetchOrderData();
+        // After fetching the updated order data, check if the values are updated.
+        print("Updated order data: ${orderData.value}");
       } else {
         print('Failed to update payment method: ${response.statusCode}');
       }
@@ -143,7 +142,6 @@ class PaymentController extends GetxController {
       print('Error: $e');
     }
   }
-
   Future<void> fetchOrderData() async {
     var token = await prefs.getString("token");
     String url = 'https://klambi.ta.rplrus.com/api/orders/latest';
@@ -154,17 +152,14 @@ class PaymentController extends GetxController {
         'Authorization': 'Bearer $token',
       },
     );
-
     print("Response: ${response.body}");
     if (response.statusCode == 200) {
       var jsonResponse = json.decode(response.body);
       ShowOrderResponseModel orderResponse = ShowOrderResponseModel.fromJson(jsonResponse);
 
-      // Update orderData with data retrieved
       orderData.value = orderResponse.data;
-      // Retrieve order ID from model
       if (orderResponse.data != null) {
-        orderId = orderResponse.data!.order?.id; // Get order ID from data
+        orderId = orderResponse.data!.order?.id;
         order.value = orderResponse.data!.order; // Update order if necessary
       }
     } else {

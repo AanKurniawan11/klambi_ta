@@ -4,28 +4,22 @@ import 'package:get/get.dart';
 import 'package:klambi_ta/Common/colors/color.dart';
 import 'package:klambi_ta/Pages/cart/controller/cart_controllers.dart';
 import 'package:klambi_ta/Pages/menuprofile/pages/address/controller/address_controller.dart';
-import 'package:klambi_ta/Pages/payment/components/test.dart';
-import 'package:klambi_ta/Pages/payment/components/test2.dart';
+import 'package:klambi_ta/Pages/payment/components/paymethcart.dart';
 import 'package:klambi_ta/Pages/payment/controller/payment_controller.dart';
 import 'package:klambi_ta/component/my_elevatedbutton.dart';
-import 'package:klambi_ta/component/mytext.dart';
-import 'package:klambi_ta/component/space_extension.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import '../../../component/format_price.dart';
 
-class Payment extends StatelessWidget {
-  Payment({super.key});
+class PaymentCart extends StatelessWidget {
+  PaymentCart({super.key});
   final PaymentController controller = Get.put(PaymentController());
+  final CartControllers cartcontroller = Get.put(CartControllers());
 
   @override
   Widget build(BuildContext context) {
     final Size mediaQuery = MediaQuery.of(context).size;
     final double height = mediaQuery.height;
     final double width = mediaQuery.width;
-    int parsePrice(String? price) {
-      final cleanedPrice = price?.replaceAll(RegExp('[^0-9]'), '') ?? '0';
-      return int.tryParse(cleanedPrice) ?? 0;
-    }
-
 
     return Scaffold(
       appBar: AppBar(
@@ -49,20 +43,20 @@ class Payment extends StatelessWidget {
         elevation: 0,
       ),
       body: Obx(() {
-        if (controller.isLoading.value) {
-          return Center(child: CircularProgressIndicator());
+        if (cartcontroller.isLoading.value) {
+          return Center(child: LoadingAnimationWidget.discreteCircle(
+            color: ColorValue.kPrimary,
+            size: 50,
+            secondRingColor: ColorValue.kSecondary,
+            thirdRingColor: ColorValue.kDanger,
+          ));
         }
-        if (controller.order.value == null) {
+        if (cartcontroller.order.value == null) {
           return Center(child: Text('Tidak ada data pesanan.'));
         }
-        final order = controller.orderData.value?.order;
-        final products = controller.orderData.value?.products;
-        final address = order?.address;
-
-        // Helper function to parse and format prices
-        int parsePrice(String? price) {
-          return int.tryParse(price ?? '0') ?? 0;
-        }
+        final orderCart = cartcontroller.orderData.value?.order;
+        final products = cartcontroller.orderData.value?.products;
+        final address = orderCart?.address;
 
         return SingleChildScrollView(
           child: Column(
@@ -197,7 +191,7 @@ class Payment extends StatelessWidget {
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(8),
                                 image: DecorationImage(
-                                  image: NetworkImage(product.image ?? ''),
+                                  image: NetworkImage(products?[0].imagee ?? ''),
                                   fit: BoxFit.cover,
                                 ),
                               ),
@@ -246,12 +240,8 @@ class Payment extends StatelessWidget {
                     SizedBox(height: 20),
                     Column(
                       children: [
-                        _buildPriceDetailRow(
-                          "Harga Barang",
-                          formatPrice(parsePrice(products?[0].price.toString())),
-                        ),
-                        Text("Biaya Pengiriman ${order?.shippingFee}"),
-                        Text("Biaya Penangan${order?.handlingFee}")
+                        Text("Biaya Pengiriman ${orderCart?.shippingFee}"),
+                        Text("Biaya Penangan${orderCart?.handlingFee}")
                       ],
                     ),
                     SizedBox(height: 20),
@@ -270,7 +260,7 @@ class Payment extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            ("${order?.totalPrice}"),
+                            "Totalnye ${orderCart?.totalPrice}",
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w700,
@@ -288,12 +278,12 @@ class Payment extends StatelessWidget {
               // Pilih Metode Pembayaran
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: Test2(),
+                child: PaymethCart(),
               ),
               SizedBox(height: 20),
               My_Button(
                 onclick: () {
-                  controller.addHistory();
+                  cartcontroller.addHistoryCart();
                   Get.offAllNamed("/design");
                 },
                 title: "Konfirmasi dan bayar",
@@ -306,31 +296,4 @@ class Payment extends StatelessWidget {
     );
   }
 
-  Widget _buildPriceDetailRow(String label, String value) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 5.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            label,
-            style: TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w500,
-              fontFamily: 'General Sans',
-              color: Colors.grey[700],
-            ),
-          ),
-          Text(
-            value,
-            style: TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w500,
-              fontFamily: 'General Sans',
-            ),
-          ),
-        ],
-      ),
-    );
-  }
 }
