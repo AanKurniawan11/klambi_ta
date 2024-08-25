@@ -8,11 +8,8 @@ import 'categoryresponsemodel.dart' as category_model;
 
 class HomeController extends GetxController {
   final RefreshController refreshController = RefreshController(initialRefresh: false);
-
   RxList<product_model.Datum> productResponseAll = <product_model.Datum>[].obs;
-
   RxList<product_model.Datum> searchResult = <product_model.Datum>[].obs;
-
   RxList<String> categoryResponseAll = <String>[].obs;
   RxInt selectedIndex = 0.obs;
 
@@ -91,7 +88,6 @@ class HomeController extends GetxController {
     await loadDataProduct(selectedIndex.value == 0 ? null : categoryResponseAll[selectedIndex.value]);
     refreshController.refreshCompleted();
   }
-
   String imageUrl(String path) {
     final baseUrl = 'https://klambi.ta.rplrus.com/storage/';
     return '$baseUrl$path';

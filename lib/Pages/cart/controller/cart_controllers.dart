@@ -6,12 +6,20 @@ import 'package:klambi_ta/Pages/cart/models/showcartmodel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
+import '../../payment/components/paymentmethodemodel.dart';
+import '../../payment/components/showcartordermodel.dart';
+
 class CartControllers extends GetxController {
   RxBool isRefresh = false.obs;
   late final SharedPreferences prefs;
   RxList<Item> Cartdata = <Item>[].obs;
   RxList<Item> selectedItems = <Item>[].obs;
+  Rx<Order?> order = Rx<Order?>(null);
+  Rx<Data?> orderData = Rx<Data?>(null);
+  var isLoading = true.obs;
+  int? orderId;
 
+  var paymeth = "".obs;
   var size = 'S'.obs;
   var quantity = 0.obs;
   var productTitle = ''.obs;
@@ -22,27 +30,135 @@ class CartControllers extends GetxController {
   var totalPrice = 0.obs;
 
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
-    setPreference();
+    await setPreference();
+    await fetchOrderCart();
     updateTotalPrice();
+  }
+
+  Future<void> addPayCart() async {
+    if (orderId == null) {
+      print('Order ID is not available');
+      return;
+    }
+
+    var token = await prefs.getString("token");
+    final paydata = PayresponseModel(
+      paymentMethod: paymeth.value,
+    );
+
+    try {
+      final response = await http.post(
+        Uri.parse('https://klambi.ta.rplrus.com/api/orders/$orderId/update-payment-method'),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+        body: jsonEncode(paydata.toJson()),
+      );
+
+      if (response.statusCode == 200) {
+        print('Payment method updated: ${response.body}');
+        await fetchOrderCart();
+        print("Updated order data: ${orderData.value}");
+      } else {
+        print('Failed to update payment method: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error: $e');
+    }
+  }
+
+  Future<void> addHistoryCart() async {
+    if (orderId == null) {
+      print('Order ID is not available');
+      return;
+    }
+
+    var token = await prefs.getString("token");
+    try {
+      final response = await http.post(
+        Uri.parse('https://klambi.ta.rplrus.com/api/orders/$orderId/history'),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+      );
+      print(response.body);
+      if (response.statusCode == 200) {
+        print('History added successfully: ${response.body}');
+        await fetchOrderCart();
+      } else {
+        print('Failed to add history: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error: $e');
+    }
+  }
+
+  Future<void> orderfromCart() async {
+    var token = await prefs.getString("token");
+    try {
+      final response = await http.post(
+        Uri.parse('https://klambi.ta.rplrus.com/api/carts/checkout-from-cart'),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+      );
+      print(response.body);
+      if (response.statusCode == 201) {
+        print('Order from cart added successfully: ${response.body}');
+        await fetchOrderCart();
+      } else {
+        print('Failed to add cart order: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error: $e');
+    }
+  }
+
+  Future<void> fetchOrderCart() async {
+    isLoading.value = true; // Start loading
+    var token = await prefs.getString("token");
+    String url = 'https://klambi.ta.rplrus.com/api/show/last/cart';
+    try {
+      final response = await http.get(
+        Uri.parse(url),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+      );
+      if (response.statusCode == 200) {
+        var jsonResponse = json.decode(response.body);
+        Showcartordermodel orderResponse = Showcartordermodel.fromJson(jsonResponse);
+        orderData.value = orderResponse.data;
+        if (orderResponse.data != null) {
+          orderId = orderResponse.data!.order?.id;
+          order.value = orderResponse.data!.order;
+        }
+      } else {
+        orderData.value = null; // Handle error case
+      }
+    } finally {
+      isLoading.value = false; // Stop loading regardless of the outcome
+    }
   }
 
   Future<void> setPreference() async {
     prefs = await SharedPreferences.getInstance();
-    ShowCartData();
+    await ShowCartData(); // Make sure to wait for this method to finish before proceeding
   }
 
   Future<void> selectedCart(int id, bool status, int quantity) async {
-    print(id);
-
     var token = await prefs.getString("token");
     final select = SelectedCartModel(cartId: id, selected: status, quantity: quantity);
     print(token);
     try {
       final response = await http.post(
         Uri.parse('https://klambi.ta.rplrus.com/api/update-selection'),
-        // Update this URL as needed
         headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer $token',
@@ -52,12 +168,9 @@ class CartControllers extends GetxController {
       print(response.body);
 
       if (response.statusCode == 200) {
-        // ShowCartData();/
+        // Optionally refresh data after selecting a cart item
       } else {
-        print(response.statusCode);
-        print(response.obs.value.body);
-        print("Failed to send");
-        print('Token: $token');
+        print("Failed to send: ${response.statusCode}");
       }
     } catch (e) {
       print("Error: $e");
@@ -75,7 +188,6 @@ class CartControllers extends GetxController {
     try {
       final response = await http.post(
         Uri.parse('https://klambi.ta.rplrus.com/api/cart/add'),
-        // Update this URL as needed
         headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer $token',
@@ -85,16 +197,10 @@ class CartControllers extends GetxController {
       print(response.body);
 
       if (response.statusCode == 200) {
-        // print('Token: $token');
-        // print('Response body: ${response.body}');
-        ShowCartData();
+        await ShowCartData(); // Refresh cart data after adding
         Get.toNamed("/detail");
-        print(response.body);
       } else {
-        print(response.statusCode);
-        print(response.obs.value.body);
-        print("Failed to send");
-        print('Token: $token');
+        print("Failed to send: ${response.statusCode}");
       }
     } catch (e) {
       print("Error: $e");
@@ -102,56 +208,68 @@ class CartControllers extends GetxController {
   }
 
   Future<void> ShowCartData() async {
+    isLoading.value = true; // Start loading
     var token = await prefs.getString("token");
-    final response = await http.get(
-      Uri.parse('https://klambi.ta.rplrus.com/api/cart-items'),
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer $token'
-      },
-    );
-    // print(response.body);
+    try {
+      final response = await http.get(
+        Uri.parse('https://klambi.ta.rplrus.com/api/cart-items'),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token'
+        },
+      );
+      if (response.statusCode == 200) {
+        ShowCart tes = showCartFromJson(response.body);
+        Cartdata.value = tes.items;
 
-    if (response.statusCode == 200) {
-      ShowCart tes = showCartFromJson(response.body);
-      Cartdata.value = tes.items;
-
-      selectedItems.clear();
-      for (var i = 0; i < tes.items.length; ++i) {
-        if (tes.items[i].selected) {
-          selectedItems.add(tes.items[i]);
+        selectedItems.clear();
+        for (var item in tes.items) {
+          if (item.selected) {
+            selectedItems.add(item);
+          }
         }
+        updateTotalPrice();
+      } else {
+        Cartdata.clear(); // Clear cart data if request fails
+        print("Failed to fetch cart data: ${response.statusCode}");
       }
-      updateTotalPrice();
-    } else {
-      Cartdata.clear();
-      print('Token: $token');
-      print(response.body);
+    } finally {
+      isLoading.value = false; // Stop loading
     }
   }
 
   Future<void> DeleteCartItem(Map<String, dynamic> body) async {
     var token = await prefs.getString("token");
-    final response = await http.delete(
-      Uri.parse('https://klambi.ta.rplrus.com/api/cart/remove'),
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer $token'
-      },
-      body: jsonEncode(body),
-    );
+    try {
+      final response = await http.delete(
+        Uri.parse('https://klambi.ta.rplrus.com/api/cart/remove'),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token'
+        },
+        body: jsonEncode(body),
+      );
 
-    if (response.statusCode == 200) {
-      // Menghapus item dari Cartdata dan selectedItems
-      final removedItem = Cartdata.firstWhere((item) => item.productId == body['products_id']);
-      Cartdata.remove(removedItem);
-      selectedItems.remove(removedItem);
+      if (response.statusCode == 200) {
+        // Remove the item from Cartdata and selectedItems
+        final removedItem = Cartdata.firstWhere((item) => item.productId == body['products_id']);
+        Cartdata.remove(removedItem);
+        selectedItems.remove(removedItem);
 
-      // Perbarui total harga setelah item dihapus
-      updateTotalPrice();
-    } else {
-      print("Gagal menghapus: ${response.body}");
+        updateTotalPrice(); // Update total price after item is removed
+      } else {
+        print("Failed to delete item: ${response.body}");
+      }
+    } catch (e) {
+      print("Error: $e");
     }
+  }
+
+  void updateTotalPrice() {
+    totalPrice.value = selectedItems.fold(
+      0,
+          (sum, item) => sum + (item.productPrice * item.quantity),
+    );
   }
 
   void toggleSelection(Item item) {
@@ -162,10 +280,4 @@ class CartControllers extends GetxController {
     }
     updateTotalPrice();
   }
-
-  void updateTotalPrice() {
-    final total = selectedItems.fold(0, (sum, item) => sum + (item.quantity * item.productPrice));
-    totalPrice.value = total;
-  }
-
 }

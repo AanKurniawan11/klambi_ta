@@ -21,6 +21,7 @@ import 'package:klambi_ta/Pages/menuprofile/pages/edit/page/editprofile.dart';
 import 'package:klambi_ta/Pages/menuprofile/pages/menu_profile.dart';
 import 'package:klambi_ta/Pages/payment/controller/payment_binding.dart';
 import 'package:klambi_ta/Pages/payment/page/payment.dart';
+import 'package:klambi_ta/Pages/payment/page/payment_cart.dart';
 import 'package:klambi_ta/Pages/user/login/components/login_binding.dart';
 import 'package:klambi_ta/Pages/user/login/page/login.dart';
 import 'package:klambi_ta/Pages/user/register/components/register_binding.dart';
@@ -49,7 +50,7 @@ List<GetPage> pageRoutes = <GetPage>[
 
   GetPage(
       name: RouteName.chat,
-      page: () => const ChatPage(),
+      page: () =>  ChatPage(),
       binding: ChatBinding()),
   GetPage(
       name: RouteName.design,
@@ -75,10 +76,14 @@ List<GetPage> pageRoutes = <GetPage>[
       name: RouteName.insert,
       page: () => const InsertAddressPageView(),
       binding: InserAddressBinding()),
-  // GetPage(
-  //     name: RouteName.payment,
-  //     page: () =>  Payment(),
-  //     binding: PaymentBinding()),
+  GetPage(
+      name: RouteName.payment,
+      page: () =>  Payment(),
+      binding: PaymentBinding()),
+  GetPage(
+      name: RouteName.paymentcart,
+      page: () =>  PaymentCart(),
+      binding: CartBinding()),
   GetPage(
     name: RouteName.navbar,
     page: () => LandingPage(),

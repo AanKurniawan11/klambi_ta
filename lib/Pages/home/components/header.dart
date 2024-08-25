@@ -2,10 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:klambi_ta/Common/colors/color.dart';
 import 'package:klambi_ta/Pages/cart/page/cart.dart';
-import 'package:klambi_ta/Pages/cart/controller/cart_controllers.dart';
 import 'package:klambi_ta/Pages/menuprofile/pages/edit/controller/edit_controller.dart';
 import 'package:klambi_ta/component/space_extension.dart';
-import 'package:klambi_ta/shimer/product_page.dart';
 import 'package:shimmer/shimmer.dart';
 
 class Header extends StatelessWidget {

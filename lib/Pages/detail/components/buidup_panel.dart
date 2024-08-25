@@ -4,8 +4,12 @@ import 'package:klambi_ta/Pages/cart/controller/cart_controllers.dart';
 import 'package:klambi_ta/Pages/detail/components/sizes.dart';
 import 'package:klambi_ta/Pages/home/components/home_controller.dart';
 import 'package:klambi_ta/Pages/home/components/recomend_product.dart';
+import 'package:klambi_ta/Pages/menuprofile/pages/address/controller/address_controller.dart';
+import 'package:klambi_ta/Pages/payment/controller/payment_controller.dart';
 import 'package:klambi_ta/Pages/payment/page/payment.dart';
+import 'package:klambi_ta/Pages/payment/page/test.dart';
 import 'package:klambi_ta/component/format_price.dart';
+import 'package:klambi_ta/component/sizesPay.dart';
 import 'package:klambi_ta/component/space_extension.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
@@ -16,22 +20,24 @@ import 'package:get/get.dart';
 
 class ProductDetailPanel extends StatelessWidget {
   final Datum item;
-  final double height;
-  final double width;
   final CartControllers cartcontroller;
   final HomeController homecontroller;
-
+  final AddressController addresscontroller;
+  final PaymentController paymentController;
   const ProductDetailPanel({
     Key? key,
     required this.item,
-    required this.height,
-    required this.width,
     required this.cartcontroller,
     required this.homecontroller,
+    required this.addresscontroller,
+    required this.paymentController,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final Size mediaquery = MediaQuery.of(context).size;
+    final double height = mediaquery.height;
+    final double width = mediaquery.width;
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 25),
       decoration: BoxDecoration(
@@ -203,8 +209,198 @@ class ProductDetailPanel extends StatelessWidget {
                   width: width * 0.58,
                   height: height * 0.075,
                   child: My_Button(
-                    onclick: (){
-                      Get.to(Payment());
+                    onclick: () {
+                      showMaterialModalBottomSheet(
+                        context: context,
+                        builder: (context) => SingleChildScrollView(
+                          controller: ModalScrollController.of(context),
+                          child: Container(
+                            height: height * 0.53,
+                            // width: 100,
+                            color: ColorValue.kWhite,
+                            child: Padding(
+                              padding: const EdgeInsets.all(15),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  GestureDetector(
+                                    onTap: () {
+                                      Get.back();
+                                    },
+                                    child: Align(
+                                        alignment: Alignment.topRight,
+                                        child: Icon(Icons.close)),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Row(
+                                      children: [
+                                        Container(
+                                          height: 100,
+                                          width: 100,
+                                          foregroundDecoration: BoxDecoration(
+                                              image: DecorationImage(
+                                                  image: NetworkImage(
+                                                      homecontroller.imageUrl(
+                                                          item.imagee)))),
+                                        ),
+                                        SizedBox(
+                                          width: 10,
+                                        ),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Container(
+                                                width: width * 0.6,
+                                                child: Text(
+                                                  item.title,
+                                                  style: TextStyle(
+                                                      fontFamily:
+                                                          "General Sans"),
+                                                  maxLines: 2,
+                                                )),
+                                            Text(
+                                              formatPrice(item.price),
+                                              style: TextStyle(
+                                                  fontFamily: "General Sans",
+                                                  fontSize: 16,
+                                                  color: ColorValue.kSecondary),
+                                            )
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                  SizedBox(height: 20),
+                                  Text(
+                                    "Pilih Ukuran",
+                                    style: TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w500,
+                                        color: ColorValue.kDarkGrey),
+                                  ),
+                                  Divider(
+                                    thickness: 1,
+                                    indent: 3,
+                                    endIndent: 3,
+                                    color: ColorValue.kLightGrey,
+                                  ),
+                                  SizesPay(onChanged: (value) {
+                                    paymentController.size.value = value;
+                                  }),
+                                  SizedBox(height: 10),
+                                  Divider(
+                                    thickness: 1,
+                                    indent: 3,
+                                    endIndent: 3,
+                                    color: ColorValue.kLightGrey,
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            "Jumlah",
+                                            style: TextStyle(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w500,
+                                                color: ColorValue.kDarkGrey),
+                                          ),
+                                          Obx(() {
+                                            return Container(
+                                              width: width * 0.26,
+                                              height: height * 0.04,
+                                              decoration: BoxDecoration(
+                                                  color: ColorValue.kLightGrey,
+                                                  border: Border.fromBorderSide(
+                                                    BorderSide(
+                                                        color: ColorValue
+                                                            .kDarkGrey),
+                                                  ),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10)),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  IconButton(
+                                                    icon: Icon(
+                                                      Icons.remove,
+                                                      size: 10,
+                                                    ),
+                                                    onPressed: () {
+                                                      if (paymentController
+                                                              .quantity.value >
+                                                          0) {
+                                                        paymentController
+                                                            .quantity.value--;
+                                                      }
+                                                    },
+                                                  ),
+                                                  Text(
+                                                    paymentController
+                                                        .quantity.value
+                                                        .toString(),
+                                                    style:
+                                                        TextStyle(fontSize: 10),
+                                                  ),
+                                                  IconButton(
+                                                    icon: Icon(
+                                                      Icons.add,
+                                                      size: 10,
+                                                    ),
+                                                    onPressed: () {
+                                                      paymentController
+                                                          .quantity.value++;
+                                                    },
+                                                  ),
+                                                ],
+                                              ),
+                                            );
+                                          }),
+                                        ].withSpaceBetween(height: 20)),
+                                  ),
+                                  SizedBox(
+                                    height: 20,
+                                  ),
+                                  Center(
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        if (addresscontroller.Show.isNotEmpty) {
+                                          paymentController.addOrder(item.id);
+                                          Get.offAllNamed("/payment");
+                                          // Get.to(Pengiriman());
+                                        } else {
+                                          Get.offAllNamed("/address");
+                                        }
+                                        },
+                                      child: Container(
+                                        width: width * 0.8,
+                                        height: height * 0.06,
+                                        decoration: BoxDecoration(
+                                            color: ColorValue.kPrimary,
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
+                                        child: Center(
+                                            child: Text(
+                                          "Beli",
+                                          style: TextStyle(
+                                              fontFamily: "General Sans"),
+                                        )),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      );
                     },
                     title: "Langsung Beli",
                   ),
@@ -246,14 +442,15 @@ class ProductDetailPanel extends StatelessWidget {
                                           foregroundDecoration: BoxDecoration(
                                               image: DecorationImage(
                                                   image: NetworkImage(
-                                                      homecontroller.imageUrl(item.imagee)))),
+                                                      homecontroller.imageUrl(
+                                                          item.imagee)))),
                                         ),
                                         SizedBox(
                                           width: 10,
                                         ),
                                         Column(
                                           crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                              CrossAxisAlignment.start,
                                           children: [
                                             Container(
                                                 width: width * 0.6,
@@ -261,18 +458,15 @@ class ProductDetailPanel extends StatelessWidget {
                                                   item.title,
                                                   style: TextStyle(
                                                       fontFamily:
-                                                      "General Sans"),
+                                                          "General Sans"),
                                                   maxLines: 2,
                                                 )),
                                             Text(
                                               formatPrice(item.price),
-
-
                                               style: TextStyle(
                                                   fontFamily: "General Sans",
                                                   fontSize: 16,
-                                                  color:
-                                                  ColorValue.kSecondary),
+                                                  color: ColorValue.kSecondary),
                                             )
                                           ],
                                         )
@@ -307,7 +501,7 @@ class ProductDetailPanel extends StatelessWidget {
                                     padding: const EdgeInsets.all(8.0),
                                     child: Row(
                                         mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                            MainAxisAlignment.spaceBetween,
                                         children: [
                                           Text(
                                             "Jumlah",
@@ -328,11 +522,11 @@ class ProductDetailPanel extends StatelessWidget {
                                                             .kDarkGrey),
                                                   ),
                                                   borderRadius:
-                                                  BorderRadius.circular(
-                                                      10)),
+                                                      BorderRadius.circular(
+                                                          10)),
                                               child: Row(
                                                 mainAxisAlignment:
-                                                MainAxisAlignment.center,
+                                                    MainAxisAlignment.center,
                                                 children: [
                                                   IconButton(
                                                     icon: Icon(
@@ -341,7 +535,7 @@ class ProductDetailPanel extends StatelessWidget {
                                                     ),
                                                     onPressed: () {
                                                       if (cartcontroller
-                                                          .quantity.value >
+                                                              .quantity.value >
                                                           0) {
                                                         cartcontroller
                                                             .quantity.value--;
@@ -349,11 +543,11 @@ class ProductDetailPanel extends StatelessWidget {
                                                     },
                                                   ),
                                                   Text(
-                                                    cartcontroller.quantity
-                                                        .value
+                                                    cartcontroller
+                                                        .quantity.value
                                                         .toString(),
-                                                    style: TextStyle(
-                                                        fontSize: 10),
+                                                    style:
+                                                        TextStyle(fontSize: 10),
                                                   ),
                                                   IconButton(
                                                     icon: Icon(
@@ -385,11 +579,12 @@ class ProductDetailPanel extends StatelessWidget {
                                               content: Text(
                                                   "Tidak ada barang untuk ditambahkan ke keranjang"),
                                               behavior:
-                                              SnackBarBehavior.floating,
+                                                  SnackBarBehavior.floating,
                                               margin: EdgeInsets.only(
                                                   bottom: 700.0,
                                                   left: 20.0,
-                                                  right: 20.0), // Margin untuk menempatkan SnackBar di atas
+                                                  right:
+                                                      20.0), // Margin untuk menempatkan SnackBar di atas
                                             ),
                                           );
                                         } else {
@@ -403,13 +598,13 @@ class ProductDetailPanel extends StatelessWidget {
                                         decoration: BoxDecoration(
                                             color: ColorValue.kPrimary,
                                             borderRadius:
-                                            BorderRadius.circular(10)),
+                                                BorderRadius.circular(10)),
                                         child: Center(
                                             child: Text(
-                                              "Tambahkan ke Keranjang",
-                                              style: TextStyle(
-                                                  fontFamily: "General Sans"),
-                                            )),
+                                          "Tambahkan ke Keranjang",
+                                          style: TextStyle(
+                                              fontFamily: "General Sans"),
+                                        )),
                                       ),
                                     ),
                                   ),
@@ -422,7 +617,7 @@ class ProductDetailPanel extends StatelessWidget {
                     },
                     style: ButtonStyle(
                       backgroundColor:
-                      MaterialStateProperty.all(ColorValue.kSecondary),
+                          MaterialStateProperty.all(ColorValue.kSecondary),
                       minimumSize: MaterialStateProperty.all(
                           Size(width * 0.85, height * 0.065)),
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(

@@ -60,6 +60,7 @@ class AddressController extends GetxController {
       body: jsonEncode(address.toJson()),
     );
 
+    print(response.body);
     if (response.statusCode == 201) {
       isLoading(true);
       ShowData();

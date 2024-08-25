@@ -1,57 +1,19 @@
 import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:klambi_ta/Common/colors/color.dart';
+import 'package:klambi_ta/Pages/menuprofile/components/menu_item.dart';
 import 'package:klambi_ta/Pages/menuprofile/components/profile_controller.dart';
 import 'package:klambi_ta/Pages/menuprofile/pages/address/controller/address_controller.dart';
 import 'package:klambi_ta/Pages/menuprofile/pages/edit/controller/edit_controller.dart';
-import 'package:klambi_ta/component/mytext.dart';
-import 'package:klambi_ta/component/space_extension.dart';
+import '../components/category.dart';
 
 class Profile extends StatelessWidget {
   Profile({super.key});
-
   final profileController = Get.put(ProfileController());
   final editController = Get.put(EditController());
   final addressController = Get.put(AddressController());
-
-  Future<void> showLogoutConfirmationDialog(BuildContext context) async {
-    return showDialog<void>(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Confirm Logout'),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: <Widget>[
-                Text('Are you sure you want to log out?'),
-              ],
-            ),
-          ),
-          actions: <Widget>[
-            TextButton(
-              child: Text('Cancel'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-            TextButton(
-              child: Text('Log Out'),
-              onPressed: () async {
-                await profileController.logoutg();
-                if (Navigator.of(context).canPop()) {
-                  Navigator.of(context).pop();
-                }
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,187 +23,97 @@ class Profile extends StatelessWidget {
 
     return Scaffold(
       body: Obx(
-            () => SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 80),
-            child: Center(
-              child: Column(
-                children: [
-                  if (editController.username.value.isNotEmpty)
-                    Column(
-                      children: [
-                        CircleAvatar(
-                          backgroundImage: profileController.imageUrl.value.isNotEmpty
-                              ? NetworkImage(profileController.imageUrl.value)
-                              : AssetImage("assets/images/banner/pro.png") as ImageProvider,
-                          radius: 50,
-                        ),
-                        txt(username: profileController.username.value),
-                        txt(username: profileController.email.value),
-                      ],
-                    )
-                  else
-                    Column(
-                      children: [
-                        ClipOval(
-                          child: Container(
-                            height: height * 0.14,
-                            width: width * 0.3,
-                            decoration: BoxDecoration(
-                              image: DecorationImage(
-                                image: editController.pickedImage.value != null
-                                    ? FileImage(editController.pickedImage.value!)
-                                    : editController.imageUrl.value != null
-                                    ? NetworkImage(editController.imageUrl.value!)
-                                    : AssetImage("assets/images/banner/pro.png") as ImageProvider,
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: 10),
-                        txt(username: editController.userProfile.value.name),
-                        txt(username: profileController.email.value),
-                      ],
-                    ),
-                  const Padding(
-                    padding: EdgeInsets.only(right: 280, top: 50),
-                    child: Text(
-                      "Menu",
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w500,
-                        fontFamily: "General Sans",
-                        color: ColorValue.kDarkGrey,
-                      ),
+        () => Padding(
+          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              ClipOval(
+                child: Container(
+                  height: height * 0.13,
+                  width: width * 0.28,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: editController.pickedImage.value != null
+                          ? FileImage(editController.pickedImage.value!)
+                          : editController.imageUrl.value != null
+                              ? NetworkImage(editController.imageUrl.value!)
+                              : AssetImage("assets/images/banner/pro.png")
+                                  as ImageProvider,
+                      fit: BoxFit.cover,
                     ),
                   ),
-                  const Divider(
-                    thickness: 1,
-                    indent: 25,
-                    endIndent: 25,
-                    color: ColorValue.kLightGrey,
+                ),
+              ),
+              SizedBox(height: 12),
+              Text(
+                editController.userProfile.value.name,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                  color: ColorValue.kPrimary,
+                ),
+              ),
+              SizedBox(height: 4),
+              Text(
+                profileController.email.value,
+                style: TextStyle(
+                  fontSize: 14,
+                  color: Colors.grey[600],
+                ),
+              ),
+              SizedBox(height: 10),
+              CategorySection(
+                title: "Profil",
+                items: [
+                  MenuItem(
+                    icon: Icons.edit,
+                    title: "Edit Profile",
+                    onTap: () {
+                      Get.offAllNamed("/edit");
+                    },
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 20,
-                      horizontal: 25,
-                    ),
-                    child: Column(
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            Get.offAllNamed("/edit");
-                          },
-                          child: Row(
-                            children: [
-                              const Icon(
-                                Icons.edit,
-                                size: 30,
-                                color: ColorValue.kPrimary,
-                              ),
-                              const Text(
-                                "Edit Profile",
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontFamily: "General Sans",
-                                ),
-                              )
-                            ].withSpaceBetween(width: 20),
-                          ),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            addressController.ShowData();
-                            Get.offNamed("/addAddress");
-                          },
-                          child: Row(
-                            children: [
-                              const Icon(
-                                Icons.location_on_outlined,
-                                size: 35,
-                                color: ColorValue.kPrimary,
-                              ),
-                              const Text(
-                                "Alamat",
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontFamily: "General Sans",
-                                ),
-                              )
-                            ].withSpaceBetween(width: 20),
-                          ),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            Get.offNamed("/chat");
-                          },
-                          child: Row(
-                            children: [
-                              const Icon(
-                                CupertinoIcons.chat_bubble_text,
-                                size: 35,
-                                color: ColorValue.kSecondary,
-                              ),
-                              const Text(
-                                "Chat",
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontFamily: "General Sans",
-                                ),
-                              )
-                            ].withSpaceBetween(width: 20),
-                          ),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            Get.offNamed("/cs");
-                          },
-                          child: Row(
-                            children: [
-                              const Icon(
-                                Icons.headset_mic_outlined,
-                                size: 35,
-                                color: ColorValue.kPrimary,
-                              ),
-                              const Text(
-                                "Pusat Bantuan",
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontFamily: "General Sans",
-                                ),
-                              )
-                            ].withSpaceBetween(width: 20),
-                          ),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            showLogoutConfirmationDialog(context);
-                          },
-                          child: Row(
-                            children: [
-                              const Icon(
-                                Icons.output_outlined,
-                                size: 35,
-                                color: ColorValue.kDanger,
-                              ),
-                              const Text(
-                                "Log Out",
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  color: ColorValue.kDanger,
-                                  fontFamily: "General Sans",
-                                ),
-                              )
-                            ].withSpaceBetween(width: 20),
-                          ),
-                        ),
-                      ].withSpaceBetween(height: 25),
-                    ),
-                  )
+                  MenuItem(
+                    icon: Icons.location_on_outlined,
+                    title: "Alamat",
+                    onTap: () {
+                      addressController.ShowData();
+                      Get.offNamed("/addAddress");
+                    },
+                  ),
                 ],
               ),
-            ),
+              SizedBox(height: 10),
+              CategorySection(
+                title: "Lainnya",
+                items: [
+                  MenuItem(
+                    icon: CupertinoIcons.chat_bubble_text,
+                    title: "Chat",
+                    onTap: () {
+                      Get.offNamed("/chat");
+                    },
+                  ),
+                  MenuItem(
+                    icon: Icons.headset_mic_outlined,
+                    title: "Pusat Bantuan",
+                    onTap: () {
+                      Get.offNamed("/cs");
+                    },
+                  ),
+                  MenuItem(
+                    icon: Icons.logout,
+                    title: "Log Out",
+                    iconColor: ColorValue.kDanger,
+                    textColor: ColorValue.kDanger,
+                    showArrow: false,
+                    onTap: () {
+                      profileController.showLogoutConfirmationDialog(context);
+                    },
+                  ),
+                ],
+              ),
+            ],
           ),
         ),
       ),

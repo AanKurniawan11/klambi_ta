@@ -17,8 +17,6 @@ Widget RecomendProduct(BuildContext context, Datum item) {
   }
   final size = MediaQuery.of(context).size;
 
-
-
   return GestureDetector(
     onTap: () {
       Get.to(()=>DetailView(item: item));
@@ -170,6 +168,7 @@ Widget ProductCard(List<Datum> itemList) {
     },
   );
 }
+
 extension CategoryExtension on Category {
   String get displayName {
     switch (this) {

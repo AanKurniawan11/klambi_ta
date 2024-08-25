@@ -13,7 +13,7 @@ class EditController extends GetxController {
   final controller = Get.put(ProfileController());
   late SharedPreferences prefs;
   var pickedImage = Rxn<File>();
-    var imageUrl = Rxn<String>();
+  var imageUrl = Rxn<String>();
   RxString username = "".obs;
 
   var isLoading = false.obs;
@@ -117,4 +117,4 @@ class EditController extends GetxController {
       pickedImage.value = File(savedImagePath); // Load image from file
     }
   }
-  }
+}
