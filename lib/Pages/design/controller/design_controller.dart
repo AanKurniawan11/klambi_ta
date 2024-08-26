@@ -5,16 +5,17 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class ImageUploadController extends GetxController {
   RxBool isLoading = false.obs;
+  int? orderId;
+
 
   Future<void> uploadImage(File image) async {
     isLoading(true);
     var token = await SharedPreferences.getInstance().then((prefs) => prefs.getString("token"));
 
-    var uri = Uri.parse('https://klambi.ta.rplrus.com/api/gambar');
+    var uri = Uri.parse('https://klambi.ta.rplrus.com/api/order/$orderId/upload-image');
     var request = http.MultipartRequest('POST', uri)
       ..headers['Authorization'] = 'Bearer $token'
-      ..files.add(await http.MultipartFile.fromPath('image', image.path)); // Ubah 'file' menjadi 'image'
-
+      ..files.add(await http.MultipartFile.fromPath('image', image.path));
     try {
       var response = await request.send();
       if (response.statusCode == 200) {

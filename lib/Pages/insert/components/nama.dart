@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:klambi_ta/Pages/insert/components/custom_textfield2.dart';
+import 'package:klambi_ta/Pages/menuprofile/pages/address/controller/address_controller.dart';
 
 class Nama extends StatelessWidget {
   final Function(String) onChanged;
+  final AddressController controller = Get.put(AddressController());
 
-  const Nama({required this.onChanged, super.key});
+   Nama({required this.onChanged, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +19,7 @@ class Nama extends StatelessWidget {
         children: [
           // SizedBox(height: 10),
           CustomTextfield(
-            hintText: 'Nama Lengkap',
+            hintText: controller.Show[0].namaLengkap,
             onChanged: onChanged,
           ),
         ],

@@ -1,25 +1,25 @@
 // To parse this JSON data, do
 //
-//     final showOrderModel = showOrderModelFromJson(jsonString);
+//     final allstatusmodel = allstatusmodelFromJson(jsonString);
 
 import 'dart:convert';
 
-ShowOrderModel showOrderModelFromJson(String str) => ShowOrderModel.fromJson(json.decode(str));
+Allstatusmodel allstatusmodelFromJson(String str) => Allstatusmodel.fromJson(json.decode(str));
 
-String showOrderModelToJson(ShowOrderModel data) => json.encode(data.toJson());
+String allstatusmodelToJson(Allstatusmodel data) => json.encode(data.toJson());
 
-class ShowOrderModel {
+class Allstatusmodel {
   bool success;
   String message;
   List<Datum> data;
 
-  ShowOrderModel({
+  Allstatusmodel({
     required this.success,
     required this.message,
     required this.data,
   });
 
-  factory ShowOrderModel.fromJson(Map<String, dynamic> json) => ShowOrderModel(
+  factory Allstatusmodel.fromJson(Map<String, dynamic> json) => Allstatusmodel(
     success: json["success"],
     message: json["message"],
     data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
@@ -35,87 +35,99 @@ class ShowOrderModel {
 class Datum {
   Order order;
   List<Product> products;
+  dynamic image;
 
   Datum({
     required this.order,
     required this.products,
+    required this.image,
   });
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
     order: Order.fromJson(json["order"]),
     products: List<Product>.from(json["products"].map((x) => Product.fromJson(x))),
+    image: json["image"],
   );
 
   Map<String, dynamic> toJson() => {
     "order": order.toJson(),
     "products": List<dynamic>.from(products.map((x) => x.toJson())),
+    "image": image,
   };
 }
 
 class Order {
   int id;
+  int orderId;
   int userId;
   int addressId;
-  String paymentMethod;
-  String shippingMethod;
-  String handlingFee;
-  String shippingFee;
-  String discount;
-  int quantity;
-  String status;
   String products;
+  String status;
+  int totalPrice;
+  String paymentMethod;
+  int handlingFee;
+  int shippingFee;
+  String shippingMethod;
+  DateTime orderTime;
   DateTime createdAt;
   DateTime updatedAt;
+  User user;
   Address address;
 
   Order({
     required this.id,
+    required this.orderId,
     required this.userId,
     required this.addressId,
+    required this.products,
+    required this.status,
+    required this.totalPrice,
     required this.paymentMethod,
-    required this.shippingMethod,
     required this.handlingFee,
     required this.shippingFee,
-    required this.discount,
-    required this.quantity,
-    required this.status,
-    required this.products,
+    required this.shippingMethod,
+    required this.orderTime,
     required this.createdAt,
     required this.updatedAt,
+    required this.user,
     required this.address,
   });
 
   factory Order.fromJson(Map<String, dynamic> json) => Order(
     id: json["id"],
+    orderId: json["order_id"],
     userId: json["user_id"],
     addressId: json["address_id"],
+    products: json["products"],
+    status: json["status"],
+    totalPrice: json["total_price"],
     paymentMethod: json["payment_method"],
-    shippingMethod: json["shipping_method"],
     handlingFee: json["handling_fee"],
     shippingFee: json["shipping_fee"],
-    discount: json["discount"],
-    quantity: json["quantity"],
-    status: json["status"],
-    products: json["products"],
+    shippingMethod: json["shipping_method"],
+    orderTime: DateTime.parse(json["order_time"]),
     createdAt: DateTime.parse(json["created_at"]),
     updatedAt: DateTime.parse(json["updated_at"]),
+    user: User.fromJson(json["user"]),
     address: Address.fromJson(json["address"]),
   );
 
   Map<String, dynamic> toJson() => {
     "id": id,
+    "order_id": orderId,
     "user_id": userId,
     "address_id": addressId,
+    "products": products,
+    "status": status,
+    "total_price": totalPrice,
     "payment_method": paymentMethod,
-    "shipping_method": shippingMethod,
     "handling_fee": handlingFee,
     "shipping_fee": shippingFee,
-    "discount": discount,
-    "quantity": quantity,
-    "status": status,
-    "products": products,
+    "shipping_method": shippingMethod,
+    "order_time": orderTime.toIso8601String(),
     "created_at": createdAt.toIso8601String(),
     "updated_at": updatedAt.toIso8601String(),
+    "user": user.toJson(),
     "address": address.toJson(),
   };
 }
@@ -159,6 +171,50 @@ class Address {
     "nama_lengkap": namaLengkap,
     "keterangan": keterangan,
     "provinsi": provinsi,
+    "created_at": createdAt.toIso8601String(),
+    "updated_at": updatedAt.toIso8601String(),
+  };
+}
+
+class User {
+  int id;
+  String name;
+  String email;
+  dynamic emailVerifiedAt;
+  dynamic apiToken;
+  String image;
+  DateTime createdAt;
+  DateTime updatedAt;
+
+  User({
+    required this.id,
+    required this.name,
+    required this.email,
+    required this.emailVerifiedAt,
+    required this.apiToken,
+    required this.image,
+    required this.createdAt,
+    required this.updatedAt,
+  });
+
+  factory User.fromJson(Map<String, dynamic> json) => User(
+    id: json["id"],
+    name: json["name"],
+    email: json["email"],
+    emailVerifiedAt: json["email_verified_at"],
+    apiToken: json["api_token"],
+    image: json["image"],
+    createdAt: DateTime.parse(json["created_at"]),
+    updatedAt: DateTime.parse(json["updated_at"]),
+  );
+
+  Map<String, dynamic> toJson() => {
+    "id": id,
+    "name": name,
+    "email": email,
+    "email_verified_at": emailVerifiedAt,
+    "api_token": apiToken,
+    "image": image,
     "created_at": createdAt.toIso8601String(),
     "updated_at": updatedAt.toIso8601String(),
   };

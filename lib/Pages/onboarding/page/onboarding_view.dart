@@ -8,7 +8,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:get/get.dart';
 
-
 class OnboardingView extends StatefulWidget {
   const OnboardingView({super.key});
 
@@ -19,9 +18,8 @@ class OnboardingView extends StatefulWidget {
 class _OnboardingViewState extends State<OnboardingView> {
   final controller = OnboardingItems();
   final pageController = PageController();
-  int currentindex = 0;
-
   bool isLastPage = false;
+
   @override
   Widget build(BuildContext context) {
     final Size mediaquery = MediaQuery.of(context).size;
@@ -40,47 +38,49 @@ class _OnboardingViewState extends State<OnboardingView> {
               getStarted(),
             ],
           )
-              : Container(
-            width: double.infinity,
-            child: Column(
-              children: [
-                ElevatedButton(
-                  onPressed: () => pageController.nextPage(
-                    duration: const Duration(milliseconds: 600),
-                    curve: Curves.easeIn,
-                  ),
-                  style: ButtonStyle(
-                    backgroundColor:
-                    MaterialStateProperty.all(ColorValue.kPrimary),
-                    minimumSize: MaterialStateProperty.all(
-                        Size(width * 0.85, height * 0.065)),
-                  ),
-                  child: const Text(
-                    "Lanjut",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.w600,
-                      fontSize: 18,
+              : Column(
+            children: [
+              ElevatedButton(
+                onPressed: () => pageController.nextPage(
+                  duration: const Duration(milliseconds: 600),
+                  curve: Curves.easeInOut,
+                ),
+                style: ButtonStyle(
+                  backgroundColor:
+                  MaterialStateProperty.all(ColorValue.kPrimary),
+                  minimumSize: MaterialStateProperty.all(
+                      Size(width * 0.85, height * 0.065)),
+                  shape: MaterialStateProperty.all(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12.0),
                     ),
                   ),
                 ),
-                const SizedBox(
-                  height: 20,
+                child: const Text(
+                  "Lanjut",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 18,
+                  ),
                 ),
-                SmoothPageIndicator(
-                  controller: pageController,
-                  count: controller.items.length,
-                  onDotClicked: (index) => pageController.animateToPage(
-                      index,
-                      duration: const Duration(milliseconds: 600),
-                      curve: Curves.easeIn),
-                  effect: const ExpandingDotsEffect(
-                      dotHeight: 10,
-                      dotWidth: 20,
-                      activeDotColor: ColorValue.kPrimary),
+              ),
+              const SizedBox(height: 20),
+              SmoothPageIndicator(
+                controller: pageController,
+                count: controller.items.length,
+                onDotClicked: (index) =>
+                    pageController.animateToPage(index,
+                        duration: const Duration(milliseconds: 600),
+                        curve: Curves.easeInOut),
+                effect: const ExpandingDotsEffect(
+                  dotHeight: 10,
+                  dotWidth: 20,
+                  activeDotColor: ColorValue.kPrimary,
+                  dotColor: ColorValue.kLightGrey,
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
@@ -97,17 +97,29 @@ class _OnboardingViewState extends State<OnboardingView> {
                 return Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Image.asset(controller.items[index].image),
+                    // Add animation or transition effect to the image
+                    AnimatedContainer(
+                      duration: const Duration(milliseconds: 600),
+                      curve: Curves.easeInOut,
+                      child: Image.asset(controller.items[index].image),
+                    ),
                     const SizedBox(height: 15),
                     Text(
                       controller.items[index].title,
                       style: const TextStyle(
-                          fontSize: 25, fontWeight: FontWeight.bold),
+                        fontSize: 28,
+                        fontWeight: FontWeight.bold,
+                        color: ColorValue.kPrimary,
+                      ),
+                      textAlign: TextAlign.center,
                     ),
                     const SizedBox(height: 15),
                     Text(
                       controller.items[index].description,
-                      style: const TextStyle(color: ColorValue.kDarkGrey),
+                      style: const TextStyle(
+                        color: ColorValue.kDarkGrey,
+                        fontSize: 16,
+                      ),
                       maxLines: 5,
                       textAlign: TextAlign.center,
                     ),
@@ -125,9 +137,10 @@ class _OnboardingViewState extends State<OnboardingView> {
               child: const Text(
                 "Skip",
                 style: TextStyle(
-                    color: ColorValue.kDarkGrey,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600),
+                  color: ColorValue.kDarkGrey,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
             ),
           ),
@@ -146,17 +159,22 @@ class _OnboardingViewState extends State<OnboardingView> {
         final pres = await SharedPreferences.getInstance();
         pres.setBool("onboarding", true);
         if (!mounted) return;
-        Get.offAll( Register());
+        Get.offAll(Register());
       },
       style: ButtonStyle(
         backgroundColor: MaterialStateProperty.all(ColorValue.kPrimary),
         minimumSize:
         MaterialStateProperty.all(Size(width * 0.85, height * 0.065)),
+        shape: MaterialStateProperty.all(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12.0),
+          ),
+        ),
       ),
       child: const Text(
         "Mulai",
         style: TextStyle(
-          color: Colors.black,
+          color: Colors.white,
           fontWeight: FontWeight.w600,
           fontSize: 18,
         ),

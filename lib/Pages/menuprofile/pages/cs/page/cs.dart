@@ -17,7 +17,7 @@ class CustomerService extends StatelessWidget {
             fontFamily: 'General Sans',
             fontWeight: FontWeight.w600,
             fontSize: 24,
-            color: ColorValue.kBlack,
+            color: ColorValue.kWhite,
           ),
         ),
         backgroundColor: ColorValue.kSecondary,

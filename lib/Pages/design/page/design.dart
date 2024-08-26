@@ -1,14 +1,24 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:klambi_ta/Pages/design/components/upload_container.dart';
 import 'package:klambi_ta/Common/colors/color.dart';
 import 'package:klambi_ta/component/my_elevatedbutton.dart';
 
+import '../../cart/controller/cart_controllers.dart';
+import '../../payment/controller/payment_controller.dart';
+import '../controller/design_controller.dart';
+
 class DesignPageView extends StatelessWidget {
   const DesignPageView({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final PaymentController paymentController = Get.put(PaymentController());
+    final CartControllers cartController = Get.put(CartControllers());
+    final ImageUploadController imageUploadController = Get.put(ImageUploadController());
+
     return Scaffold(
       backgroundColor: ColorValue.kBackground,
       appBar: AppBar(
@@ -36,70 +46,24 @@ class DesignPageView extends StatelessWidget {
                 SizedBox(height: 20),
                 My_Button(
                   onclick: () {
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15),
-                          ),
-                          backgroundColor: ColorValue.kSecondary.withOpacity(0.9),
-                          title: Center(
-                            child: Text(
-                              "Berhasil",
-                              style: TextStyle(
-                                color: ColorValue.kPrimary,
-                                fontSize: 22,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                          content: Text(
-                            "Pemesanan Berhasil",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 18,
-                            ),
-                            textAlign: TextAlign.center,
-                          ),icon: Icon(Icons.check_circle,color: ColorValue.kPrimary,),
-                          actions: [
-                            Center(
-                              child: TextButton(
-                                style: TextButton.styleFrom(
-                                  backgroundColor: ColorValue.kPrimary,
-                                  padding: EdgeInsets.symmetric(
-                                    horizontal: 20,
-                                    vertical: 10,
-                                  ),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                ),
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                  Get.offAndToNamed("/navbar");
-                                },
-                                child: Text(
-                                  'OK',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 16,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        );
-                      },
-                    );
+                    if (imageUploadController.isLoading.isFalse) {
+                      // Cek apakah ada gambar yang sudah diupload
+                      if (imageUploadController.uploadImage != null) {
+                        // Panggil fungsi uploadImage ketika tombol diklik
+                        imageUploadController.uploadImage(imageUploadController.uploadImage! as File);
+                      } else {
+                        Get.snackbar("Error", "Harap pilih gambar terlebih dahulu",
+                            snackPosition: SnackPosition.BOTTOM);
+                      }
+                    }
                   },
                   title: 'Lanjutkan',
                 ),
               ],
             ),
-            ),
           ),
         ),
-      );
+      ),
+    );
   }
 }

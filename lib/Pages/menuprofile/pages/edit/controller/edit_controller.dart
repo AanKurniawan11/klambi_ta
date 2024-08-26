@@ -20,11 +20,19 @@ class EditController extends GetxController {
 
   final TextEditingController ctrName = TextEditingController();
 
+
+
   @override
   void onInit() {
     super.onInit();
     loadUserProfile();
     loadImageFromPrefs();
+  }
+
+
+  setPreference() async {
+    prefs = await SharedPreferences.getInstance();
+    update();
   }
 
 

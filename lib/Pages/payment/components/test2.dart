@@ -3,12 +3,12 @@ import 'package:get/get.dart';
 import 'package:klambi_ta/Pages/payment/controller/payment_controller.dart';
 
 class Test2 extends StatelessWidget {
-  final PaymentController controller = Get.find(); // Mengambil instance controller
+  final PaymentController controller = Get.find();
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -37,7 +37,7 @@ class Test2 extends StatelessWidget {
                   style: TextStyle(color: Colors.grey.shade600),
                 ),
                 isExpanded: true,
-                items: ['Cash on Delivery', 'Credit Card', 'Bank Transfer'] // Tambahkan metode pembayaran lain jika ada
+                items: ['Cash on Delivery', 'Credit Card', 'Bank Transfer']
                     .map((method) => DropdownMenuItem<String>(
                   value: method,
                   child: Text(method),
@@ -46,7 +46,8 @@ class Test2 extends StatelessWidget {
                 onChanged: (String? newValue) {
                   if (newValue != null) {
                     controller.paymeth.value = newValue;
-                    controller.addPay(); // Kirim data langsung setelah memilih metode pembayaran
+                    controller.addPay(); // Memanggil fungsi untuk memperbarui metode pembayaran
+                    print('Metode pembayaran dipilih: ${controller.paymeth.value}');
                   }
                 },
                 icon: Icon(

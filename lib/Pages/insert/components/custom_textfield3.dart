@@ -11,7 +11,7 @@ class CustomTextfield3 extends StatelessWidget {
   const CustomTextfield3({
     required this.hintText,
     required this.onChanged,
-    super.key,
+    super.key, required List<TextInputFormatter> inputFormatters, required TextInputType keyboardType,
   });
 
   @override
