@@ -2,18 +2,17 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:klambi_ta/Common/colors/color.dart';
-import 'package:klambi_ta/Pages/cart/controller/cart_controllers.dart';
 import 'package:klambi_ta/Pages/menuprofile/pages/address/controller/address_controller.dart';
-import 'package:klambi_ta/Pages/payment/components/test.dart';
 import 'package:klambi_ta/Pages/payment/components/test2.dart';
 import 'package:klambi_ta/Pages/payment/controller/payment_controller.dart';
 import 'package:klambi_ta/component/my_elevatedbutton.dart';
-import 'package:klambi_ta/component/mytext.dart';
 import 'package:klambi_ta/component/space_extension.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import '../../../component/format_price.dart';
 
 class Payment extends StatelessWidget {
   Payment({super.key});
+  final AddressController showController = Get.put(AddressController());
   final PaymentController controller = Get.put(PaymentController());
 
   @override
@@ -21,11 +20,6 @@ class Payment extends StatelessWidget {
     final Size mediaQuery = MediaQuery.of(context).size;
     final double height = mediaQuery.height;
     final double width = mediaQuery.width;
-    int parsePrice(String? price) {
-      final cleanedPrice = price?.replaceAll(RegExp('[^0-9]'), '') ?? '0';
-      return int.tryParse(cleanedPrice) ?? 0;
-    }
-
 
     return Scaffold(
       appBar: AppBar(
@@ -50,7 +44,13 @@ class Payment extends StatelessWidget {
       ),
       body: Obx(() {
         if (controller.isLoading.value) {
-          return Center(child: CircularProgressIndicator());
+          return
+            Center(child: LoadingAnimationWidget.discreteCircle(
+              color: ColorValue.kPrimary,
+              size: 50,
+              secondRingColor: ColorValue.kSecondary,
+              thirdRingColor: ColorValue.kDanger,
+            ));
         }
         if (controller.order.value == null) {
           return Center(child: Text('Tidak ada data pesanan.'));
@@ -59,9 +59,12 @@ class Payment extends StatelessWidget {
         final products = controller.orderData.value?.products;
         final address = order?.address;
 
-        // Helper function to parse and format prices
-        int parsePrice(String? price) {
-          return int.tryParse(price ?? '0') ?? 0;
+        // Calculate total price for all products
+        int totalProductPrice = 0;
+        if (products != null) {
+          for (var product in products) {
+            totalProductPrice += (product.price ?? 0) * (product.quantity ?? 0);
+          }
         }
 
         return SingleChildScrollView(
@@ -228,15 +231,29 @@ class Payment extends StatelessWidget {
                                     ),
                                   ),
                                   SizedBox(height: 5),
-                                  Text(
-                                    formatPrice(product.price ?? 0),
-                                    style: TextStyle(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w600,
-                                      fontFamily: 'General Sans',
-                                      color: ColorValue.kPrimary,
-                                    ),
-                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        formatPrice(product.price ?? 0),
+                                        style: TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.w600,
+                                          fontFamily: 'General Sans',
+                                          color: ColorValue.kPrimary,
+                                        ),
+                                      ),
+                                      Text(
+                                        "x${product.quantity ?? 0}",
+                                        style: TextStyle(
+                                          fontSize: 13,
+                                          fontWeight: FontWeight.w500,
+                                          fontFamily: 'General Sans',
+                                          color: Colors.grey[700],
+                                        ),
+                                      ),
+                                    ],
+                                  )
                                 ],
                               ),
                             ),
@@ -247,12 +264,18 @@ class Payment extends StatelessWidget {
                     Column(
                       children: [
                         _buildPriceDetailRow(
-                          "Harga Barang",
-                          formatPrice(parsePrice(products?[0].price.toString())),
+                          "Total Pesanan (${products?[0].quantity ?? 0} produk)",
+                          formatPrice(totalProductPrice),
                         ),
-                        Text("Biaya Pengiriman ${order?.shippingFee}"),
-                        Text("Biaya Penangan${order?.handlingFee}")
-                      ],
+                        _buildPriceDetailRow(
+                          'Biaya Penangan',
+                          formatPrice(order?.handlingFee ?? 0),
+                        ),
+                        _buildPriceDetailRow(
+                          'Biaya Pengiriman',
+                          formatPrice(order?.shippingFee ?? 0),
+                        ),
+                      ].withSpaceBetween(height: 5)
                     ),
                     SizedBox(height: 20),
                     Divider(color: ColorValue.kLightGrey),
@@ -262,15 +285,17 @@ class Payment extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            "Total",
+                            "Total Pembayaran",
                             style: TextStyle(
                               fontSize: 16,
-                              fontWeight: FontWeight.w700,
+                              fontWeight: FontWeight.w600,
                               fontFamily: 'General Sans',
                             ),
                           ),
                           Text(
-                            ("${order?.totalPrice}"),
+                            formatPrice((totalProductPrice +
+                                (order?.handlingFee ?? 0) +
+                                (order?.shippingFee ?? 0))),
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w700,
@@ -281,24 +306,19 @@ class Payment extends StatelessWidget {
                         ],
                       ),
                     ),
+                    SizedBox(height: 20),
+                    Test2(),
+                    My_Button(
+                      title: 'Konfirmasi Pembayaran',
+                      onclick: (){
+                        controller.addHistory();
+                        Get.offAllNamed("/design");
+                      }
+                    ),
+
                   ],
                 ),
               ),
-              SizedBox(height: 40),
-              // Pilih Metode Pembayaran
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: Test2(),
-              ),
-              SizedBox(height: 20),
-              My_Button(
-                onclick: () {
-                  controller.addHistory();
-                  Get.offAllNamed("/design");
-                },
-                title: "Konfirmasi dan bayar",
-              ),
-              SizedBox(height: 20),
             ],
           ),
         );
@@ -306,31 +326,28 @@ class Payment extends StatelessWidget {
     );
   }
 
-  Widget _buildPriceDetailRow(String label, String value) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 5.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            label,
-            style: TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w500,
-              fontFamily: 'General Sans',
-              color: Colors.grey[700],
-            ),
+  Widget _buildPriceDetailRow(String title, String value) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          title,
+          style: TextStyle(
+            fontSize: 14,
+            fontWeight: FontWeight.w600,
+            fontFamily: 'General Sans',
           ),
-          Text(
-            value,
-            style: TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w500,
-              fontFamily: 'General Sans',
-            ),
+        ),
+        Text(
+          value,
+          style: TextStyle(
+            fontSize: 14,
+            fontWeight: FontWeight.w600,
+            fontFamily: 'General Sans',
+            color: Colors.grey[700],
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

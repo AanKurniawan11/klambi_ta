@@ -12,10 +12,10 @@ Widget MyTextField({
     TextField(
       controller: controller,
       decoration: InputDecoration(
-        hintStyle: const TextStyle(color: ColorValue.kDarkGrey),
+        hintStyle: const TextStyle(color: ColorValue.kDarkGrey,fontFamily: "General Sans"),
         hintText: hint,
         labelText: label,
-        labelStyle: const TextStyle(color: ColorValue.kDarkGrey),
+        labelStyle: const TextStyle(color: ColorValue.kDarkGrey,fontFamily: "General Sans"),
         focusedBorder: OutlineInputBorder(
           borderSide: const BorderSide(color: ColorValue.kPrimary),
           borderRadius: BorderRadius.circular(10.0),
@@ -32,6 +32,6 @@ Widget MyTextField({
             : null,
         border: const OutlineInputBorder(),
       ),
-      keyboardType: TextInputType.emailAddress,
+      keyboardType: TextInputType.emailAddress,style: TextStyle(fontFamily: "General Sans"),
       textInputAction: TextInputAction.done,
     );

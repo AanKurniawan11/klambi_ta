@@ -1,25 +1,21 @@
-// To parse this JSON data, do
-//
-//     final showcartordermodel = showcartordermodelFromJson(jsonString);
-
 import 'dart:convert';
 
-Showcartordermodel showcartordermodelFromJson(String str) => Showcartordermodel.fromJson(json.decode(str));
+ShowCartOrderModel showCartOrderModelFromJson(String str) => ShowCartOrderModel.fromJson(json.decode(str));
 
-String showcartordermodelToJson(Showcartordermodel data) => json.encode(data.toJson());
+String showCartOrderModelToJson(ShowCartOrderModel data) => json.encode(data.toJson());
 
-class Showcartordermodel {
+class ShowCartOrderModel {
   bool success;
   String message;
   Data data;
 
-  Showcartordermodel({
+  ShowCartOrderModel({
     required this.success,
     required this.message,
     required this.data,
   });
 
-  factory Showcartordermodel.fromJson(Map<String, dynamic> json) => Showcartordermodel(
+  factory ShowCartOrderModel.fromJson(Map<String, dynamic> json) => ShowCartOrderModel(
     success: json["success"],
     message: json["message"],
     data: Data.fromJson(json["data"]),
@@ -58,13 +54,13 @@ class Order {
   int addressId;
   String paymentMethod;
   String shippingMethod;
-  String handlingFee;
-  String shippingFee;
-  String discount;
+  int handlingFee;
+  int shippingFee;
+  int discount;
   int quantity;
-  String totalPrice;
+  int totalPrice;
   String status;
-  String products;
+  String products; // Stringified JSON array
   DateTime createdAt;
   DateTime updatedAt;
   Address address;
@@ -91,15 +87,15 @@ class Order {
     id: json["id"],
     userId: json["user_id"],
     addressId: json["address_id"],
-    paymentMethod: json["payment_method"],
-    shippingMethod: json["shipping_method"],
+    paymentMethod: json["payment_method"] ?? '',  // Handling possible null values
+    shippingMethod: json["shipping_method"] ?? '',  // Handling possible null values
     handlingFee: json["handling_fee"],
     shippingFee: json["shipping_fee"],
     discount: json["discount"],
     quantity: json["quantity"],
     totalPrice: json["total_price"],
-    status: json["status"],
-    products: json["products"],
+    status: json["status"] ?? '',  // Handling possible null values
+    products: json["products"] ?? '',  // Handling possible null values
     createdAt: DateTime.parse(json["created_at"]),
     updatedAt: DateTime.parse(json["updated_at"]),
     address: Address.fromJson(json["address"]),
@@ -175,7 +171,7 @@ class Product {
   int price;
   bool fromCart;
   String title;
-  String imagee;
+  String image;
 
   Product({
     required this.productId,
@@ -184,17 +180,17 @@ class Product {
     required this.price,
     required this.fromCart,
     required this.title,
-    required this.imagee,
+    required this.image,
   });
 
   factory Product.fromJson(Map<String, dynamic> json) => Product(
     productId: json["product_id"],
     quantity: json["quantity"],
-    size: json["size"],
+    size: json["size"] ?? '',  // Handling possible null values
     price: json["price"],
     fromCart: json["from_cart"],
-    title: json["title"],
-    imagee: json["imagee"],
+    title: json["title"] ?? '',  // Handling possible null values
+    image: json["imagee"] ?? '',  // Corrected key from "imagee" to "image"
   );
 
   Map<String, dynamic> toJson() => {
@@ -204,6 +200,6 @@ class Product {
     "price": price,
     "from_cart": fromCart,
     "title": title,
-    "imagee": imagee,
+    "image": image,
   };
 }

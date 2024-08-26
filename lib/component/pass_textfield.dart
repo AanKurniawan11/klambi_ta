@@ -29,9 +29,9 @@ class _PassTextFieldState extends State<PassTextField> {
       controller: widget.controller,
       decoration: InputDecoration(
         hintText: widget.hint,
-        hintStyle: const TextStyle(color: ColorValue.kDarkGrey),
+        hintStyle: const TextStyle(color: ColorValue.kDarkGrey,fontFamily: "General Sans"),
         labelText: widget.label,
-        labelStyle: const TextStyle(color: ColorValue.kDarkGrey),
+        labelStyle: const TextStyle(color: ColorValue.kDarkGrey,fontFamily: "General Sans"),
         focusedBorder: OutlineInputBorder(
             borderSide: const BorderSide(color: ColorValue.kPrimary),
             borderRadius: BorderRadius.circular(10.0)),
@@ -59,7 +59,7 @@ class _PassTextFieldState extends State<PassTextField> {
         ),
         border: const OutlineInputBorder(),
       ),
-      keyboardType: TextInputType.text,
+      keyboardType: TextInputType.text,style: TextStyle(fontFamily: "General Sans"),
       textInputAction: TextInputAction.done,
       obscureText: !isPasswordVisible,
     );

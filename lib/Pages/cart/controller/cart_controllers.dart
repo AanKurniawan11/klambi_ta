@@ -42,7 +42,6 @@ class CartControllers extends GetxController {
       print('Order ID is not available');
       return;
     }
-
     var token = await prefs.getString("token");
     final paydata = PayresponseModel(
       paymentMethod: paymeth.value,
@@ -57,7 +56,6 @@ class CartControllers extends GetxController {
         },
         body: jsonEncode(paydata.toJson()),
       );
-
       if (response.statusCode == 200) {
         print('Payment method updated: ${response.body}');
         await fetchOrderCart();
@@ -131,9 +129,13 @@ class CartControllers extends GetxController {
           'Authorization': 'Bearer $token',
         },
       );
+
+      print(response.body);
+
       if (response.statusCode == 200) {
+        print(response.body);
         var jsonResponse = json.decode(response.body);
-        Showcartordermodel orderResponse = Showcartordermodel.fromJson(jsonResponse);
+        ShowCartOrderModel orderResponse = ShowCartOrderModel.fromJson(jsonResponse);
         orderData.value = orderResponse.data;
         if (orderResponse.data != null) {
           orderId = orderResponse.data!.order?.id;

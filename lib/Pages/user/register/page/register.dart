@@ -53,7 +53,7 @@ class Register extends StatelessWidget {
                   ),
                   const Text(
                     "Daftar",
-                    style: TextStyle(fontSize: 32, fontWeight: FontWeight.w500),
+                    style: TextStyle(fontSize: 32, fontFamily: "General Sans",color: ColorValue.kPrimary),
                   ),
                   const SizedBox(
                     height: 20,
@@ -62,7 +62,7 @@ class Register extends StatelessWidget {
                     children: [
                       Container(
                         margin: const EdgeInsets.all(10.0),
-                        width: width * 0.85,
+                        width: width * 0.8,
                         child: Column(
                           children: [
                             MyTextField(
@@ -90,16 +90,19 @@ class Register extends StatelessWidget {
                           ].withSpaceBetween(height: 15),
                         ),
                       ),
-                      My_Button(
-                        title: "Daftar",
-                        onclick: () {
-                          registerController.registerAction(
-                            ctrUsername.text,
-                            ctrEmail.text,
-                            ctrPassword.text,
-                            ctrConfirmPass.text,
-                          );
-                        },
+                      Container(
+                        padding: EdgeInsets.symmetric(horizontal: 40),
+                        child: My_Button(
+                          title: "Daftar",
+                          onclick: () {
+                            registerController.registerAction(
+                              ctrUsername.text,
+                              ctrEmail.text,
+                              ctrPassword.text,
+                              ctrConfirmPass.text,
+                            );
+                          },
+                        ),
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,

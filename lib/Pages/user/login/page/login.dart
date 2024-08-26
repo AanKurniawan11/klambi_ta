@@ -68,14 +68,14 @@ class _LoginState extends State<Login> {
                   ),
                   const Text(
                     "Masuk",
-                    style: TextStyle(fontSize: 32, fontWeight: FontWeight.w500),
+                    style: TextStyle(fontSize: 32, fontFamily: "General Sans",color: ColorValue.kPrimary),
                   ),
                   const SizedBox(height: 20),
                   Column(
                     children: [
                       Container(
                         margin: EdgeInsets.all(10.0),
-                        width: width * 0.85,
+                        width: width * 0.8,
                         child: Column(
                           children: [
                             MyTextField(
@@ -94,8 +94,8 @@ class _LoginState extends State<Login> {
                           ],
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 10),
+                      Container(
+                        padding: EdgeInsets.symmetric(horizontal: 40),
                         child: My_Button(
                           onclick: () {
                             loginController.loginAction(
@@ -107,63 +107,63 @@ class _LoginState extends State<Login> {
                           title: 'Mulai',
                         ),
                       ),
-                      const Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 35.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Expanded(
-                              child: Divider(
-                                thickness: 1,
-                                color: ColorValue.kLightGrey,
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 25.0),
-                              child: Text(
-                                "Atau masuk dengan",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 14,
-                                ),
-                              ),
-                            ),
-                            Expanded(
-                              child: Divider(
-                                thickness: 1,
-                                color: ColorValue.kLightGrey,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 10),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            GestureDetector(
-                              onTap: () {
-                                signinWithGoogle();
-                              },
-                              child: Container(
-                                padding: const EdgeInsets.all(20),
-                                height: height * 0.08,
-                                width: width * 0.16,
-                                decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.white),
-                                  borderRadius: BorderRadius.circular(16),
-                                  color: Colors.grey[200],
-                                ),
-                                child: Image.asset(
-                                  "assets/images/banner/Google_Icon.png",
-                                  height: 10,
-                                ),
-                              ),
-                            ),
-                          ].withSpaceBetween(width: 30),
-                        ),
-                      ),
+                      // const Padding(
+                      //   padding: EdgeInsets.symmetric(horizontal: 35.0),
+                      //   child: Row(
+                      //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      //     children: [
+                      //       Expanded(
+                      //         child: Divider(
+                      //           thickness: 1,
+                      //           color: ColorValue.kLightGrey,
+                      //         ),
+                      //       ),
+                      //       Padding(
+                      //         padding: EdgeInsets.symmetric(horizontal: 25.0),
+                      //         child: Text(
+                      //           "Atau masuk dengan",
+                      //           style: TextStyle(
+                      //             fontWeight: FontWeight.w400,
+                      //             fontSize: 14,
+                      //           ),
+                      //         ),
+                      //       ),
+                      //       Expanded(
+                      //         child: Divider(
+                      //           thickness: 1,
+                      //           color: ColorValue.kLightGrey,
+                      //         ),
+                      //       ),
+                      //     ],
+                      //   ),
+                      // ),
+                      // Padding(
+                      //   padding: const EdgeInsets.symmetric(vertical: 10),
+                      //   child: Row(
+                      //     mainAxisAlignment: MainAxisAlignment.center,
+                      //     children: [
+                      //       GestureDetector(
+                      //         onTap: () {
+                      //           signinWithGoogle();
+                      //         },
+                      //         child: Container(
+                      //           padding: const EdgeInsets.all(20),
+                      //           height: height * 0.08,
+                      //           width: width * 0.16,
+                      //           decoration: BoxDecoration(
+                      //             border: Border.all(color: Colors.white),
+                      //             borderRadius: BorderRadius.circular(16),
+                      //             color: Colors.grey[200],
+                      //           ),
+                      //           child: Image.asset(
+                      //             "assets/images/banner/Google_Icon.png",
+                      //             height: 10,
+                      //           ),
+                      //         ),
+                      //       ),
+                      //     ].withSpaceBetween(width: 30),
+                      //   ),
+                      // ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [

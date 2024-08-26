@@ -7,8 +7,10 @@ import 'package:klambi_ta/Pages/menuprofile/pages/address/controller/address_con
 import 'package:klambi_ta/Pages/payment/components/paymethcart.dart';
 import 'package:klambi_ta/Pages/payment/controller/payment_controller.dart';
 import 'package:klambi_ta/component/my_elevatedbutton.dart';
+import 'package:klambi_ta/component/space_extension.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import '../../../component/format_price.dart';
+import '../components/test2.dart';
 
 class PaymentCart extends StatelessWidget {
   PaymentCart({super.key});
@@ -43,20 +45,29 @@ class PaymentCart extends StatelessWidget {
         elevation: 0,
       ),
       body: Obx(() {
-        if (cartcontroller.isLoading.value) {
-          return Center(child: LoadingAnimationWidget.discreteCircle(
-            color: ColorValue.kPrimary,
-            size: 50,
-            secondRingColor: ColorValue.kSecondary,
-            thirdRingColor: ColorValue.kDanger,
-          ));
+        if (controller.isLoading.value) {
+          return
+            Center(child: LoadingAnimationWidget.discreteCircle(
+              color: ColorValue.kPrimary,
+              size: 50,
+              secondRingColor: ColorValue.kSecondary,
+              thirdRingColor: ColorValue.kDanger,
+            ));
         }
         if (cartcontroller.order.value == null) {
           return Center(child: Text('Tidak ada data pesanan.'));
         }
-        final orderCart = cartcontroller.orderData.value?.order;
+        final order = cartcontroller.orderData.value?.order;
         final products = cartcontroller.orderData.value?.products;
-        final address = orderCart?.address;
+        final address = order?.address;
+
+        // Calculate total price for all products
+        int totalProductPrice = 0;
+        if (products != null) {
+          for (var product in products) {
+            totalProductPrice += (product.price ?? 0) * (product.quantity ?? 0);
+          }
+        }
 
         return SingleChildScrollView(
           child: Column(
@@ -191,7 +202,7 @@ class PaymentCart extends StatelessWidget {
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(8),
                                 image: DecorationImage(
-                                  image: NetworkImage(products?[0].imagee ?? ''),
+                                  image: NetworkImage(product.image ?? ''),
                                   fit: BoxFit.cover,
                                 ),
                               ),
@@ -222,15 +233,29 @@ class PaymentCart extends StatelessWidget {
                                     ),
                                   ),
                                   SizedBox(height: 5),
-                                  Text(
-                                    formatPrice(product.price ?? 0),
-                                    style: TextStyle(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w600,
-                                      fontFamily: 'General Sans',
-                                      color: ColorValue.kPrimary,
-                                    ),
-                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        formatPrice(product.price ?? 0),
+                                        style: TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.w600,
+                                          fontFamily: 'General Sans',
+                                          color: ColorValue.kPrimary,
+                                        ),
+                                      ),
+                                      Text(
+                                        "x${product.quantity ?? 0}",
+                                        style: TextStyle(
+                                          fontSize: 13,
+                                          fontWeight: FontWeight.w500,
+                                          fontFamily: 'General Sans',
+                                          color: Colors.grey[700],
+                                        ),
+                                      ),
+                                    ],
+                                  )
                                 ],
                               ),
                             ),
@@ -239,10 +264,20 @@ class PaymentCart extends StatelessWidget {
                       ),
                     SizedBox(height: 20),
                     Column(
-                      children: [
-                        Text("Biaya Pengiriman ${orderCart?.shippingFee}"),
-                        Text("Biaya Penangan${orderCart?.handlingFee}")
-                      ],
+                        children: [
+                          _buildPriceDetailRow(
+                            "Total Pesanan (${products?[0].quantity ?? 0} produk)",
+                            formatPrice(totalProductPrice),
+                          ),
+                          _buildPriceDetailRow(
+                            'Biaya Penangan',
+                            formatPrice(order?.handlingFee ?? 0),
+                          ),
+                          _buildPriceDetailRow(
+                            'Biaya Pengiriman',
+                            formatPrice(order?.shippingFee ?? 0),
+                          ),
+                        ].withSpaceBetween(height: 5)
                     ),
                     SizedBox(height: 20),
                     Divider(color: ColorValue.kLightGrey),
@@ -252,15 +287,17 @@ class PaymentCart extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            "Total",
+                            "Total Pembayaran",
                             style: TextStyle(
                               fontSize: 16,
-                              fontWeight: FontWeight.w700,
+                              fontWeight: FontWeight.w600,
                               fontFamily: 'General Sans',
                             ),
                           ),
                           Text(
-                            "Totalnye ${orderCart?.totalPrice}",
+                            formatPrice((totalProductPrice +
+                                (order?.handlingFee ?? 0) +
+                                (order?.shippingFee ?? 0))),
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w700,
@@ -271,28 +308,48 @@ class PaymentCart extends StatelessWidget {
                         ],
                       ),
                     ),
+                    SizedBox(height: 20),
+                    Test2(),
+                    My_Button(
+                        title: 'Konfirmasi Pembayaran',
+                        onclick: (){
+                          controller.addHistory();
+                          Get.offAllNamed("/design");
+                        }
+                    ),
+
                   ],
                 ),
               ),
-              SizedBox(height: 40),
-              // Pilih Metode Pembayaran
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: PaymethCart(),
-              ),
-              SizedBox(height: 20),
-              My_Button(
-                onclick: () {
-                  cartcontroller.addHistoryCart();
-                  Get.offAllNamed("/design");
-                },
-                title: "Konfirmasi dan bayar",
-              ),
-              SizedBox(height: 20),
             ],
           ),
         );
       }),
+    );
+  }
+
+  Widget _buildPriceDetailRow(String title, String value) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          title,
+          style: TextStyle(
+            fontSize: 14,
+            fontWeight: FontWeight.w600,
+            fontFamily: 'General Sans',
+          ),
+        ),
+        Text(
+          value,
+          style: TextStyle(
+            fontSize: 14,
+            fontWeight: FontWeight.w600,
+            fontFamily: 'General Sans',
+            color: Colors.grey[700],
+          ),
+        ),
+      ],
     );
   }
 

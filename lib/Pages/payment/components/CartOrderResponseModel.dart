@@ -3,7 +3,7 @@ import 'dart:convert';
 class ShowOrderResponseModel {
   bool? success;
   String? message;
-  Data? data;  // Perbaikan: data tidak lagi menjadi List
+  Data? data;
 
   ShowOrderResponseModel({this.success, this.message, this.data});
 
@@ -38,33 +38,34 @@ class Order {
   int? addressId;
   String? paymentMethod;
   String? shippingMethod;
-  String? handlingFee;
-  String? shippingFee;
-  String? discount;
+  int? handlingFee;
+  int? shippingFee;
+  int? discount;
   int? quantity;
   String? status;
   String? products;
-  String? totalPrice; // Menambahkan totalPrice
+  int? totalPrice;
   String? createdAt;
   String? updatedAt;
   Address? address;
 
-  Order(
-      {this.id,
-        this.userId,
-        this.addressId,
-        this.paymentMethod,
-        this.shippingMethod,
-        this.handlingFee,
-        this.shippingFee,
-        this.discount,
-        this.quantity,
-        this.status,
-        this.products,
-        this.totalPrice, // Inisialisasi totalPrice
-        this.createdAt,
-        this.updatedAt,
-        this.address});
+  Order({
+    this.id,
+    this.userId,
+    this.addressId,
+    this.paymentMethod,
+    this.shippingMethod,
+    this.handlingFee,
+    this.shippingFee,
+    this.discount,
+    this.quantity,
+    this.status,
+    this.products,
+    this.totalPrice,
+    this.createdAt,
+    this.updatedAt,
+    this.address,
+  });
 
   factory Order.fromJson(Map<String, dynamic> json) {
     return Order(
@@ -79,7 +80,7 @@ class Order {
       quantity: json['quantity'],
       status: json['status'],
       products: json['products'],
-      totalPrice: json['total_price'], // Parsing totalPrice dari JSON
+      totalPrice: json['total_price'],
       createdAt: json['created_at'],
       updatedAt: json['updated_at'],
       address: json['address'] != null ? Address.fromJson(json['address']) : null,
@@ -97,15 +98,16 @@ class Address {
   String? createdAt;
   String? updatedAt;
 
-  Address(
-      {this.id,
-        this.userId,
-        this.nomorTelepon,
-        this.namaLengkap,
-        this.keterangan,
-        this.provinsi,
-        this.createdAt,
-        this.updatedAt});
+  Address({
+    this.id,
+    this.userId,
+    this.nomorTelepon,
+    this.namaLengkap,
+    this.keterangan,
+    this.provinsi,
+    this.createdAt,
+    this.updatedAt,
+  });
 
   factory Address.fromJson(Map<String, dynamic> json) {
     return Address(
@@ -129,7 +131,14 @@ class Product {
   String? title;
   String? image;
 
-  Product({this.productId, this.quantity, this.size, this.price, this.title, this.image});
+  Product({
+    this.productId,
+    this.quantity,
+    this.size,
+    this.price,
+    this.title,
+    this.image,
+  });
 
   factory Product.fromJson(Map<String, dynamic> json) {
     return Product(

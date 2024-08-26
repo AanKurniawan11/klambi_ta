@@ -45,7 +45,7 @@ List<GetPage> pageRoutes = <GetPage>[
       binding: HomeBinding()),
   GetPage(
       name: RouteName.history,
-      page: () => const HistoryPage(),
+      page: () =>  HistoryPage(),
       binding: HistoryBinding()),
 
   GetPage(

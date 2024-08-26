@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:klambi_ta/Pages/insert/components/custom_dropdown.dart';
+
+import '../../menuprofile/pages/address/controller/address_controller.dart';
 
 class Provinsi extends StatelessWidget {
   final Function(String) onCodeChanged;
+  final AddressController controller = Get.put(AddressController());
+
 
   Provinsi({super.key, required this.onCodeChanged});
 
@@ -18,7 +23,7 @@ class Provinsi extends StatelessWidget {
               children: [
                 CustomDropdown(
                   items: ['Kudus'],
-                  hintText: 'Kota',
+                  hintText: controller.Show[0].provinsi,
                   onChanged: (String? newValue) {
                     if (newValue != null) {
                       print('Selected: $newValue');

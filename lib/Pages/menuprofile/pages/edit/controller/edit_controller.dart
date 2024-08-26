@@ -10,22 +10,29 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
 class EditController extends GetxController {
-  final controller = Get.put(ProfileController());
+  // final controller = Get.put(ProfileController());
   late SharedPreferences prefs;
   var pickedImage = Rxn<File>();
   var imageUrl = Rxn<String>();
-  RxString username = "".obs;
 
   var isLoading = false.obs;
   var userProfile = UserProfile(name: '', email: '', image: '').obs;
 
   final TextEditingController ctrName = TextEditingController();
 
+
+
   @override
   void onInit() {
     super.onInit();
     loadUserProfile();
     loadImageFromPrefs();
+  }
+
+
+  setPreference() async {
+    prefs = await SharedPreferences.getInstance();
+    update();
   }
 
 

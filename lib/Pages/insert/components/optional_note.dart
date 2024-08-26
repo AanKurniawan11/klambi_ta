@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:klambi_ta/Common/colors/color.dart';
+import 'package:get/get.dart';
+
 import 'package:klambi_ta/Pages/insert/components/custom_textfield2.dart';
 
+import '../../menuprofile/pages/address/controller/address_controller.dart';
+
 class Keterangan extends StatelessWidget {
-   Keterangan({super.key, required this.onChanged});
+  final AddressController controller = Get.put(AddressController());
+
+  Keterangan({super.key, required this.onChanged});
   final Function(String) onChanged;
 
 
@@ -14,7 +19,7 @@ class Keterangan extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          CustomTextfield(hintText: 'Keterangan',
+          CustomTextfield(hintText: controller.Show[0].keterangan,
             onChanged: onChanged,
           )
         ],

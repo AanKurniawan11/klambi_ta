@@ -90,59 +90,62 @@ Widget RecomendProduct(BuildContext context, Datum item) {
               ),
             ),
             SizedBox(height: size.height * 0.005),
-            Row(
-              children: [
-                Row(
-                  children: [
+            FittedBox(
+              fit: BoxFit.cover,
+              child: Row(
+                children: [
+                  Row(
+                    children: [
 
-                    Icon(
-                      Icons.star,
-                      size: 14,
-                      color: ColorValue.kPrimary,
-                    ),
-                    Text(
-                      item.rate.toString(),
-                      style: TextStyle(
-                        color: ColorValue.kDarkGrey,
-                        fontSize: 12,
-                        fontFamily: "General Sans",
+                      Icon(
+                        Icons.star,
+                        size: 14,
+                        color: ColorValue.kPrimary,
                       ),
+                      Text(
+                        item.rate.toString(),
+                        style: TextStyle(
+                          color: ColorValue.kDarkGrey,
+                          fontSize: 12,
+                          fontFamily: "General Sans",
+                        ),
+                      ),
+                    ],
+                  ),
+                  Text(
+                    '|',
+                    style: TextStyle(
+                      color: ColorValue.kDarkGrey,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 16,
                     ),
-                  ],
-                ),
-                Text(
-                  '|',
-                  style: TextStyle(
-                    color: ColorValue.kDarkGrey,
-                    fontWeight: FontWeight.w500,
-                    fontSize: 16,
                   ),
-                ),
-                Text(
-                  "Stock ${item.stock.toString()}",
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: ColorValue.kDarkGrey,
-                    fontFamily: "General Sans",
+                  Text(
+                    "Stock ${item.stock.toString()}",
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: ColorValue.kDarkGrey,
+                      fontFamily: "General Sans",
+                    ),
                   ),
-                ),
-                Text(
-                  '|',
-                  style: TextStyle(
-                    color: ColorValue.kDarkGrey,
-                    fontWeight: FontWeight.w500,
-                    fontSize: 16,
+                  Text(
+                    '|',
+                    style: TextStyle(
+                      color: ColorValue.kDarkGrey,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 16,
+                    ),
                   ),
-                ),
-                Text(
-                  "Terjual 10",
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: ColorValue.kDarkGrey,
-                    fontFamily: "General Sans",
+                  Text(
+                    "Terjual 10",
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: ColorValue.kDarkGrey,
+                      fontFamily: "General Sans",
+                    ),
                   ),
-                ),
-              ].withSpaceBetween(width: 4),
+                ].withSpaceBetween(width: 4),
+              ),
             ),
           ],
         ),
