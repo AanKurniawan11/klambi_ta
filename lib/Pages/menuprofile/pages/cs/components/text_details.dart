@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:klambi_ta/Common/colors/color.dart';
+import 'package:klambi_ta/Pages/history/page/testview.dart';
+import 'package:klambi_ta/component/my_elevatedbutton.dart';
+import 'package:get/get.dart';
 
 class TextDetails extends StatelessWidget {
   const TextDetails({super.key});
@@ -28,6 +31,9 @@ class TextDetails extends StatelessWidget {
               '- Hubungi admin jika barang tidak sesuai dengan keinginan.\n'
                   '- Pastikan memiliki video unboxing yang jelas untuk klaim.\n'
                   '- Kirim kembali barang yang akan di-return sesuai instruksi admin.'),
+          // My_Button(onclick: (){
+          //   Get.to(HistoryPage());
+          // }, title: "buat ngetes histoy")
         ],
       ),
     );

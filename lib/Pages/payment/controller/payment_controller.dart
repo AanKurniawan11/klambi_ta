@@ -6,6 +6,8 @@ import 'package:klambi_ta/Pages/history/components/history_controller.dart';
 import 'package:klambi_ta/Pages/payment/components/paymentmethodemodel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../history/page/testcontroller.dart';
+import '../components/AddHistoryresponsemodel.dart';
 import '../components/AddResponseModel.dart';
 import '../components/CartOrderResponseModel.dart';
 
@@ -48,7 +50,7 @@ class PaymentController extends GetxController {
   Future<void> addOrder(int id) async {
     isLoading.value = true; // Set loading to true
     var token = await prefs.getString("token");
-    final ordersData = AddresponseModel(
+    final ordersData = AddOrderponseModel(
       productId: id,
       quantity: quantity.value,
       size: size.value,
@@ -63,6 +65,9 @@ class PaymentController extends GetxController {
         },
         body: jsonEncode(ordersData.toJson()),
       );
+      print("ini id saya${orderId}");
+      print("ini id saya${response.body}");
+      print("ini id saya${response.statusCode}");
       if (response.statusCode == 201) {
         print('Order successful: ${response.body}');
         await fetchOrderData(); // Fetch updated order data after adding
@@ -85,12 +90,13 @@ class PaymentController extends GetxController {
 
     var token = await prefs.getString("token");
     final paydata = PayresponseModel(
+      orderId: orderId!,
       paymentMethod: paymeth.value,
     );
 
     try {
       final response = await http.post(
-        Uri.parse('https://klambi.ta.rplrus.com/api/orders/$orderId/update-payment-method'),
+        Uri.parse('https://klambi.ta.rplrus.com/api/orders/update-payment-method'),
         headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer $token',
@@ -98,8 +104,8 @@ class PaymentController extends GetxController {
         body: jsonEncode(paydata.toJson()),
       );
 
-      print('Payment method update response status: ${response.statusCode}');
-      print('Payment method update response body: ${response.body}');
+      // print('Payment method update response status: ${response.statusCode}');
+      // print('Payment method update response body: ${response.body}');
 
       if (response.statusCode == 200) {
         print('Payment method updated successfully');
@@ -118,19 +124,28 @@ class PaymentController extends GetxController {
     isLoading.value = true; // Set loading to true
     if (orderId == null) {
       print('Order ID is not available');
+      isLoading.value = false; // Ensure loading is set to false if no orderId
       return;
     }
 
     var token = await prefs.getString("token");
+    final paydata = AddHistoryResponseModel(
+      orderId: orderId!,
+    );
+
     try {
       final response = await http.post(
-        Uri.parse('https://klambi.ta.rplrus.com/api/orders/$orderId/history'),
+        Uri.parse('https://klambi.ta.rplrus.com/api/orders/history'),
         headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer $token',
         },
+        body: jsonEncode(paydata.toJson()), // Convert model to JSON and set body
       );
+
       print(response.body);
+      print("Order ID: ${orderId}");
+
       if (response.statusCode == 200) {
         print('History added successfully: ${response.body}');
         await fetchOrderData(); // Fetch updated order data after adding history
@@ -188,7 +203,7 @@ class PaymentController extends GetxController {
       print(response.body);
       if (response.statusCode == 200) {
         print('History added successfully: ${response.body}');
-        await controller.fetchOrders(); // Fetch updated order data after adding history
+        await controller.fetchOrderHistory(); // Fetch updated order data after adding history
       } else {
         print('Failed to add history: ${response.statusCode}');
       }
@@ -203,28 +218,39 @@ class PaymentController extends GetxController {
     isLoading.value = true; // Set loading to true
     var token = await prefs.getString("token");
     String url = 'https://klambi.ta.rplrus.com/api/orders/latest';
-    final response = await http.get(
-      Uri.parse(url),
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer $token',
-      },
-    );
-    print("Response: ${response.body}");
 
-    if (response.statusCode == 200) {
-      var jsonResponse = json.decode(response.body);
-      ShowOrderResponseModel orderResponse = ShowOrderResponseModel.fromJson(jsonResponse);
+    try {
+      final response = await http.get(
+        Uri.parse(url),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+      );
+      print("Response: ${response.body}");
 
-      orderData.value = orderResponse.data;
-      if (orderResponse.data != null) {
-        orderId = orderResponse.data!.order?.id;
-        order.value = orderResponse.data!.order; // Update order if necessary
+      if (response.statusCode == 200) {
+        var jsonResponse = json.decode(response.body);
+
+        // Sesuaikan parsing JSON berdasarkan model terbaru
+        ShowOrderResponseModel orderResponse = ShowOrderResponseModel.fromJson(jsonResponse);
+
+        orderData.value = orderResponse.data;
+        if (orderResponse.data != null && orderResponse.data!.order != null) {
+          orderId = orderResponse.data!.order!.id; // Ambil order ID dari model
+          order.value = orderResponse.data!.order; // Update order jika ada
+        } else {
+          print("Order data is null or order is not found");
+        }
+      } else {
+        print("Failed to fetch order data: ${response.statusCode}");
+        orderData.value = null; // Handle error case
       }
-    } else {
-      print("Failed to fetch order data: ${response.statusCode}");
-      orderData.value = null; // Handle error case
+    } catch (e) {
+      print("Error fetching order data: $e");
+      orderData.value = null; // Handle exception case
+    } finally {
+      isLoading.value = false; // Set loading to false
     }
-    isLoading.value = false; // Set loading to false
   }
 }

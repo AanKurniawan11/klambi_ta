@@ -7,9 +7,8 @@ import 'package:klambi_ta/component/space_extension.dart';
 import '../../../Common/colors/color.dart';
 
 class CartItem extends StatelessWidget {
-   CartItem({super.key});
+  CartItem({super.key});
   final CartControllers controllers = Get.find();
-
 
   @override
   Widget build(BuildContext context) {
@@ -25,28 +24,19 @@ class CartItem extends StatelessWidget {
         final item = controllers.Cartdata[index];
 
         return Dismissible(
-          key: Key(item.productId.toString()),
-          direction: DismissDirection.endToStart,
+          key: ValueKey(item.productId), // Unique key for each item
+          direction: DismissDirection.endToStart, // Swipe direction
           onDismissed: (direction) {
-            controllers.DeleteCartItem({
-              "products_id": item.productId,
-              "quantity": item.quantity,
-              "size": item.size,
-            }).then((_) {
-              controllers.Cartdata.removeAt(index);
-              controllers.update();
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('${item.productTitle} dihapus dari keranjang')),
-              );
-            });
+            controllers.deleteCartItem(item.productId, item.quantity, item.size);
           },
           background: Container(
             color: Colors.red,
             alignment: Alignment.centerRight,
-            padding: EdgeInsets.symmetric(horizontal: 20),
+            padding: EdgeInsets.only(right: 20),
             child: Icon(
               Icons.delete,
               color: Colors.white,
+              size: 40,
             ),
           ),
           child: Container(
@@ -173,8 +163,4 @@ class CartItem extends StatelessWidget {
       },
     );
   }
-
 }
-
-
-

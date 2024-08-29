@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 class ShowOrderResponseModel {
   bool? success;
   String? message;
@@ -41,13 +39,13 @@ class Order {
   int? handlingFee;
   int? shippingFee;
   int? discount;
+  int? totalPrice;
   int? quantity;
   String? status;
-  String? products;
-  int? totalPrice;
+  String? products; // Produk dalam bentuk string JSON
   String? createdAt;
   String? updatedAt;
-  Address? address;
+  Address? address; // Menambahkan Address di dalam Order
 
   Order({
     this.id,
@@ -58,10 +56,10 @@ class Order {
     this.handlingFee,
     this.shippingFee,
     this.discount,
+    this.totalPrice,
     this.quantity,
     this.status,
     this.products,
-    this.totalPrice,
     this.createdAt,
     this.updatedAt,
     this.address,
@@ -77,13 +75,13 @@ class Order {
       handlingFee: json['handling_fee'],
       shippingFee: json['shipping_fee'],
       discount: json['discount'],
+      totalPrice: json['total_price'],
       quantity: json['quantity'],
       status: json['status'],
-      products: json['products'],
-      totalPrice: json['total_price'],
+      products: json['products'], // Produk disimpan sebagai string JSON
       createdAt: json['created_at'],
       updatedAt: json['updated_at'],
-      address: json['address'] != null ? Address.fromJson(json['address']) : null,
+      address: json['address'] != null ? Address.fromJson(json['address']) : null, // Parsing Address
     );
   }
 }

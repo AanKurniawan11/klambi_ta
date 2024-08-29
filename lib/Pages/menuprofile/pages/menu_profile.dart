@@ -6,11 +6,13 @@ import 'package:klambi_ta/Common/colors/color.dart';
 import 'package:klambi_ta/Pages/menuprofile/components/profile_controller.dart';
 import 'package:klambi_ta/Pages/menuprofile/pages/address/controller/address_controller.dart';
 import 'package:klambi_ta/Pages/menuprofile/pages/edit/controller/edit_controller.dart';
+import 'package:klambi_ta/Pages/user/login/components/login_controller.dart';
 
 class Profile extends StatelessWidget {
   Profile({super.key});
 
   final profileController = Get.put(ProfileController());
+  final controller = Get.put(LoginController());
   final editController = Get.put(EditController());
   final addressController = Get.put(AddressController());
 
@@ -38,10 +40,12 @@ class Profile extends StatelessWidget {
               ),
               child: Text('Log Out'),
               onPressed: () async {
-                await profileController.logoutg();
+                await controller.logoutAction();
                 if (Navigator.of(context).canPop()) {
                   Navigator.of(context).pop();
+
                 }
+                Get.offAllNamed("/login");
               },
             ),
           ],
@@ -58,49 +62,67 @@ class Profile extends StatelessWidget {
 
     return Scaffold(
       body: Obx(
-            () => Padding(
-          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+            () => profileController.isLoading.value
+            ? Center(child: CircularProgressIndicator())
+            : Padding(
+          padding: const EdgeInsets.all(16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              ClipOval(
-                child: Container(
-                  height: height * 0.13,
-                  width: width * 0.28,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: editController.pickedImage.value != null
-                          ? FileImage(editController.pickedImage.value!)
-                          : editController.imageUrl.value != null
-                          ? NetworkImage(editController.imageUrl.value!)
-                          : AssetImage("assets/images/banner/pro.png") as ImageProvider,
-                      fit: BoxFit.cover,
+              // Profile header container
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  ClipOval(
+                    child: AnimatedSwitcher(
+                      duration: Duration(milliseconds: 300),
+                      child: Container(
+                        height: height * 0.15,
+                        width: width * 0.3,
+                        key: ValueKey<String>(
+                            editController.imageUrl.value ?? ''),
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: editController.pickedImage.value !=
+                                null
+                                ? FileImage(
+                                editController.pickedImage.value!)
+                                : editController.imageUrl.value !=
+                                null
+                                ? NetworkImage(editController
+                                .imageUrl.value!)
+                                : AssetImage(
+                                "assets/images/banner/pro.png")
+                            as ImageProvider,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
                     ),
                   ),
-                ),
+                  SizedBox(height: 12),
+                  Text(
+                    editController.userProfile.value.name,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                      color: ColorValue.kPrimary,
+                    ),
+                  ),
+                  SizedBox(height: 6),
+                  Text(
+                    profileController.email.value,
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.grey[700],
+                    ),
+                  ),
+                ],
               ),
-              SizedBox(height: 12),
-              Text(
-                editController.userProfile.value.name,
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18,
-                  color: ColorValue.kPrimary,
-                ),
-              ),
-              SizedBox(height: 4),
-              Text(
-                profileController.email.value,
-                style: TextStyle(
-                  fontSize: 14,
-                  color: Colors.grey[600],
-                ),
-              ),
-              SizedBox(height: 5),
-
-              Container(
-                padding: EdgeInsets.all(8),
-                child: Column(
+              SizedBox(height: 20),
+              // Menu sections
+              Expanded(
+                child: ListView(
                   children: [
                     _buildCategorySection(
                       title: "Profil",
@@ -122,17 +144,7 @@ class Profile extends StatelessWidget {
                         ),
                       ],
                     ),
-
-                  ],
-                ),
-              ),
-
-              SizedBox(height: 10),
-
-              Container(
-                padding: EdgeInsets.all(8),
-                child: Column(
-                  children: [
+                    SizedBox(height: 10),
                     _buildCategorySection(
                       title: "Lainnya",
                       items: [
@@ -164,7 +176,7 @@ class Profile extends StatelessWidget {
                     ),
                   ],
                 ),
-              )
+              ),
             ],
           ),
         ),
@@ -176,21 +188,35 @@ class Profile extends StatelessWidget {
     required String title,
     required List<Widget> items,
   }) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 10),
-          child: Text(
+    return Container(
+      padding: EdgeInsets.all(12),
+      margin: EdgeInsets.only(bottom: 16),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.05),
+            blurRadius: 6,
+            offset: Offset(0, 3),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
             title,
             style: TextStyle(
-              fontSize: 16,
+              fontSize: 18,
               fontWeight: FontWeight.bold,
+              color: ColorValue.kPrimary,
             ),
           ),
-        ),
-        ...items,
-      ],
+          SizedBox(height: 10),
+          Column(children: items),
+        ],
+      ),
     );
   }
 
@@ -198,49 +224,28 @@ class Profile extends StatelessWidget {
     required IconData icon,
     required String title,
     required VoidCallback onTap,
-    Color iconColor = ColorValue.kSecondary,
-    Color textColor = Colors.black,
+    Color? iconColor,
+    Color? textColor,
     bool showArrow = true,
   }) {
-    return GestureDetector(
+    return InkWell(
       onTap: onTap,
-      child: Container(
-        padding: EdgeInsets.symmetric(vertical: 12, horizontal: 12),
-        margin: EdgeInsets.symmetric(vertical: 4),
-        decoration: BoxDecoration(
-          color: ColorValue.kLightGrey.withOpacity(0.1),
-          borderRadius: BorderRadius.circular(8),
-        ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Row(
-              children: [
-                Container(
-                  padding: EdgeInsets.all(8),
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: iconColor.withOpacity(0.1),
-                  ),
-                  child: Icon(icon, size: 22, color: iconColor),
-                ),
-                SizedBox(width: 12),
-                Text(
-                  title,
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: textColor,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ],
-            ),
-            if (showArrow)
-              Icon(
-                Icons.arrow_forward_ios_rounded,
-                size: 16,
-                color: Colors.grey[600],
+            Icon(icon, color: iconColor ?? ColorValue.kPrimary),
+            SizedBox(width: 16),
+            Text(
+              title,
+              style: TextStyle(
+                fontSize: 16,
+                color: textColor ?? Colors.black,
               ),
+            ),
+            Spacer(),
+            if (showArrow)
+              Icon(Icons.arrow_forward_ios, color: Colors.grey[400], size: 16),
           ],
         ),
       ),

@@ -12,11 +12,19 @@ import '../../../component/format_price.dart';
 
 class Payment extends StatelessWidget {
   Payment({super.key});
-  final AddressController showController = Get.put(AddressController());
   final PaymentController controller = Get.put(PaymentController());
+
+
+  @override
+  void onInit() async {
+     controller.onInit();
+    controller.setPreference(); // Ensure preferences are set
+    controller.fetchOrderData(); // Fetch order data to get order ID
+  }
 
   @override
   Widget build(BuildContext context) {
+    controller.fetchOrderData();
     final Size mediaQuery = MediaQuery.of(context).size;
     final double height = mediaQuery.height;
     final double width = mediaQuery.width;
@@ -43,18 +51,6 @@ class Payment extends StatelessWidget {
         elevation: 0,
       ),
       body: Obx(() {
-        if (controller.isLoading.value) {
-          return
-            Center(child: LoadingAnimationWidget.discreteCircle(
-              color: ColorValue.kPrimary,
-              size: 50,
-              secondRingColor: ColorValue.kSecondary,
-              thirdRingColor: ColorValue.kDanger,
-            ));
-        }
-        if (controller.order.value == null) {
-          return Center(child: Text('Tidak ada data pesanan.'));
-        }
         final order = controller.orderData.value?.order;
         final products = controller.orderData.value?.products;
         final address = order?.address;
@@ -78,7 +74,7 @@ class Payment extends StatelessWidget {
                     padding: const EdgeInsets.all(16.0),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(12),
-                      color: ColorValue.kPrimary.withOpacity(0.1),
+                      color: ColorValue.kSecondary.withOpacity(0.1),
                       boxShadow: [
                         BoxShadow(
                           color: Colors.grey.withOpacity(0.2),
@@ -96,13 +92,13 @@ class Payment extends StatelessWidget {
                             fontSize: 14,
                             fontWeight: FontWeight.w600,
                             fontFamily: 'General Sans',
-                            color: ColorValue.kPrimary,
+                            color: ColorValue.kSecondary,
                           ),
                         ),
                         SizedBox(height: 10),
                         Row(
                           children: [
-                            Icon(Icons.location_on, color: ColorValue.kPrimary, size: 28),
+                            Icon(Icons.location_on, color: ColorValue.kSecondary, size: 28),
                             SizedBox(width: 10),
                             Expanded(
                               child: Column(
@@ -141,15 +137,15 @@ class Payment extends StatelessWidget {
                             ),
                           ],
                         ),
-                        Align(
-                          alignment: Alignment.bottomRight,
-                          child: TextButton(
-                            onPressed: () {
-                              // Get.offAllNamed("/edit");
-                            },
-                            child: Text("Ganti", style: TextStyle(color: ColorValue.kPrimary)),
-                          ),
-                        ),
+                        // Align(
+                        //   alignment: Alignment.bottomRight,
+                        //   child: TextButton(
+                        //     onPressed: () {
+                        //       // Get.offAllNamed("/edit");
+                        //     },
+                        //     child: Text("Ganti", style: TextStyle(color: ColorValue.kSecondary)),
+                        //   ),
+                        // ),
                       ],
                     ),
                   ),

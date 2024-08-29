@@ -34,27 +34,31 @@ class CartControllers extends GetxController {
     super.onInit();
     await setPreference();
     await fetchOrderCart();
+    await ShowCartData();
     updateTotalPrice();
   }
 
   Future<void> addPayCart() async {
+    isLoading.value = true;
+    print(orderId);
     if (orderId == null) {
       print('Order ID is not available');
       return;
     }
     var token = await prefs.getString("token");
-    final paydata = PayresponseModel(
+    final test = PayresponseModel(
+      orderId: orderId!,
       paymentMethod: paymeth.value,
     );
 
     try {
       final response = await http.post(
-        Uri.parse('https://klambi.ta.rplrus.com/api/orders/$orderId/update-payment-method'),
+        Uri.parse('https://klambi.ta.rplrus.com/api/orders/update-payment-method'),
         headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer $token',
         },
-        body: jsonEncode(paydata.toJson()),
+        body: jsonEncode(test.toJson()),
       );
       if (response.statusCode == 200) {
         print('Payment method updated: ${response.body}');
@@ -65,8 +69,11 @@ class CartControllers extends GetxController {
       }
     } catch (e) {
       print('Error: $e');
+    }finally{
+      isLoading.value = false; // Set loading to false
     }
   }
+
 
   Future<void> addHistoryCart() async {
     if (orderId == null) {
@@ -96,6 +103,7 @@ class CartControllers extends GetxController {
   }
 
   Future<void> orderfromCart() async {
+    isLoading.value = true; // Set loading to true
     var token = await prefs.getString("token");
     try {
       final response = await http.post(
@@ -114,6 +122,8 @@ class CartControllers extends GetxController {
       }
     } catch (e) {
       print('Error: $e');
+    }finally{
+      isLoading.value = false; // Set loading to false
     }
   }
 
@@ -142,7 +152,8 @@ class CartControllers extends GetxController {
           order.value = orderResponse.data!.order;
         }
       } else {
-        orderData.value = null; // Handle error case
+        // Get.showSnackbar(token)
+        orderData.value = null;
       }
     } finally {
       isLoading.value = false; // Stop loading regardless of the outcome
@@ -180,6 +191,7 @@ class CartControllers extends GetxController {
   }
 
   Future<void> addToCart(int id) async {
+    isLoading.value = true; // Set loading to false
     var token = await prefs.getString("token");
     final carts = AddToCart(
       size: size.value,
@@ -206,6 +218,8 @@ class CartControllers extends GetxController {
       }
     } catch (e) {
       print("Error: $e");
+    }finally{
+      isLoading.value = false; // Set loading to false
     }
   }
 
@@ -240,25 +254,45 @@ class CartControllers extends GetxController {
     }
   }
 
-  Future<void> DeleteCartItem(Map<String, dynamic> body) async {
+  Future<void> deleteCartItem(int productId, int quantity, String size) async {
     var token = await prefs.getString("token");
     try {
       final response = await http.delete(
         Uri.parse('https://klambi.ta.rplrus.com/api/cart/remove'),
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer $token'
+          'Authorization': 'Bearer $token',
         },
-        body: jsonEncode(body),
+        body: jsonEncode({
+          'products_id': productId,
+          'quantity': quantity,
+          'size': size,
+        }),
       );
 
       if (response.statusCode == 200) {
-        // Remove the item from Cartdata and selectedItems
-        final removedItem = Cartdata.firstWhere((item) => item.productId == body['products_id']);
-        Cartdata.remove(removedItem);
-        selectedItems.remove(removedItem);
+        final responseData = jsonDecode(response.body);
 
-        updateTotalPrice(); // Update total price after item is removed
+        if (responseData['status'] == true) {
+          // Cari item yang sesuai berdasarkan productId, quantity, dan size
+          final Item? removedItem = Cartdata.firstWhere(
+                (item) => item.productId == productId &&
+                item.quantity == quantity &&
+                item.size == size,
+          );
+
+          if (removedItem != null) {
+            Cartdata.remove(removedItem);
+            selectedItems.remove(removedItem);
+
+            updateTotalPrice(); // Update total price after item is removed
+            print("Item berhasil dihapus: ${responseData['message']}");
+          } else {
+            print("Item tidak ditemukan di Cartdata.");
+          }
+        } else {
+          print("Gagal menghapus item: ${responseData['message']}");
+        }
       } else {
         print("Failed to delete item: ${response.body}");
       }

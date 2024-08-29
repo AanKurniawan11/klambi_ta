@@ -19,7 +19,7 @@ class Keterangan extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          CustomTextfield(hintText: controller.Show[0].keterangan,
+          CustomTextfield(hintText: "Keterangan",
             onChanged: onChanged,
           )
         ],

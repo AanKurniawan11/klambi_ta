@@ -1,62 +1,62 @@
-// To parse this JSON data, do
-//
-//     final detailOrderModel = detailOrderModelFromJson(jsonString);
-
 import 'dart:convert';
 
-DetailOrderModel detailOrderModelFromJson(String str) => DetailOrderModel.fromJson(json.decode(str));
+OrderHistoryResponse orderHistoryResponseFromJson(String str) => OrderHistoryResponse.fromJson(json.decode(str));
 
-String detailOrderModelToJson(DetailOrderModel data) => json.encode(data.toJson());
+String orderHistoryResponseToJson(OrderHistoryResponse data) => json.encode(data.toJson());
 
-class DetailOrderModel {
+class OrderHistoryResponse {
   bool success;
   String message;
-  Data data;
+  List<Datum> data;
 
-  DetailOrderModel({
+  OrderHistoryResponse({
     required this.success,
     required this.message,
     required this.data,
   });
 
-  factory DetailOrderModel.fromJson(Map<String, dynamic> json) => DetailOrderModel(
-    success: json["success"] ?? false, // Default to false if null
-    message: json["message"] ?? 'Unknown error', // Provide default message
-    data: Data.fromJson(json["data"]),
+  factory OrderHistoryResponse.fromJson(Map<String, dynamic> json) => OrderHistoryResponse(
+    success: json["success"],
+    message: json["message"],
+    data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
   );
 
   Map<String, dynamic> toJson() => {
     "success": success,
     "message": message,
-    "data": data.toJson(),
+    "data": List<dynamic>.from(data.map((x) => x.toJson())),
   };
 }
 
-class Data {
-  OrderHistory orderHistory;
-  Product product;
+class Datum {
+  int orderHistoryId;
+  Order order;
   Address address;
-  dynamic image;
+  List<Product> products;
+  ImageData image;
 
-  Data({
-    required this.orderHistory,
-    required this.product,
+  Datum({
+    required this.orderHistoryId,
+    required this.order,
     required this.address,
+    required this.products,
     required this.image,
   });
 
-  factory Data.fromJson(Map<String, dynamic> json) => Data(
-    orderHistory: OrderHistory.fromJson(json["order_history"]),
-    product: Product.fromJson(json["product"]),
+  factory Datum.fromJson(Map<String, dynamic> json) => Datum(
+    orderHistoryId: json["order_history_id"],
+    order: Order.fromJson(json["order"]),
     address: Address.fromJson(json["address"]),
-    image: json["image"],
+    products: List<Product>.from(json["products"].map((x) => Product.fromJson(x))),
+    image: ImageData.fromJson(json["image"]),
   );
 
   Map<String, dynamic> toJson() => {
-    "order_history": orderHistory.toJson(),
-    "product": product.toJson(),
+    "order_history_id": orderHistoryId,
+    "order": order.toJson(),
     "address": address.toJson(),
-    "image": image,
+    "products": List<dynamic>.from(products.map((x) => x.toJson())),
+    "image": image.toJson(),
   };
 }
 
@@ -104,9 +104,28 @@ class Address {
   };
 }
 
-class OrderHistory {
+class ImageData {
+  String path;
+  String filename;
+
+  ImageData({
+    required this.path,
+    required this.filename,
+  });
+
+  factory ImageData.fromJson(Map<String, dynamic> json) => ImageData(
+    path: json["path"],
+    filename: json["filename"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "path": path,
+    "filename": filename,
+  };
+}
+
+class Order {
   int id;
-  int orderId;
   int userId;
   int addressId;
   String status;
@@ -116,12 +135,9 @@ class OrderHistory {
   int shippingFee;
   String shippingMethod;
   DateTime orderTime;
-  DateTime createdAt;
-  DateTime updatedAt;
 
-  OrderHistory({
+  Order({
     required this.id,
-    required this.orderId,
     required this.userId,
     required this.addressId,
     required this.status,
@@ -131,13 +147,10 @@ class OrderHistory {
     required this.shippingFee,
     required this.shippingMethod,
     required this.orderTime,
-    required this.createdAt,
-    required this.updatedAt,
   });
 
-  factory OrderHistory.fromJson(Map<String, dynamic> json) => OrderHistory(
+  factory Order.fromJson(Map<String, dynamic> json) => Order(
     id: json["id"],
-    orderId: json["order_id"],
     userId: json["user_id"],
     addressId: json["address_id"],
     status: json["status"],
@@ -147,13 +160,10 @@ class OrderHistory {
     shippingFee: json["shipping_fee"],
     shippingMethod: json["shipping_method"],
     orderTime: DateTime.parse(json["order_time"]),
-    createdAt: DateTime.parse(json["created_at"]),
-    updatedAt: DateTime.parse(json["updated_at"]),
   );
 
   Map<String, dynamic> toJson() => {
     "id": id,
-    "order_id": orderId,
     "user_id": userId,
     "address_id": addressId,
     "status": status,
@@ -163,8 +173,6 @@ class OrderHistory {
     "shipping_fee": shippingFee,
     "shipping_method": shippingMethod,
     "order_time": orderTime.toIso8601String(),
-    "created_at": createdAt.toIso8601String(),
-    "updated_at": updatedAt.toIso8601String(),
   };
 }
 
@@ -173,7 +181,6 @@ class Product {
   int quantity;
   String size;
   int price;
-  bool fromCart;
   String title;
   String image;
 
@@ -182,7 +189,6 @@ class Product {
     required this.quantity,
     required this.size,
     required this.price,
-    required this.fromCart,
     required this.title,
     required this.image,
   });
@@ -192,7 +198,6 @@ class Product {
     quantity: json["quantity"],
     size: json["size"],
     price: json["price"],
-    fromCart: json["from_cart"] ?? false, // Handle null value here
     title: json["title"],
     image: json["image"],
   );
@@ -202,7 +207,6 @@ class Product {
     "quantity": quantity,
     "size": size,
     "price": price,
-    "from_cart": fromCart,
     "title": title,
     "image": image,
   };

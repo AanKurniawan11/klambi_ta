@@ -52,15 +52,13 @@ class Order {
   int id;
   int userId;
   int addressId;
+  String status;
+  int totalPrice;
   String paymentMethod;
-  String shippingMethod;
   int handlingFee;
   int shippingFee;
-  int discount;
-  int quantity;
-  int totalPrice;
-  String status;
-  String products; // Stringified JSON array
+  String shippingMethod;
+  DateTime? orderTime;
   DateTime createdAt;
   DateTime updatedAt;
   Address address;
@@ -69,15 +67,13 @@ class Order {
     required this.id,
     required this.userId,
     required this.addressId,
+    required this.status,
+    required this.totalPrice,
     required this.paymentMethod,
-    required this.shippingMethod,
     required this.handlingFee,
     required this.shippingFee,
-    required this.discount,
-    required this.quantity,
-    required this.totalPrice,
-    required this.status,
-    required this.products,
+    required this.shippingMethod,
+    this.orderTime,
     required this.createdAt,
     required this.updatedAt,
     required this.address,
@@ -87,15 +83,13 @@ class Order {
     id: json["id"],
     userId: json["user_id"],
     addressId: json["address_id"],
-    paymentMethod: json["payment_method"] ?? '',  // Handling possible null values
-    shippingMethod: json["shipping_method"] ?? '',  // Handling possible null values
+    status: json["status"] ?? '',
+    totalPrice: json["total_price"],
+    paymentMethod: json["payment_method"] ?? '',
     handlingFee: json["handling_fee"],
     shippingFee: json["shipping_fee"],
-    discount: json["discount"],
-    quantity: json["quantity"],
-    totalPrice: json["total_price"],
-    status: json["status"] ?? '',  // Handling possible null values
-    products: json["products"] ?? '',  // Handling possible null values
+    shippingMethod: json["shipping_method"] ?? '',
+    orderTime: json["order_time"] != null ? DateTime.parse(json["order_time"]) : null,
     createdAt: DateTime.parse(json["created_at"]),
     updatedAt: DateTime.parse(json["updated_at"]),
     address: Address.fromJson(json["address"]),
@@ -105,15 +99,13 @@ class Order {
     "id": id,
     "user_id": userId,
     "address_id": addressId,
+    "status": status,
+    "total_price": totalPrice,
     "payment_method": paymentMethod,
-    "shipping_method": shippingMethod,
     "handling_fee": handlingFee,
     "shipping_fee": shippingFee,
-    "discount": discount,
-    "quantity": quantity,
-    "total_price": totalPrice,
-    "status": status,
-    "products": products,
+    "shipping_method": shippingMethod,
+    "order_time": orderTime?.toIso8601String(),
     "created_at": createdAt.toIso8601String(),
     "updated_at": updatedAt.toIso8601String(),
     "address": address.toJson(),
@@ -186,11 +178,11 @@ class Product {
   factory Product.fromJson(Map<String, dynamic> json) => Product(
     productId: json["product_id"],
     quantity: json["quantity"],
-    size: json["size"] ?? '',  // Handling possible null values
+    size: json["size"] ?? '',
     price: json["price"],
     fromCart: json["from_cart"],
-    title: json["title"] ?? '',  // Handling possible null values
-    image: json["imagee"] ?? '',  // Corrected key from "imagee" to "image"
+    title: json["title"] ?? '',
+    image: json["imagee"] ?? '',
   );
 
   Map<String, dynamic> toJson() => {

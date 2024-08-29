@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:klambi_ta/Common/colors/color.dart';
 import 'package:klambi_ta/Pages/onboarding/components/onboarding_item.dart';
+import 'package:klambi_ta/Pages/user/login/page/login.dart';
 import 'package:klambi_ta/Pages/user/register/page/register.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -159,7 +160,7 @@ class _OnboardingViewState extends State<OnboardingView> {
         final pres = await SharedPreferences.getInstance();
         pres.setBool("onboarding", true);
         if (!mounted) return;
-        Get.offAll(Register());
+        Get.offAll(Login());
       },
       style: ButtonStyle(
         backgroundColor: MaterialStateProperty.all(ColorValue.kPrimary),

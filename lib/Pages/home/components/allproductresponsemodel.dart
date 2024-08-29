@@ -41,6 +41,7 @@ class Datum {
   Category category;
   String imagee;
   int stock;
+  int sold;
   DateTime createdAt;
   DateTime updatedAt;
 
@@ -53,21 +54,23 @@ class Datum {
     required this.category,
     required this.imagee,
     required this.stock,
+    required this.sold,
     required this.createdAt,
     required this.updatedAt,
   });
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
-    id: json["id"],
-    title: json["title"],
-    price: json["price"],
-    descripsi: json["descripsi"],
-    rate: json["rate"]?.toDouble(),
-    category: categoryValues.map[json["category"]]!,
-    imagee: json["imagee"],
-    stock: json["stock"],
-    createdAt: DateTime.parse(json["created_at"]),
-    updatedAt: DateTime.parse(json["updated_at"]),
+    id: json["id"] ?? 0,  // Default to 0 if null
+    title: json["title"] ?? '',  // Default to empty string if null
+    price: json["price"] ?? 0,  // Default to 0 if null
+    descripsi: json["descripsi"] ?? '',  // Default to empty string if null
+    rate: (json["rate"] != null) ? json["rate"].toDouble() : 0.0,  // Default to 0.0 if null
+    category: categoryValues.map[json["category"]] ?? Category.LENGAN_PANJANG,  // Default to a valid category if null
+    imagee: json["imagee"] ?? '',  // Default to empty string if null
+    stock: json["stock"] ?? 0,  // Default to 0 if null
+    sold: json["sold"] ?? 0,  // Default to 0 if null
+    createdAt: DateTime.parse(json["created_at"] ?? DateTime.now().toIso8601String()),  // Default to current date if null
+    updatedAt: DateTime.parse(json["updated_at"] ?? DateTime.now().toIso8601String()),  // Default to current date if null
   );
 
   Map<String, dynamic> toJson() => {
@@ -79,6 +82,7 @@ class Datum {
     "category": categoryValues.reverse[category],
     "imagee": imagee,
     "stock": stock,
+    "sold": sold,
     "created_at": createdAt.toIso8601String(),
     "updated_at": updatedAt.toIso8601String(),
   };

@@ -37,7 +37,7 @@ class Test2 extends StatelessWidget {
                   style: TextStyle(color: Colors.grey.shade600),
                 ),
                 isExpanded: true,
-                items: ['Cash on Delivery', 'Credit Card', 'Bank Transfer']
+                items: ['Cash on Delivery']
                     .map((method) => DropdownMenuItem<String>(
                   value: method,
                   child: Text(method),

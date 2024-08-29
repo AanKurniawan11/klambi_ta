@@ -19,7 +19,7 @@ class Nama extends StatelessWidget {
         children: [
           // SizedBox(height: 10),
           CustomTextfield(
-            hintText: controller.Show[0].namaLengkap,
+            hintText: "Nama",
             onChanged: onChanged,
           ),
         ],

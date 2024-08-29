@@ -155,7 +155,7 @@ class AddAddress extends StatelessWidget {
                                   IconButton(
                                     icon: Icon(Icons.delete, color: ColorValue.kLightGrey, size: 20),
                                     onPressed: () async {
-                                      controller.DeleteAddress();
+                                      controller.deleteAddress(data.id);
                                     },
                                   ),
                                 ],

@@ -10,7 +10,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
 class EditController extends GetxController {
-  // final controller = Get.put(ProfileController());
   late SharedPreferences prefs;
   var pickedImage = Rxn<File>();
   var imageUrl = Rxn<String>();
@@ -20,21 +19,12 @@ class EditController extends GetxController {
 
   final TextEditingController ctrName = TextEditingController();
 
-
-
   @override
   void onInit() {
     super.onInit();
     loadUserProfile();
     loadImageFromPrefs();
   }
-
-
-  setPreference() async {
-    prefs = await SharedPreferences.getInstance();
-    update();
-  }
-
 
   Future<void> pickImage() async {
     final picker = ImagePicker();
@@ -43,8 +33,6 @@ class EditController extends GetxController {
     if (pickedFile != null) {
       pickedImage.value = File(pickedFile.path);
       imageUrl.value = null;
-
-      // Simpan jalur file gambar ke SharedPreferences
       await prefs.setString('userImage', pickedFile.path);
     }
   }
@@ -63,15 +51,10 @@ class EditController extends GetxController {
     );
 
     if (response.statusCode == 200) {
-      print(token);
       var data = ShowProfileResponse.fromJson(jsonDecode(response.body)).data;
       userProfile.value = data;
-      print(response.body);
     } else {
-      print(response.body);
       print('Failed to load profile');
-      print(ctrName.value);
-
     }
     isLoading(false);
   }
@@ -110,7 +93,6 @@ class EditController extends GetxController {
         email: userProfile.value.email,
         image: updatedData.image,
       );
-      print('Profile updated successfully');
     } else {
       print('Failed to update profile');
     }
@@ -121,7 +103,7 @@ class EditController extends GetxController {
     prefs = await SharedPreferences.getInstance();
     var savedImagePath = prefs.getString('userImage');
     if (savedImagePath != null && savedImagePath.isNotEmpty) {
-      pickedImage.value = File(savedImagePath); // Load image from file
+      pickedImage.value = File(savedImagePath);
     }
   }
 }

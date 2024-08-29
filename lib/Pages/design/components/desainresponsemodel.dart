@@ -1,39 +1,15 @@
-class UploadImageResponse {
-  final bool success;
-  final String message;
-  final UploadImageData data;
+import 'dart:convert';
 
-  UploadImageResponse({
-    required this.success,
-    required this.message,
-    required this.data,
-  });
+class AddOrderImageModel {
+  final int orderId;
+  final String image;
 
-  factory UploadImageResponse.fromJson(Map<String, dynamic> json) {
-    return UploadImageResponse(
-      success: json['success'],
-      message: json['message'],
-      data: UploadImageData.fromJson(json['data']),
-    );
-  }
-}
+  AddOrderImageModel({required this.orderId, required this.image});
 
-class UploadImageData {
-  final int userId;
-  final String path;
-  final int id;
-
-  UploadImageData({
-    required this.userId,
-    required this.path,
-    required this.id,
-  });
-
-  factory UploadImageData.fromJson(Map<String, dynamic> json) {
-    return UploadImageData(
-      userId: json['user_id'],
-      path: json['path'],
-      id: json['id'],
-    );
+  String toJsonString() {
+    return jsonEncode({
+      'order_id': orderId,
+      'image': image,
+    });
   }
 }

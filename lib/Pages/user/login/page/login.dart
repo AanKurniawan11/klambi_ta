@@ -9,6 +9,7 @@ import 'package:klambi_ta/component/my_elevatedbutton.dart';
 import 'package:klambi_ta/component/my_textfield.dart';
 import 'package:klambi_ta/component/pass_textfield.dart';
 import 'package:klambi_ta/component/space_extension.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -34,13 +35,15 @@ class _LoginState extends State<Login> {
         );
 
         final UserCredential userCredential = await auth.signInWithCredential(credential);
-        loginController.setUser(userCredential.user); // Update the user in the controller
+        loginController.setUser(userCredential.user); // Update user in the controller
         Get.offAllNamed("/navbar");
       }
     } catch (e) {
       ToastMessage.show('Login gagal. Silakan coba lagi.');
+      Get.snackbar("Gagal", "Coba Lagi");
     }
   }
+
   @override
   Widget build(BuildContext context) {
     final Size mediaquery = MediaQuery.of(context).size;
@@ -48,7 +51,16 @@ class _LoginState extends State<Login> {
     final double width = mediaquery.width;
     return Scaffold(
       body: SafeArea(
-        child: SingleChildScrollView(
+        child: Obx(() => loginController.isLoading.value
+            ? Center(child:
+        LoadingAnimationWidget.discreteCircle(
+          color: ColorValue.kPrimary,
+          size: 50,
+          secondRingColor: ColorValue.kSecondary,
+          thirdRingColor: ColorValue.kDanger,
+        ),
+        )
+            : SingleChildScrollView(
           scrollDirection: Axis.vertical,
           child: Stack(
             children: [
@@ -68,7 +80,10 @@ class _LoginState extends State<Login> {
                   ),
                   const Text(
                     "Masuk",
-                    style: TextStyle(fontSize: 32, fontFamily: "General Sans",color: ColorValue.kPrimary),
+                    style: TextStyle(
+                        fontSize: 32,
+                        fontFamily: "General Sans",
+                        color: ColorValue.kPrimary),
                   ),
                   const SizedBox(height: 20),
                   Column(
@@ -97,73 +112,17 @@ class _LoginState extends State<Login> {
                       Container(
                         padding: EdgeInsets.symmetric(horizontal: 40),
                         child: My_Button(
-                          onclick: () {
-                            loginController.loginAction(
+                          onclick: () async {
+                            loginController.isLoading.value = true;
+                            await loginController.loginAction(
                               ctrEmail.text,
                               ctrPassword.text,
                             );
-                            // Get.offAllNamed("/navbar");
+                            loginController.isLoading.value = false;
                           },
                           title: 'Mulai',
                         ),
                       ),
-                      // const Padding(
-                      //   padding: EdgeInsets.symmetric(horizontal: 35.0),
-                      //   child: Row(
-                      //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      //     children: [
-                      //       Expanded(
-                      //         child: Divider(
-                      //           thickness: 1,
-                      //           color: ColorValue.kLightGrey,
-                      //         ),
-                      //       ),
-                      //       Padding(
-                      //         padding: EdgeInsets.symmetric(horizontal: 25.0),
-                      //         child: Text(
-                      //           "Atau masuk dengan",
-                      //           style: TextStyle(
-                      //             fontWeight: FontWeight.w400,
-                      //             fontSize: 14,
-                      //           ),
-                      //         ),
-                      //       ),
-                      //       Expanded(
-                      //         child: Divider(
-                      //           thickness: 1,
-                      //           color: ColorValue.kLightGrey,
-                      //         ),
-                      //       ),
-                      //     ],
-                      //   ),
-                      // ),
-                      // Padding(
-                      //   padding: const EdgeInsets.symmetric(vertical: 10),
-                      //   child: Row(
-                      //     mainAxisAlignment: MainAxisAlignment.center,
-                      //     children: [
-                      //       GestureDetector(
-                      //         onTap: () {
-                      //           signinWithGoogle();
-                      //         },
-                      //         child: Container(
-                      //           padding: const EdgeInsets.all(20),
-                      //           height: height * 0.08,
-                      //           width: width * 0.16,
-                      //           decoration: BoxDecoration(
-                      //             border: Border.all(color: Colors.white),
-                      //             borderRadius: BorderRadius.circular(16),
-                      //             color: Colors.grey[200],
-                      //           ),
-                      //           child: Image.asset(
-                      //             "assets/images/banner/Google_Icon.png",
-                      //             height: 10,
-                      //           ),
-                      //         ),
-                      //       ),
-                      //     ].withSpaceBetween(width: 30),
-                      //   ),
-                      // ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -197,13 +156,9 @@ class _LoginState extends State<Login> {
                 alignment: Alignment.topRight,
                 child: Image.asset("assets/images/banner/dec4.png"),
               ),
-              // Align(
-              //   alignment: Alignment.bottomLeft,
-              //   child: Image.asset("assets/images/banner/dec4.png"),
-              // ),
             ],
           ),
-        ),
+        )),
       ),
     );
   }

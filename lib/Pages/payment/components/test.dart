@@ -1,32 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:klambi_ta/Pages/cart/controller/cart_controllers.dart';
 import 'package:klambi_ta/Pages/payment/controller/payment_controller.dart';
-import '../../../Common/colors/color.dart';
 
-class PaymentSelection extends StatefulWidget {
-  final Function(String) onCodeChanged;
-
-  PaymentSelection({super.key, required this.onCodeChanged});
-
-  @override
-  _PaymentSelectionState createState() => _PaymentSelectionState();
-}
-
-class _PaymentSelectionState extends State<PaymentSelection> {
-  final PaymentController controller = Get.find(); // Use Get.find() to get the existing instance
-  String _selectedPaymentMethod = 'Cash on Delivery';
-
-  @override
-  void initState() {
-    super.initState();
-    // Set the initial value of the controller
-    controller.paymeth.value = _selectedPaymentMethod;
-  }
+class test1 extends StatelessWidget {
+  final CartControllers controller = Get.find();
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 5),
+      padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -36,62 +19,50 @@ class _PaymentSelectionState extends State<PaymentSelection> {
               fontSize: 16,
               fontWeight: FontWeight.bold,
               fontFamily: 'General Sans',
-              color: ColorValue.kSecondary,
+              color: Colors.black,
             ),
           ),
           const SizedBox(height: 10),
-          Column(
-            children: [
-              ListTile(
-                title: const Text('Cash on Delivery'),
-                leading: Radio<String>(
-                  value: 'Cash on Delivery',
-                  groupValue: _selectedPaymentMethod,
-                  activeColor: ColorValue.kPrimary,
-                  onChanged: (String? value) {
-                    if (value != null) {
-                      setState(() {
-                        _selectedPaymentMethod = value;
-                        widget.onCodeChanged(value);
-                        controller.paymeth.value = value; // Update the payment method in the controller
-                      });
-                    }
-                  },
+          Obx(() => Container(
+            padding: const EdgeInsets.symmetric(horizontal: 12.0),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8.0),
+              border: Border.all(color: Colors.grey.shade300, width: 1.5),
+              color: Colors.white,
+            ),
+            child: DropdownButtonHideUnderline(
+              child: DropdownButton<String>(
+                value: controller.paymeth.value.isEmpty ? null : controller.paymeth.value,
+                hint: Text(
+                  'Pilih Metode Pembayaran',
+                  style: TextStyle(color: Colors.grey.shade600),
                 ),
-              ),
-              // Tambahkan lebih banyak ListTile jika ada metode pembayaran lain
-            ],
-          ),
-          const SizedBox(height: 20),
-          ElevatedButton(
-            style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all(ColorValue.kPrimary),
-              padding: MaterialStateProperty.all(
-                const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
-              ),
-              shape: MaterialStateProperty.all(
-                RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
+                isExpanded: true,
+                items: ['Cash on Delivery']
+                    .map((method) => DropdownMenuItem<String>(
+                  value: method,
+                  child: Text(method),
+                ))
+                    .toList(),
+                onChanged: (String? newValue) {
+                  if (newValue != null) {
+                    controller.paymeth.value = newValue;
+                    controller.addPayCart(); // Memanggil fungsi untuk memperbarui metode pembayaran
+                    print('Metode pembayaran dipilih: ${controller.paymeth.value}');
+                  }
+                },
+                icon: Icon(
+                  Icons.arrow_drop_down,
+                  color: Colors.black,
+                ),
+                iconSize: 24,
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.black,
                 ),
               ),
             ),
-            onPressed: () {
-              if (controller.paymeth.value.isEmpty) {
-                // Check if a payment method is selected
-                Get.snackbar('Error', 'Please select a payment method');
-              } else {
-                controller.addPay();
-              }
-            },
-            child: const Text(
-              'Konfirmasi',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 16,
-                fontFamily: 'General Sans',
-              ),
-            ),
-          ),
+          )),
         ],
       ),
     );

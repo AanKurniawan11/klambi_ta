@@ -17,40 +17,23 @@ class SearchField extends StatelessWidget {
           controller: _controller,
           onChanged: onChanged,
           decoration: InputDecoration(
+            prefixIcon: Icon(Icons.search, color: ColorValue.kPrimary),
+            hintText: 'Cari produk...',
+            hintStyle: TextStyle(color: Colors.grey[600]),
             filled: true,
             fillColor: Colors.white,
-            contentPadding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
-            border: searchOutlineInputBorders,
-            focusedBorder: searchOutlineInputBorder,
-            enabledBorder: searchOutlineInputBorders,
-            hintText: "Cari Style...",
-            hintStyle: TextStyle(
-              fontFamily: 'General Sans',
-              fontSize: 16,
-              fontWeight: FontWeight.w500,
-              color: ColorValue.kLightGrey.withOpacity(0.7),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: BorderSide.none,
             ),
-            prefixIcon: Padding(
-              padding: EdgeInsets.only(left: 20, right: 15),
-              child: SvgPicture.asset(
-                'assets/icons/search_icon.svg',
-                color: ColorValue.kPrimary.withOpacity(0.8),
-              ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: BorderSide(color: ColorValue.kPrimary, width: 1.5),
             ),
-            suffixIcon: _controller.text.isNotEmpty
-                ? IconButton(
-              icon: Icon(Icons.clear, color: ColorValue.kDanger),
-              onPressed: () {
-                _controller.clear();
-                onChanged('');
-              },
-            )
-                : null,
-          ),
-          style: TextStyle(
-            fontFamily: 'General Sans',
-            fontSize: 16,
-            color: Colors.black87,
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: BorderSide(color: Colors.grey[300]!, width: 1.5),
+            ),
           ),
         ),
       ),
