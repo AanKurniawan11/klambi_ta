@@ -20,6 +20,7 @@ import 'package:klambi_ta/Pages/menuprofile/pages/edit/controller/edit_binding.d
 import 'package:klambi_ta/Pages/menuprofile/pages/edit/page/editprofile.dart';
 import 'package:klambi_ta/Pages/menuprofile/pages/menu_profile.dart';
 import 'package:klambi_ta/Pages/payment/controller/payment_binding.dart';
+import 'package:klambi_ta/Pages/payment/controller/payment_controller.dart';
 import 'package:klambi_ta/Pages/payment/page/payment.dart';
 import 'package:klambi_ta/Pages/payment/page/payment_cart.dart';
 import 'package:klambi_ta/Pages/user/login/components/login_binding.dart';
@@ -29,7 +30,9 @@ import 'package:klambi_ta/Pages/user/register/page/register.dart';
 import 'package:klambi_ta/common/routes/routes_name.dart';
 import 'package:klambi_ta/Pages/cart/controller/cart_binding.dart';
 
+import '../../Pages/history/page/testview.dart';
 
+final PaymentController controller = Get.find();
 List<GetPage> pageRoutes = <GetPage>[
   GetPage(
       name: RouteName.login,

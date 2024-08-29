@@ -34,7 +34,7 @@ class LoginController extends GetxController {
   }
 
   Future<void> loginAction(String email, String password) async {
-    print('LOGIN...');
+    print(token);
     token = await prefs.getString("token");
     print("token anda" + token.toString());
 
@@ -55,6 +55,7 @@ class LoginController extends GetxController {
         headers: {'Authorization': 'Bearer $token'},
       );
       print(response.body);
+      print("ini email ${email}");
 
       if (response.statusCode == 200) {
         LoginResponseModel loginResponseModel = loginResponseModelFromJson(response.body);
@@ -72,11 +73,54 @@ class LoginController extends GetxController {
       isLoading.value = false;
     }
   }
+  Future<void> logoutAction() async {
+    try {
+      isLoading.value = true;
+
+      final url = Uri.parse("https://klambi.ta.rplrus.com/api/logout");
+
+      final response = await http.post(
+        url,
+        headers: {'Authorization': 'Bearer $token'},
+      );
+
+      print(response.body);
+      if (response.statusCode == 200) {
+        // Hapus data dari SharedPreferences
+        await prefs.remove("username");
+        await prefs.remove("email");
+        await prefs.remove("token");
+
+        // Logout dari Firebase Authentication jika diperlukan
+        await FirebaseAuth.instance.signOut();
+        await googleSignIn.signOut();
+
+        // Set nilai user menjadi null
+        setUser(null);
+
+        // Navigasi ke halaman login atau halaman lainnya setelah logout
+        Get.offAllNamed('/login');
+
+        print("Logout berhasil");
+      } else {
+        message.value = "Gagal logout: ${response.statusCode}";
+        ToastMessage.show(message.value);
+      }
+    } catch (e) {
+      message.value = "An error occurred";
+      ToastMessage.show(message.value);
+      print(e);
+    } finally {
+      isLoading.value = false;
+    }
+  }
+  
 
   void onLoginSuccess(LoginResponseModel loginResponseModel) async {
     await prefs.setString("username", loginResponseModel.data.name);
     await prefs.setString("email", loginResponseModel.data.email);
     await prefs.setString("token", loginResponseModel.data.token);
+
 
     profileController.setUser(user.value);
 
@@ -97,12 +141,4 @@ class LoginController extends GetxController {
     return prefs.containsKey('username') || FirebaseAuth.instance.currentUser != null;
   }
 
-  Future<void> logout() async {
-    prefs = await SharedPreferences.getInstance();
-    await prefs.clear();
-    await FirebaseAuth.instance.signOut();
-    await googleSignIn.signOut();
-    user.value = null;
-    Get.offAllNamed('/login');
-  }
 }

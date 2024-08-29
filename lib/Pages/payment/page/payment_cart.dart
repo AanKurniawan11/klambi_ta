@@ -5,6 +5,7 @@ import 'package:klambi_ta/Common/colors/color.dart';
 import 'package:klambi_ta/Pages/cart/controller/cart_controllers.dart';
 import 'package:klambi_ta/Pages/menuprofile/pages/address/controller/address_controller.dart';
 import 'package:klambi_ta/Pages/payment/components/paymethcart.dart';
+import 'package:klambi_ta/Pages/payment/components/test.dart';
 import 'package:klambi_ta/Pages/payment/controller/payment_controller.dart';
 import 'package:klambi_ta/component/my_elevatedbutton.dart';
 import 'package:klambi_ta/component/space_extension.dart';
@@ -19,6 +20,7 @@ class PaymentCart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    cartcontroller.fetchOrderCart();
     final Size mediaQuery = MediaQuery.of(context).size;
     final double height = mediaQuery.height;
     final double width = mediaQuery.width;
@@ -80,7 +82,7 @@ class PaymentCart extends StatelessWidget {
                     padding: const EdgeInsets.all(16.0),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(12),
-                      color: ColorValue.kPrimary.withOpacity(0.1),
+                      color: ColorValue.kSecondary.withOpacity(0.1),
                       boxShadow: [
                         BoxShadow(
                           color: Colors.grey.withOpacity(0.2),
@@ -98,13 +100,13 @@ class PaymentCart extends StatelessWidget {
                             fontSize: 14,
                             fontWeight: FontWeight.w600,
                             fontFamily: 'General Sans',
-                            color: ColorValue.kPrimary,
+                            color: ColorValue.kSecondary,
                           ),
                         ),
                         SizedBox(height: 10),
                         Row(
                           children: [
-                            Icon(Icons.location_on, color: ColorValue.kPrimary, size: 28),
+                            Icon(Icons.location_on, color: ColorValue.kSecondary, size: 28),
                             SizedBox(width: 10),
                             Expanded(
                               child: Column(
@@ -149,7 +151,7 @@ class PaymentCart extends StatelessWidget {
                             onPressed: () {
                               // Get.offAllNamed("/edit");
                             },
-                            child: Text("Ganti", style: TextStyle(color: ColorValue.kPrimary)),
+                            child: Text("Ganti", style: TextStyle(color: ColorValue.kSecondary)),
                           ),
                         ),
                       ],
@@ -309,7 +311,7 @@ class PaymentCart extends StatelessWidget {
                       ),
                     ),
                     SizedBox(height: 20),
-                    Test2(),
+                    test1(),
                     My_Button(
                         title: 'Konfirmasi Pembayaran',
                         onclick: (){

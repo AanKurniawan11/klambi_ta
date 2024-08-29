@@ -91,21 +91,22 @@ class AddressController extends GetxController {
     }
   }
 
-  Future<void> DeleteAddress() async{
+  Future<void> deleteAddress(int id) async {
     var token = await prefs.getString("token");
     final response = await http.delete(
-      Uri.parse('https://klambi.ta.rplrus.com/api/addresses'),
+      Uri.parse('https://klambi.ta.rplrus.com/api/addresses/$id'), // Menyisipkan ID di URL
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer $token'
+        'Authorization': 'Bearer $token',
       },
     );
-    if (response.statusCode == 200){
-      Show.clear();
-      print(response.body);
-    }else{
-      print("Gagal Maneng");
-      print(response.body);
+
+    if (response.statusCode == 200) {
+      Show.removeWhere((address) => address.id == id); // Menghapus alamat dari list
+      print('Alamat berhasil dihapus');
+    } else {
+      print('Gagal menghapus alamat');
+      print('Response body: ${response.body}');
     }
   }
   Future<void> updateAddress(int id) async {

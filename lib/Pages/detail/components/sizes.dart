@@ -46,7 +46,7 @@ class Sizes extends StatelessWidget {
                         style: TextStyle(
                           fontFamily: "General Sans",
                           fontWeight: FontWeight.w500,
-                          color: isSelected ? ColorValue.kBlack : ColorValue.kDarkGrey,
+                          color: isSelected ? ColorValue.kWhite : ColorValue.kDarkGrey,
                         ),
                       ),
                     ),

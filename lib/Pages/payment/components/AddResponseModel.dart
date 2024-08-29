@@ -4,22 +4,22 @@
 
 import 'dart:convert';
 
-AddresponseModel addresponseModelFromJson(String str) => AddresponseModel.fromJson(json.decode(str));
+AddOrderponseModel addresponseModelFromJson(String str) => AddOrderponseModel.fromJson(json.decode(str));
 
-String addresponseModelToJson(AddresponseModel data) => json.encode(data.toJson());
+String addresponseModelToJson(AddOrderponseModel data) => json.encode(data.toJson());
 
-class AddresponseModel {
+class AddOrderponseModel {
   int productId;
   int quantity;
   String size;
 
-  AddresponseModel({
+  AddOrderponseModel({
     required this.productId,
     required this.quantity,
     required this.size,
   });
 
-  factory AddresponseModel.fromJson(Map<String, dynamic> json) => AddresponseModel(
+  factory AddOrderponseModel.fromJson(Map<String, dynamic> json) => AddOrderponseModel(
     productId: json["product_id"],
     quantity: json["quantity"],
     size: json["size"],

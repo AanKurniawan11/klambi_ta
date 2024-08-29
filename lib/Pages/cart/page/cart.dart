@@ -11,10 +11,13 @@ import '../../../Common/colors/color.dart';
 class Cart extends StatelessWidget {
   Cart({super.key});
 
+
   final CartControllers controllers = Get.put(CartControllers());
 
   @override
   Widget build(BuildContext context) {
+    controllers.fetchOrderCart();
+    controllers.fetchOrderCart();
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -37,7 +40,8 @@ class Cart extends StatelessWidget {
       ),
       body: Obx(() {
         if (controllers.isLoading.value) {
-          return Center(
+          return
+            Center(
             child: LoadingAnimationWidget.discreteCircle(
               color: ColorValue.kPrimary,
               size: 50,
@@ -46,16 +50,21 @@ class Cart extends StatelessWidget {
             ),
           );
         }
-        if (controllers.Cartdata.isEmpty) {
-          return Center(child: CartEmpty());
-        }
-        return CartItem();
+
+        return controllers.Cartdata.isEmpty
+            ? Center(child: CartEmpty())
+            : RefreshIndicator(
+          onRefresh: () async {
+            await controllers.fetchOrderCart();
+            await controllers.ShowCartData();
+          },
+          child: CartItem(),
+        );
       }),
       bottomSheet: Obx(() {
-        if (controllers.Cartdata.isEmpty) {
-          return SizedBox.shrink(); // Menyembunyikan BottomSheet jika data kosong
-        }
-        return BottomSheetCart(); // Menampilkan BottomSheet jika ada data
+        return controllers.Cartdata.isNotEmpty
+            ? BottomSheetCart()
+            : SizedBox.shrink();
       }),
     );
   }

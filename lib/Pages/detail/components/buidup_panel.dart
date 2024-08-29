@@ -138,7 +138,7 @@ class ProductDetailPanel extends StatelessWidget {
                     ),
                   ),
                   child: Text(
-                    '20 Pembelian',
+                    '${item.sold} Terjual',
                     style: TextStyle(
                       fontFamily: "General Sans",
                       fontWeight: FontWeight.w500,
@@ -158,7 +158,7 @@ class ProductDetailPanel extends StatelessWidget {
                     ),
                   ),
                   child: Text(
-                    "Stock ${item.stock.toString()}",
+                    "Stok ${item.stock}",
                     style: TextStyle(
                       fontFamily: "General Sans",
                       fontWeight: FontWeight.w500,
@@ -202,6 +202,26 @@ class ProductDetailPanel extends StatelessWidget {
             SizedBox(
               height: 40,
             ),
+            Text(
+              'Review',
+              style: TextStyle(
+                fontFamily: 'General Sans',
+                fontWeight: FontWeight.w600,
+                fontSize: 20,
+                color: ColorValue.kBlack,
+              ),
+            ),
+            Text(
+              item.descripsi,
+              style: TextStyle(
+                fontFamily: 'General Sans',
+                fontWeight: FontWeight.w500,
+                fontSize: 12,
+                color: ColorValue.kBlack,
+              ),
+            ),
+
+
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -390,7 +410,8 @@ class ProductDetailPanel extends StatelessWidget {
                                             child: Text(
                                           "Beli",
                                           style: TextStyle(
-                                              fontFamily: "General Sans"),
+                                              fontFamily: "General Sans",
+                                          color: ColorValue.kWhite),
                                         )),
                                       ),
                                     ),
@@ -569,24 +590,11 @@ class ProductDetailPanel extends StatelessWidget {
                                     height: 20,
                                   ),
                                   Center(
-                                    child: GestureDetector(
+                                    child:
+                                    GestureDetector(
                                       onTap: () {
-                                        if (cartcontroller.quantity.value ==
-                                            0) {
-                                          ScaffoldMessenger.of(context)
-                                              .showSnackBar(
-                                            SnackBar(
-                                              content: Text(
-                                                  "Tidak ada barang untuk ditambahkan ke keranjang"),
-                                              behavior:
-                                                  SnackBarBehavior.floating,
-                                              margin: EdgeInsets.only(
-                                                  bottom: 700.0,
-                                                  left: 20.0,
-                                                  right:
-                                                      20.0), // Margin untuk menempatkan SnackBar di atas
-                                            ),
-                                          );
+                                        if (cartcontroller.quantity.value == 0) {
+                                          showCustomSnackbar(context, "Gagal menambahkan barang", "Pilih jumlah produk.");
                                         } else {
                                           cartcontroller.addToCart(item.id);
                                           Get.toNamed("/cart");
@@ -596,17 +604,20 @@ class ProductDetailPanel extends StatelessWidget {
                                         width: width * 0.8,
                                         height: height * 0.06,
                                         decoration: BoxDecoration(
-                                            color: ColorValue.kPrimary,
-                                            borderRadius:
-                                                BorderRadius.circular(10)),
+                                          color: ColorValue.kPrimary,
+                                          borderRadius: BorderRadius.circular(10),
+                                        ),
                                         child: Center(
-                                            child: Text(
-                                          "Tambahkan ke Keranjang",
-                                          style: TextStyle(
-                                              fontFamily: "General Sans"),
-                                        )),
+                                          child: Text(
+                                            "Tambahkan ke Keranjang",
+                                            style: TextStyle(
+                                              fontFamily: "General Sans",
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        ),
                                       ),
-                                    ),
+                                    )
                                   ),
                                 ],
                               ),
@@ -639,4 +650,36 @@ class ProductDetailPanel extends StatelessWidget {
       ),
     );
   }
+  void showCustomSnackbar(BuildContext context, String title, String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Row(
+          children: [
+            Icon(Icons.error, color: Colors.white),
+            SizedBox(width: 10),
+            Expanded(
+              child: Text(
+                message,
+                style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500),
+              ),
+            ),
+          ],
+        ),
+        backgroundColor: Colors.redAccent, // Warna latar belakang
+        duration: Duration(seconds: 3), // Durasi tampilan
+        behavior: SnackBarBehavior.floating, // Agar Snackbar melayang
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        action: SnackBarAction(
+          label: 'OK',
+          textColor: Colors.white,
+          onPressed: () {
+            // Aksi ketika tombol OK ditekan
+          },
+        ),
+      ),
+    );
+  }
+
 }

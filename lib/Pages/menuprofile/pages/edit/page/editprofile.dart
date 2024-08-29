@@ -5,6 +5,7 @@ import 'package:klambi_ta/Pages/menuprofile/pages/edit/components/textfield.dart
 import 'package:klambi_ta/Pages/menuprofile/pages/edit/controller/edit_controller.dart';
 import 'package:klambi_ta/component/my_elevatedbutton.dart';
 import 'package:klambi_ta/component/space_extension.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import '../../../../../common/colors/color.dart';
 
 class EditProfile extends StatelessWidget {
@@ -33,7 +34,7 @@ class EditProfile extends StatelessWidget {
         ),
       ),
       body: Obx(
-            () => SafeArea(
+        () => SafeArea(
           child: SingleChildScrollView(
             child: Container(
               padding: EdgeInsets.all(20),
@@ -47,31 +48,36 @@ class EditProfile extends StatelessWidget {
                       children: [
                         controllerEdit.pickedImage.value == null
                             ? ClipOval(
-                          child: Container(
-                            height: height * 0.14,
-                            width: width * 0.3,
-                            decoration: BoxDecoration(
-                              image: DecorationImage(
-                                image: controllerEdit.imageUrl.value != null
-                                    ? NetworkImage(controllerEdit.imageUrl.value!)
-                                    : AssetImage("assets/images/banner/pro.png") as ImageProvider,
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          ),
-                        )
+                                child: Container(
+                                  height: height * 0.14,
+                                  width: width * 0.3,
+                                  decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                      image: controllerEdit.imageUrl.value !=
+                                              null
+                                          ? NetworkImage(
+                                              controllerEdit.imageUrl.value!)
+                                          : AssetImage(
+                                                  "assets/images/banner/pro.png")
+                                              as ImageProvider,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                ),
+                              )
                             : ClipOval(
-                          child: Container(
-                            height: height * 0.14,
-                            width: width * 0.3,
-                            decoration: BoxDecoration(
-                              image: DecorationImage(
-                                image: FileImage(controllerEdit.pickedImage.value!),
-                                fit: BoxFit.cover,
+                                child: Container(
+                                  height: height * 0.14,
+                                  width: width * 0.3,
+                                  decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                      image: FileImage(
+                                          controllerEdit.pickedImage.value!),
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                ),
                               ),
-                            ),
-                          ),
-                        ),
                         Positioned(
                           bottom: 5,
                           right: 0,
@@ -119,16 +125,25 @@ class EditProfile extends StatelessWidget {
                       ),
                     ],
                   ),
-                  My_Button(
-                    onclick: () {
-                      controllerEdit.updateProfile(
-                        controllerEdit.ctrName.text,
-                        controllerEdit.pickedImage.value,
-                      );
-                      Get.offAllNamed("/navbar");
-                    },
-                    title: "Simpan",
-                  ),
+                  Obx(() => controllerEdit.isLoading.value
+                      ? Center(
+                          child: LoadingAnimationWidget.discreteCircle(
+                            color: ColorValue.kPrimary,
+                            size: 50,
+                            secondRingColor: ColorValue.kSecondary,
+                            thirdRingColor: ColorValue.kDanger,
+                          ),
+                        )
+                      : My_Button(
+                          onclick: () {
+                            controllerEdit.updateProfile(
+                              controllerEdit.ctrName.text,
+                              controllerEdit.pickedImage.value,
+                            );
+                            Get.offAllNamed("/navbar");
+                          },
+                          title: "Simpan",
+                        )),
                 ].withSpaceBetween(height: 30),
               ),
             ),

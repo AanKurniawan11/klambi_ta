@@ -25,25 +25,29 @@ class ProfileController extends GetxController {
     username.value = prefs.getString("username") ?? "";
     email.value = prefs.getString("email") ?? "";
     imageUrl.value = prefs.getString("imageUrl") ?? "";
+    print("Email loaded from prefs: ${email.value}");
+
   }
 
-  void setUser(User? firebaseUser) {
-    user.value = firebaseUser;
-    if (firebaseUser != null) {
-      username.value = firebaseUser.displayName ?? "";
-      email.value = firebaseUser.email ?? "";
-
-      prefs.setString("username", username.value);
-      prefs.setString("email", email.value);
-
-      if (firebaseUser.photoURL != null) {
-        imageUrl.value = firebaseUser.photoURL!;
-        prefs.setString("imageUrl", imageUrl.value);
-      }
-
-      update();
-    }
-  }
+  // void setUser(User? firebaseUser) {
+  //   user.value = firebaseUser;
+  //   if (firebaseUser != null) {
+  //     username.value = firebaseUser.displayName ?? "";
+  //     email.value = firebaseUser.email ?? "";
+  //
+  //     prefs.setString("username", username.value);
+  //     prefs.setString("email", email.value);
+  //
+  //     print("ini email ${email}");
+  //
+  //     if (firebaseUser.photoURL != null) {
+  //       imageUrl.value = firebaseUser.photoURL!;
+  //       prefs.setString("imageUrl", imageUrl.value);
+  //     }
+  //
+  //     update();
+  //   }
+  // }
 
   setPreference() async {
     prefs = await SharedPreferences.getInstance();
@@ -90,39 +94,25 @@ class ProfileController extends GetxController {
     setPreference();
   }
 
-  Future<void> showLogoutConfirmationDialog(BuildContext context) async {
-    return showDialog<void>(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12.0),
-          ),
-          title: Text('Confirm Logout'),
-          content: Text('Are you sure you want to log out?'),
-          actions: <Widget>[
-            TextButton(
-              child: Text('Cancel'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: ColorValue.kDanger,
-              ),
-              child: Text('Log Out'),
-              onPressed: () async {
-                await logoutg();
-                if (Navigator.of(context).canPop()) {
-                  Navigator.of(context).pop();
-                }
-              },
-            ),
-          ],
-        );
-      },
-    );
+  void setUser(User? firebaseUser) {
+    user.value = firebaseUser;
+    if (firebaseUser != null) {
+      username.value = firebaseUser.displayName ?? "";
+      email.value = firebaseUser.email ?? "";
+
+      prefs.setString("username", username.value);
+      prefs.setString("email", email.value);
+
+      print("Email set in setUser: ${email.value}");
+
+      if (firebaseUser.photoURL != null) {
+        imageUrl.value = firebaseUser.photoURL!;
+        prefs.setString("imageUrl", imageUrl.value);
+      }
+
+      update();
+    }
   }
+
+
 }

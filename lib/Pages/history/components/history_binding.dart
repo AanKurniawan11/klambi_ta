@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
-import 'package:klambi_ta/Pages/history/components/history_controller.dart';
+
+import '../page/testcontroller.dart';
 
 class HistoryBinding extends Bindings{
   @override

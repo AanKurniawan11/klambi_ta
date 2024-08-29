@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:klambi_ta/Pages/design/components/image_upload.dart';
 import 'package:klambi_ta/Common/colors/color.dart';
@@ -5,7 +7,8 @@ import 'package:klambi_ta/component/my_elevatedbutton.dart';
 import 'package:klambi_ta/Pages/design/components/my_elevatedbutton2.dart';
 
 class UploadContainer extends StatelessWidget {
-  const UploadContainer({super.key});
+  final ValueNotifier<File?> uploadedImage;
+  const UploadContainer({super.key, required this.uploadedImage});
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +33,7 @@ class UploadContainer extends StatelessWidget {
                 fontSize: 20,
               ),
             ),
-            SizedBox(height: 20), // Add some space between the texts
+            SizedBox(height: 20),
             Text(
               'Custom Sendiri Bajumu',
               style: TextStyle(
@@ -44,7 +47,7 @@ class UploadContainer extends StatelessWidget {
               color: ColorValue.kDarkGrey.withOpacity(0.2),
               thickness: 1,
             ),
-            SizedBox(height: 10), // Add some space after the divider
+            SizedBox(height: 10),
             Image.asset(
               'assets/images/design/raw_image.png',
               fit: BoxFit.contain,
@@ -55,7 +58,9 @@ class UploadContainer extends StatelessWidget {
               title: 'Unduh Mentahan',
             ),
             SizedBox(height: 20),
-            const ImageUpload(),
+            ImageUpload(
+              uploadedImage: uploadedImage,
+            ),
           ],
         ),
       ),
