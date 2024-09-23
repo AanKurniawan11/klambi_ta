@@ -1,92 +1,125 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:klambi_ta/Common/routes/navbar.dart';
-import 'package:klambi_ta/Pages/user/login/components/login_controller.dart';
-import 'package:klambi_ta/Pages/user/login/page/login.dart';
-import 'package:klambi_ta/common/routes/routes.dart';
-import 'package:klambi_ta/firebase_options.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:animated_splash_screen/animated_splash_screen.dart';
-import 'Pages/onboarding/page/onboarding_view.dart';
-import 'common/colors/color.dart';
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  final prefs = await SharedPreferences.getInstance();
-  final onboarding = prefs.getBool("onboarding") ?? false;
-  final isLoggedIn = prefs.containsKey('username') || FirebaseAuth.instance.currentUser != null;
-
-  final controller = Get.put(LoginController());  // Pindahkan ke sini setelah Firebase diinisialisasi
-
-  runApp(MyApp(
-    onboarding: onboarding,
-    isLoggedIn: isLoggedIn,
-  ));
+void main() {
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  final bool onboarding;
-  final bool isLoggedIn;
+  const MyApp({super.key});
 
-  const MyApp({super.key, this.onboarding = false, this.isLoggedIn = false});
+  // This widget is the root of your application.
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        // This is the theme of your application.
+        //
+        // TRY THIS: Try running your application with "flutter run". You'll see
+        // the application has a purple toolbar. Then, without quitting the app,
+        // try changing the seedColor in the colorScheme below to Colors.green
+        // and then invoke "hot reload" (save your changes or press the "hot
+        // reload" button in a Flutter-supported IDE, or press "r" if you used
+        // the command line to start the app).
+        //
+        // Notice that the counter didn't reset back to zero; the application
+        // state is not lost during the reload. To reset the state, use hot
+        // restart instead.
+        //
+        // This works for code too, not just values: Most code changes can be
+        // tested with just a hot reload.
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        useMaterial3: true,
+      ),
+      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+    );
+  }
+}
+
+class MyHomePage extends StatefulWidget {
+  const MyHomePage({super.key, required this.title});
+
+  // This widget is the home page of your application. It is stateful, meaning
+  // that it has a State object (defined below) that contains fields that affect
+  // how it looks.
+
+  // This class is the configuration for the state. It holds the values (in this
+  // case the title) provided by the parent (in this case the App widget) and
+  // used by the build method of the State. Fields in a Widget subclass are
+  // always marked "final".
+
+  final String title;
+
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  int _counter = 0;
+
+  void _incrementCounter() {
+    setState(() {
+      // This call to setState tells the Flutter framework that something has
+      // changed in this State, which causes it to rerun the build method below
+      // so that the display can reflect the updated values. If we changed
+      // _counter without calling setState(), then the build method would not be
+      // called again, and so nothing would appear to happen.
+      _counter++;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-      title: 'Flutter Demo',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
-          useMaterial3: true,
-
-          appBarTheme: const AppBarTheme(
-            surfaceTintColor: Colors.white,
-            color: Colors.transparent,
-          ),
-          tabBarTheme: TabBarTheme(
-            indicatorColor: Colors.red,
-            labelColor: Colors.red,
-            dividerColor: Colors.transparent,
-            labelStyle: TextStyle(fontSize: 14),
-            overlayColor: MaterialStatePropertyAll(Colors.transparent),
-          ),
-          elevatedButtonTheme: ElevatedButtonThemeData(
-              style: ButtonStyle(
-                  backgroundColor: MaterialStatePropertyAll(Colors.red)
-              )
-          ),
-        // checkboxTheme: CheckboxThemeData(
-        //   fillColor: MaterialStateProperty.resolveWith((Set<MaterialState> states) {
-        //     if (states.contains(MaterialState.selected)) {
-        //       return Colors.red; // Warna kotak centang dicentang
-        //     }
-        //     return Colors.white; // Warna kotak centang tidak dicentang
-        //   }),
-        // )
+    // This method is rerun every time setState is called, for instance as done
+    // by the _incrementCounter method above.
+    //
+    // The Flutter framework has been optimized to make rerunning build methods
+    // fast, so that you can just rebuild anything that needs updating rather
+    // than having to individually change instances of widgets.
+    return Scaffold(
+      appBar: AppBar(
+        // TRY THIS: Try changing the color here to a specific color (to
+        // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
+        // change color while the other colors stay the same.
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        // Here we take the value from the MyHomePage object that was created by
+        // the App.build method, and use it to set our appbar title.
+        title: Text(widget.title),
       ),
-      getPages: pageRoutes,
-      home: AnimatedSplashScreen(
-        splash: ("assets/images/banner/klambi_logo.png"),
-        duration: 300,
-        splashTransition: SplashTransition.fadeTransition,
-        backgroundColor: ColorValue.kPrimary,
-        nextScreen: _getNextScreen(),
+      body: Center(
+        // Center is a layout widget. It takes a single child and positions it
+        // in the middle of the parent.
+        child: Column(
+          // Column is also a layout widget. It takes a list of children and
+          // arranges them vertically. By default, it sizes itself to fit its
+          // children horizontally, and tries to be as tall as its parent.
+          //
+          // Column has various properties to control how it sizes itself and
+          // how it positions its children. Here we use mainAxisAlignment to
+          // center the children vertically; the main axis here is the vertical
+          // axis because Columns are vertical (the cross axis would be
+          // horizontal).
+          //
+          // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
+          // action in the IDE, or press "p" in the console), to see the
+          // wireframe for each widget.
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            const Text(
+              'You have pushed the button this many times:',
+            ),
+            Text(
+              '$_counter',
+              style: Theme.of(context).textTheme.headlineMedium,
+            ),
+          ],
+        ),
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _incrementCounter,
+        tooltip: 'Increment',
+        child: const Icon(Icons.add),
+      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
-  }
-
-  Widget _getNextScreen() {
-    if (onboarding) {
-      if (isLoggedIn) {
-        return LandingPage();
-      } else {
-        return Login();
-      }
-    } else {
-      return OnboardingView();
-    }
   }
 }
