@@ -3,8 +3,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:klambi_ta/Pages/design/components/image_upload.dart';
 import 'package:klambi_ta/Common/colors/color.dart';
-import 'package:klambi_ta/component/my_elevatedbutton.dart';
-import 'package:klambi_ta/Pages/design/components/my_elevatedbutton2.dart';
 
 class UploadContainer extends StatelessWidget {
   final ValueNotifier<File?> uploadedImage;
@@ -12,14 +10,15 @@ class UploadContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return
+      Container(
       decoration: BoxDecoration(
         color: ColorValue.kLightGrey.withOpacity(0.2),
         border: Border.all(color: ColorValue.kLightGrey),
         borderRadius: BorderRadius.circular(20),
       ),
       width: MediaQuery.of(context).size.width / 1.1,
-      height: MediaQuery.of(context).size.height / 1.3,
+      height: MediaQuery.of(context).size.height / 0.85,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
         child: Column(
@@ -35,7 +34,7 @@ class UploadContainer extends StatelessWidget {
             ),
             SizedBox(height: 20),
             Text(
-              'Custom Sendiri Bajumu',
+              'Contoh Desain',
               style: TextStyle(
                 fontFamily: 'General Sans',
                 fontWeight: FontWeight.w500,
@@ -48,16 +47,27 @@ class UploadContainer extends StatelessWidget {
               thickness: 1,
             ),
             SizedBox(height: 10),
-            Image.asset(
-              'assets/images/design/raw_image.png',
-              fit: BoxFit.contain,
-            ),
-            SizedBox(height: 10),
-            My_Button2(
-              onclick: () {},
-              title: 'Unduh Mentahan',
+            Center(
+              child: Image.asset(
+                'assets/images/design/catalog1.jpg',
+                fit: BoxFit.contain,
+              ),
             ),
             SizedBox(height: 20),
+            Text(
+              'Desain Kamu',
+              style: TextStyle(
+                fontFamily: 'General Sans',
+                fontWeight: FontWeight.w500,
+                fontSize: 14,
+                color: ColorValue.kDarkGrey.withOpacity(0.5),
+              ),
+            ),
+            Divider(
+              color: ColorValue.kDarkGrey.withOpacity(0.2),
+              thickness: 1,
+            ),
+            SizedBox(height: 10),
             ImageUpload(
               uploadedImage: uploadedImage,
             ),

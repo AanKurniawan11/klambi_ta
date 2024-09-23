@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:klambi_ta/Pages/cart/controller/cart_controllers.dart';
-import 'package:klambi_ta/Pages/payment/controller/payment_controller.dart';
 
 class test1 extends StatelessWidget {
   final CartControllers controller = Get.find();

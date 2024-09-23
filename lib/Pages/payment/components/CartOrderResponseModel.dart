@@ -15,17 +15,65 @@ class ShowOrderResponseModel {
 }
 
 class Data {
-  Order? order;
+  int? id;
+  int? userId;
+  int? addressId;
+  String? paymentMethod;
+  String? shippingMethod;
+  int? handlingFee;
+  int? shippingFee;
+  int? discount;
+  int? totalPrice;
+  int? quantity;
+  String? status;
+  String? paymentConfirmedAt;
   List<Product>? products;
+  String? estimatedDelivery;
+  String? paymentDueTime;
+  String? createdAt;
+  String? updatedAt;
 
-  Data({this.order, this.products});
+  Data({
+    this.id,
+    this.userId,
+    this.addressId,
+    this.paymentMethod,
+    this.shippingMethod,
+    this.handlingFee,
+    this.shippingFee,
+    this.discount,
+    this.totalPrice,
+    this.quantity,
+    this.status,
+    this.paymentConfirmedAt,
+    this.products,
+    this.estimatedDelivery,
+    this.paymentDueTime,
+    this.createdAt,
+    this.updatedAt,
+  });
 
   factory Data.fromJson(Map<String, dynamic> json) {
     return Data(
-      order: json['order'] != null ? Order.fromJson(json['order']) : null,
+      id: json['id'] != null ? int.tryParse(json['id'].toString()) : null,
+      userId: json['user_id'],
+      addressId: json['address_id'],
+      paymentMethod: json['payment_method'],
+      shippingMethod: json['shipping_method'],
+      handlingFee: json['handling_fee'],
+      shippingFee: json['shipping_fee'],
+      discount: json['discount'],
+      totalPrice: json['total_price'],
+      quantity: json['quantity'],
+      status: json['status'],
+      paymentConfirmedAt: json['payment_confirmed_at'],
       products: json['products'] != null
           ? (json['products'] as List).map((i) => Product.fromJson(i)).toList()
           : null,
+      estimatedDelivery: json['estimated_delivery'],
+      paymentDueTime: json['payment_due_time'],
+      createdAt: json['created_at'],
+      updatedAt: json['updated_at'],
     );
   }
 }
@@ -42,10 +90,10 @@ class Order {
   int? totalPrice;
   int? quantity;
   String? status;
-  String? products; // Produk dalam bentuk string JSON
+  List<Product>? products;
+  Address? address;
   String? createdAt;
   String? updatedAt;
-  Address? address; // Menambahkan Address di dalam Order
 
   Order({
     this.id,
@@ -60,9 +108,9 @@ class Order {
     this.quantity,
     this.status,
     this.products,
+    this.address,
     this.createdAt,
     this.updatedAt,
-    this.address,
   });
 
   factory Order.fromJson(Map<String, dynamic> json) {
@@ -78,10 +126,12 @@ class Order {
       totalPrice: json['total_price'],
       quantity: json['quantity'],
       status: json['status'],
-      products: json['products'], // Produk disimpan sebagai string JSON
+      products: json['products'] != null
+          ? (json['products'] as List).map((i) => Product.fromJson(i)).toList()
+          : null,
+      address: json['address'] != null ? Address.fromJson(json['address']) : null,
       createdAt: json['created_at'],
       updatedAt: json['updated_at'],
-      address: json['address'] != null ? Address.fromJson(json['address']) : null, // Parsing Address
     );
   }
 }

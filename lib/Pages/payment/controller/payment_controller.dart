@@ -1,60 +1,79 @@
+import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
+import 'package:path/path.dart' as path;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import 'package:klambi_ta/Pages/history/components/history_controller.dart';
-import 'package:klambi_ta/Pages/payment/components/paymentmethodemodel.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../history/page/testcontroller.dart';
-import '../components/AddHistoryresponsemodel.dart';
-import '../components/AddResponseModel.dart';
 import '../components/CartOrderResponseModel.dart';
 
 class PaymentController extends GetxController {
   var quantity = 0.obs;
   var size = 'S'.obs;
   var paymeth = ''.obs;
+  var shipmeth = ''.obs;
   var selectedIndex = 0.obs;
+
   Rx<Order?> order = Rx<Order?>(null);
   Rx<Data?> orderData = Rx<Data?>(null);
-  var isLoading = false.obs; // State loading
+  Rx<Address?> address = Rx<Address?>(null);
+  RxList<Product> produk = <Product>[].obs;
+
+  var isLoading = false.obs;
   var selectedPaymentMethod = Rx<String?>(null);
   late final SharedPreferences prefs;
-  final HistoryController controller = Get.put(HistoryController());
+  final picker = ImagePicker();
+  File? selectedImage;
   int? orderId;
 
   @override
   void onInit() async {
     super.onInit();
     await setPreference();
-    await fetchOrderData(); // Fetch order data to get order ID
-  }
-
-  void setPaymentMethod(String method) {
-    selectedPaymentMethod.value = method;
-  }
-
-  bool isPaymentMethodSelected() {
-    return selectedPaymentMethod.value != null;
+    await fetchLatestOrder();
   }
 
   Future<void> setPreference() async {
     prefs = await SharedPreferences.getInstance();
   }
-
   void selectSize(int index) {
     selectedIndex.value = index;
   }
 
-  Future<void> addOrder(int id) async {
-    isLoading.value = true; // Set loading to true
+  Future<void> fetchLatestOrder() async {
+    final prefs = await SharedPreferences.getInstance();
     var token = await prefs.getString("token");
-    final ordersData = AddOrderponseModel(
-      productId: id,
-      quantity: quantity.value,
-      size: size.value,
+
+    final response = await http.get(
+      Uri.parse('https://klambi.ta.rplrus.com/api/orders/latest'),
+      headers: {
+        'Authorization': 'Bearer $token',
+        'Content-Type': 'application/json',
+      },
     );
+
+    print(response.body);
+    print(response.statusCode);
+    if (response.statusCode == 200) {
+      var responseData = ShowOrderResponseModel.fromJson(json.decode(response.body));
+      orderData.value = responseData.data;
+      orderId = orderData.value?.id;
+    } else {
+      throw Exception('Failed to load order');
+    }
+  }
+
+  Future<void> addOrder(int id) async {
+    isLoading.value = true;
+    var token = await prefs.getString("token");
+    final ordersData = {
+      'product_id': id,
+      'quantity': quantity.value,
+      'size': size.value,
+    };
 
     try {
       final response = await http.post(
@@ -63,36 +82,34 @@ class PaymentController extends GetxController {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer $token',
         },
-        body: jsonEncode(ordersData.toJson()),
+        body: jsonEncode(ordersData),
       );
-      print("ini id saya${orderId}");
-      print("ini id saya${response.body}");
-      print("ini id saya${response.statusCode}");
+
+      print(response.body);
       if (response.statusCode == 201) {
-        print('Order successful: ${response.body}');
-        await fetchOrderData(); // Fetch updated order data after adding
+        await fetchLatestOrder();
       } else {
         print('Failed to add order: ${response.statusCode}');
       }
     } catch (e) {
       print('Error: $e');
     } finally {
-      isLoading.value = false; // Set loading to false
+      isLoading.value = false;
     }
   }
 
   Future<void> addPay() async {
-    isLoading.value = true; // Set loading to true
+    isLoading.value = true;
     if (orderId == null) {
       print('Order ID is not available');
       return;
     }
 
     var token = await prefs.getString("token");
-    final paydata = PayresponseModel(
-      orderId: orderId!,
-      paymentMethod: paymeth.value,
-    );
+    final paydata = {
+      'order_id': orderId!,
+      'payment_method': paymeth.value,
+    };
 
     try {
       final response = await http.post(
@@ -101,37 +118,72 @@ class PaymentController extends GetxController {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer $token',
         },
-        body: jsonEncode(paydata.toJson()),
+        body: jsonEncode(paydata),
       );
-
-      // print('Payment method update response status: ${response.statusCode}');
-      // print('Payment method update response body: ${response.body}');
 
       if (response.statusCode == 200) {
         print('Payment method updated successfully');
-        await fetchOrderData(); // Fetch updated order data after updating
+        await fetchLatestOrder();
       } else {
         print('Failed to update payment method');
       }
     } catch (e) {
       print('Error updating payment method: $e');
     } finally {
-      isLoading.value = false; // Set loading to false
+      isLoading.value = false;
     }
   }
 
-  Future<void> addHistory() async {
-    isLoading.value = true; // Set loading to true
+  Future<void> addShipping() async {
+    isLoading.value = true;
     if (orderId == null) {
       print('Order ID is not available');
-      isLoading.value = false; // Ensure loading is set to false if no orderId
       return;
     }
 
     var token = await prefs.getString("token");
-    final paydata = AddHistoryResponseModel(
-      orderId: orderId!,
-    );
+    final shipdata = {
+      'order_id': orderId!,
+      'shipping_method': shipmeth.value,
+    };
+
+    try {
+      final response = await http.post(
+        Uri.parse('https://klambi.ta.rplrus.com/api/orders/update-shipping-method'),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+        body: jsonEncode(shipdata),
+      );
+
+      if (response.statusCode == 200) {
+        print('Payment method updated successfully');
+        await fetchLatestOrder();
+      } else {
+        print('Failed to update payment method');
+      }
+    } catch (e) {
+      print('Error updating payment method: $e');
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  Future<void> addHistory() async {
+    isLoading.value = true;
+    if (orderId == null) {
+      print('Order ID is not available');
+      return;
+    }
+
+    var token = await prefs.getString("token");
+    final historyData = {
+      'order_id': orderId!,
+      'payment_method': paymeth.value,
+      'shipping_method': shipmeth.value,
+
+    };
 
     try {
       final response = await http.post(
@@ -140,117 +192,109 @@ class PaymentController extends GetxController {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer $token',
         },
-        body: jsonEncode(paydata.toJson()), // Convert model to JSON and set body
+        body: jsonEncode(historyData),
       );
 
       print(response.body);
-      print("Order ID: ${orderId}");
-
       if (response.statusCode == 200) {
-        print('History added successfully: ${response.body}');
-        await fetchOrderData(); // Fetch updated order data after adding history
+        print('Order history updated successfully');
       } else {
-        print('Failed to add history: ${response.statusCode}');
+        print('Failed to update order history');
       }
     } catch (e) {
-      print('Error: $e');
+      print('Error updating order history: $e');
     } finally {
-      isLoading.value = false; // Set loading to false
+      isLoading.value = false;
     }
   }
 
-  Future<void> orderfromCart() async {
-    isLoading.value = true; // Set loading to true
-    var token = await prefs.getString("token");
-    try {
-      final response = await http.post(
-        Uri.parse('https://klambi.ta.rplrus.com/api/carts/checkout-from-cart'),
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer $token',
-        },
-      );
-      print(response.body);
-      if (response.statusCode == 201) {
-        print('Order from cart added successfully: ${response.body}');
-        await fetchOrderData(); // Fetch updated order data after adding history
-      } else {
-        print('Failed to add cart order: ${response.statusCode}');
-      }
-    } catch (e) {
-      print('Error: $e');
-    } finally {
-      isLoading.value = false; // Set loading to false
+  Future<void> pickImage() async {
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      selectedImage = File(pickedFile.path);
+      update(); // Untuk memperbarui UI jika diperlukan
+    } else {
+      Get.snackbar('Error', 'No image selected');
     }
   }
 
-  Future<void> cancelorder() async {
-    isLoading.value = true; // Set loading to true
-    if (orderId == null) {
-      print('Order ID is not available');
+  Future<void> confirmPayment() async {
+    if (selectedImage == null) {
+      Get.snackbar('Error', 'No image selected for payment proof');
       return;
     }
 
-    var token = await prefs.getString("token");
-    try {
-      final response = await http.delete(
-        Uri.parse('https://klambi.ta.rplrus.com/api/order-history/$orderId/cancel'),
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer $token',
-        },
-      );
-      print(response.body);
-      if (response.statusCode == 200) {
-        print('History added successfully: ${response.body}');
-        await controller.fetchOrderHistory(); // Fetch updated order data after adding history
-      } else {
-        print('Failed to add history: ${response.statusCode}');
-      }
-    } catch (e) {
-      print('Error: $e');
-    } finally {
-      isLoading.value = false; // Set loading to false
+    if (orderId == null) {
+      Get.snackbar('Error', 'Order ID is not available');
+      return;
     }
-  }
 
-  Future<void> fetchOrderData() async {
-    isLoading.value = true; // Set loading to true
-    var token = await prefs.getString("token");
-    String url = 'https://klambi.ta.rplrus.com/api/orders/latest';
+    isLoading.value = true;
 
     try {
-      final response = await http.get(
-        Uri.parse(url),
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer $token',
-        },
+      String url = 'https://klambi.ta.rplrus.com/api/store-payment';
+      var request = http.MultipartRequest('POST', Uri.parse(url));
+
+      // Add the image file to the request
+      var imageFile = await http.MultipartFile.fromPath(
+        'file',
+        selectedImage!.path,
+        filename: path.basename(selectedImage!.path),
       );
-      print("Response: ${response.body}");
+      request.files.add(imageFile);
 
+      // Add order_id as an integer in the request body
+      request.fields['order_id'] = orderId.toString(); // Add this if needed in form-data
+
+      // Set authorization header
+      var token = await prefs.getString("token");
+      request.headers['Authorization'] = 'Bearer $token';
+
+      // Send the request
+      var response = await request.send();
+
+      print(response.statusCode);
       if (response.statusCode == 200) {
-        var jsonResponse = json.decode(response.body);
-
-        // Sesuaikan parsing JSON berdasarkan model terbaru
-        ShowOrderResponseModel orderResponse = ShowOrderResponseModel.fromJson(jsonResponse);
-
-        orderData.value = orderResponse.data;
-        if (orderResponse.data != null && orderResponse.data!.order != null) {
-          orderId = orderResponse.data!.order!.id; // Ambil order ID dari model
-          order.value = orderResponse.data!.order; // Update order jika ada
+        var responseData = await response.stream.bytesToString();
+        var jsonResponse = jsonDecode(responseData);
+        if (jsonResponse['success']) {
+          Get.snackbar(
+            'Success',
+            'Payment proof uploaded and order updated successfully',
+            snackPosition: SnackPosition.BOTTOM,
+            backgroundColor: Colors.green,
+            colorText: Colors.white,
+          );
+          fetchLatestOrder();
+          // Get.offAllNamed("/payment");
         } else {
-          print("Order data is null or order is not found");
+          Get.snackbar(
+            'Error',
+            jsonResponse['message'],
+            snackPosition: SnackPosition.BOTTOM,
+            backgroundColor: Colors.red,
+            colorText: Colors.white,
+          );
         }
       } else {
-        print("Failed to fetch order data: ${response.statusCode}");
-        orderData.value = null; // Handle error case
+        Get.snackbar(
+          'Error',
+          'Failed to upload payment proof. Please try again.',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
       }
     } catch (e) {
-      print("Error fetching order data: $e");
-      orderData.value = null; // Handle exception case
+      Get.snackbar(
+        'Error',
+        'An error occurred: $e',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
     } finally {
-      isLoading.value = false; // Set loading to false
+      isLoading.value = false;
     }
-  }
-}
+  }}
+

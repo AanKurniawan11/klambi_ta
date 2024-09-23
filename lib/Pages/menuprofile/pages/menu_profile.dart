@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -7,6 +6,8 @@ import 'package:klambi_ta/Pages/menuprofile/components/profile_controller.dart';
 import 'package:klambi_ta/Pages/menuprofile/pages/address/controller/address_controller.dart';
 import 'package:klambi_ta/Pages/menuprofile/pages/edit/controller/edit_controller.dart';
 import 'package:klambi_ta/Pages/user/login/components/login_controller.dart';
+import 'package:shimmer/shimmer.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Profile extends StatelessWidget {
   Profile({super.key});
@@ -41,9 +42,9 @@ class Profile extends StatelessWidget {
               child: Text('Log Out'),
               onPressed: () async {
                 await controller.logoutAction();
+                controller.prefs.clear();
                 if (Navigator.of(context).canPop()) {
                   Navigator.of(context).pop();
-
                 }
                 Get.offAllNamed("/login");
               },
@@ -65,36 +66,43 @@ class Profile extends StatelessWidget {
             () => profileController.isLoading.value
             ? Center(child: CircularProgressIndicator())
             : Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: EdgeInsets.all(width * 0.04), // Responsif padding
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              // Profile header container
               Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   ClipOval(
                     child: AnimatedSwitcher(
                       duration: Duration(milliseconds: 300),
-                      child: Container(
+                      child: editController.userProfile.value.image != null &&
+                          editController.userProfile.value.image!.isNotEmpty
+                          ? Container(
+                        key: ValueKey<String>(editController.imageUrl.value ?? ''),
+                        width: height * 0.15,
                         height: height * 0.15,
-                        width: width * 0.3,
-                        key: ValueKey<String>(
-                            editController.imageUrl.value ?? ''),
                         decoration: BoxDecoration(
+                          shape: BoxShape.circle,
                           image: DecorationImage(
-                            image: editController.pickedImage.value !=
-                                null
-                                ? FileImage(
-                                editController.pickedImage.value!)
-                                : editController.imageUrl.value !=
-                                null
-                                ? NetworkImage(editController
-                                .imageUrl.value!)
-                                : AssetImage(
-                                "assets/images/banner/pro.png")
-                            as ImageProvider,
+                            image: NetworkImage(editController.userProfile.value.image!),
                             fit: BoxFit.cover,
+                          ),
+                        ),
+                      )
+                          : Shimmer.fromColors(
+                        baseColor: Colors.grey[300]!,
+                        highlightColor: Colors.grey[100]!,
+                        child: Container(
+                          width: height * 0.15,
+                          height: height * 0.15,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Colors.grey,
+                            image: DecorationImage(
+                              image: AssetImage("assets/images/banner/pro.png"),
+                              fit: BoxFit.cover,
+                            ),
                           ),
                         ),
                       ),
@@ -102,19 +110,11 @@ class Profile extends StatelessWidget {
                   ),
                   SizedBox(height: 12),
                   Text(
-                    editController.userProfile.value.name,
+                    editController.userProfile.value.name ?? "Loading...",
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 20,
                       color: ColorValue.kPrimary,
-                    ),
-                  ),
-                  SizedBox(height: 6),
-                  Text(
-                    profileController.email.value,
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.grey[700],
                     ),
                   ),
                 ],
@@ -131,7 +131,7 @@ class Profile extends StatelessWidget {
                           icon: Icons.edit,
                           title: "Edit Profile",
                           onTap: () {
-                            Get.offAllNamed("/edit");
+                            Get.toNamed("/edit");
                           },
                         ),
                         _buildMenuItem(
@@ -139,7 +139,7 @@ class Profile extends StatelessWidget {
                           title: "Alamat",
                           onTap: () {
                             addressController.ShowData();
-                            Get.offNamed("/addAddress");
+                            Get.toNamed("/addAddress");
                           },
                         ),
                       ],
@@ -150,16 +150,18 @@ class Profile extends StatelessWidget {
                       items: [
                         _buildMenuItem(
                           icon: CupertinoIcons.chat_bubble_text,
-                          title: "Chat",
-                          onTap: () {
-                            Get.offNamed("/chat");
+                          title: "WhatsApp",
+                          onTap: () async {
+                            String phone = "+62 819-5378-1211"; // Ganti dengan nomor telepon tujuan
+                            var url = Uri.parse("https://wa.me/$phone");
+                            await launchUrl(url);
                           },
                         ),
                         _buildMenuItem(
                           icon: Icons.headset_mic_outlined,
                           title: "Pusat Bantuan",
                           onTap: () {
-                            Get.offNamed("/cs");
+                            Get.toNamed("/cs");
                           },
                         ),
                         _buildMenuItem(
@@ -174,6 +176,7 @@ class Profile extends StatelessWidget {
                         ),
                       ],
                     ),
+                    SizedBox(height: 10),
                   ],
                 ),
               ),

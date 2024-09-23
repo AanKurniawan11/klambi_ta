@@ -55,34 +55,32 @@ class CategoryTabs extends StatelessWidget {
                       homeController.selectedIndex.value = i; // Update the selected index
                       homeController.loadDataProduct(homeController.categoryResponseAll[i]);
                     },
-                    child: Row(
-                      children: [
-                        Container(
-                          margin: EdgeInsets.all(5),
-                          padding: EdgeInsets.symmetric(vertical: 8, horizontal: 18),
-                          decoration: BoxDecoration(
-                            color: homeController.selectedIndex.value == i
-                                ? ColorValue.kPrimary.withOpacity(0.2)
-                                : ColorValue.kWhite,
-                            borderRadius: BorderRadius.circular(10),
-                            border: Border.all(
-                              color: homeController.selectedIndex.value == i
-                                  ? ColorValue.kPrimary
-                                  : ColorValue.kLightGrey,
-                            ),
-                          ),
-                          child: Text(
-                            homeController.categoryResponseAll[i],
-                            style: TextStyle(
-                              fontFamily: "General Sans",
-                              fontWeight: FontWeight.w500,
-                              color: homeController.selectedIndex.value == i
-                                  ? ColorValue.kBlack
-                                  : ColorValue.kDarkGrey,
-                            ),
-                          ),
+                    child: AnimatedContainer(
+                      duration: const Duration(milliseconds: 300),
+                      margin: EdgeInsets.all(5),
+                      padding: EdgeInsets.symmetric(vertical: 8, horizontal: 18),
+                      decoration: BoxDecoration(
+                        color: homeController.selectedIndex.value == i
+                            ? ColorValue.kPrimary.withOpacity(0.3)
+                            : ColorValue.kWhite,
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(
+                          color: homeController.selectedIndex.value == i
+                              ? ColorValue.kPrimary
+                              : ColorValue.kLightGrey,
+                          width: 1, // Optional: set border width
                         ),
-                      ],
+                      ),
+                      child: Text(
+                        homeController.categoryResponseAll[i],
+                        style: TextStyle(
+                          fontFamily: "General Sans",
+                          fontWeight: FontWeight.w500,
+                          color: homeController.selectedIndex.value == i
+                              ? ColorValue.kBlack
+                              : ColorValue.kBlack,
+                        ),
+                      ),
                     ),
                   ),
               ],

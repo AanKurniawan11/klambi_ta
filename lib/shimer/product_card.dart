@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:klambi_ta/component/space_extension.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:klambi_ta/component/space_extension.dart';
-import 'package:shimmer/shimmer.dart';
+
 import 'package:klambi_ta/Common/colors/color.dart';
 
 Widget ShimmerLoadingProduct(BuildContext context) {

@@ -16,8 +16,7 @@ class Cart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    controllers.fetchOrderCart();
-    controllers.fetchOrderCart();
+    // controllers.fetchOrderCart();
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -39,18 +38,19 @@ class Cart extends StatelessWidget {
         elevation: 0,
       ),
       body: Obx(() {
-        if (controllers.isLoading.value) {
-          return
-            Center(
-            child: LoadingAnimationWidget.discreteCircle(
-              color: ColorValue.kPrimary,
-              size: 50,
-              secondRingColor: ColorValue.kSecondary,
-              thirdRingColor: ColorValue.kDanger,
-            ),
-          );
-        }
+        // controllers.fetchOrderCart();
 
+        // if (controllers.isLoading.value) {
+        //   return
+        //     Center(
+        //     child: LoadingAnimationWidget.discreteCircle(
+        //       color: ColorValue.kPrimary,
+        //       size: 50,
+        //       secondRingColor: ColorValue.kSecondary,
+        //       thirdRingColor: ColorValue.kDanger,
+        //     ),
+        //   );
+        // }
         return controllers.Cartdata.isEmpty
             ? Center(child: CartEmpty())
             : RefreshIndicator(

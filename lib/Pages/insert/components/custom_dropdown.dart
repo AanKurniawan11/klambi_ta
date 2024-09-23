@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import '../../../../Common/colors/color.dart';
 
+import 'package:flutter/material.dart';
+import '../../../../Common/colors/color.dart';
+
 class CustomDropdown extends StatelessWidget {
   final List<String> items;
   final String hintText;
@@ -24,17 +27,17 @@ class CustomDropdown extends StatelessWidget {
           value: value,
           decoration: InputDecoration(
             filled: true,
-            fillColor: ColorValue.kLightGrey,
-            contentPadding: EdgeInsets.only(left: 20, right: 10),
-            border: outlineInputBorder,
-            focusedBorder: outlineInputBorder,
-            enabledBorder: outlineInputBorder,
+            fillColor: Colors.transparent, // Sama dengan warna TextField
+            contentPadding: EdgeInsets.symmetric(vertical: 15, horizontal: 10), // Disamakan dengan TextField padding
+            border: _outlineInputBorder(),
+            focusedBorder: _outlineInputBorder(focused: true),
+            enabledBorder: _outlineInputBorder(),
             hintText: hintText,
             hintStyle: TextStyle(
               fontFamily: 'General Sans',
               fontWeight: FontWeight.w500,
               fontSize: 16,
-              color: ColorValue.kDarkGrey,
+              color: ColorValue.kDarkGrey, // Sesuaikan warna teks dengan TextField
             ),
           ),
           style: TextStyle(
@@ -52,6 +55,17 @@ class CustomDropdown extends StatelessWidget {
             );
           }).toList(),
         ),
+      ),
+    );
+  }
+
+  // Function to generate outlineInputBorder
+  OutlineInputBorder _outlineInputBorder({bool focused = false}) {
+    return OutlineInputBorder(
+      borderRadius: BorderRadius.circular(8.0), // Sesuaikan border radius
+      borderSide: BorderSide(
+        color: focused ? Colors.blue : Colors.grey, // Sama dengan gaya TextField saat focus atau tidak
+        width: focused ? 2.0 : 1.0,
       ),
     );
   }

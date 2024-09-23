@@ -1,10 +1,11 @@
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
 import 'banner.dart';
 
 class Carousel extends StatelessWidget {
-  const Carousel({Key? key});
+  const Carousel({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

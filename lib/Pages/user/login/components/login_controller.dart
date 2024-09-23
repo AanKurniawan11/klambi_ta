@@ -3,9 +3,9 @@ import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:klambi_ta/Pages/menuprofile/components/profile_controller.dart';
 import 'package:klambi_ta/Pages/user/login/components/login_response_model.dart';
-import 'package:klambi_ta/Pages/user/login/components/toast_message.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
+import 'package:flutter/material.dart'; // Tambahkan ini untuk menggunakan Colors dan EdgeInsets
 
 class LoginController extends GetxController {
   late final SharedPreferences prefs;
@@ -33,100 +33,100 @@ class LoginController extends GetxController {
     prefs = await SharedPreferences.getInstance();
   }
 
-  Future<void> loginAction(String email, String password) async {
-    print(token);
-    token = await prefs.getString("token");
-    print("token anda" + token.toString());
-
-    if (email.isEmpty || password.isEmpty) {
-      message.value = "Fields cannot be empty";
-      ToastMessage.show(message.value);
+  Future<void> loginAction(String username, String password) async {
+    if (username.isEmpty) {
+      showStyledSnackbar("Username tidak boleh kosong");
       return;
     }
-    try {
-      isLoading.value = true;
 
+    if (password.isEmpty) {
+      showStyledSnackbar("Password tidak boleh kosong");
+      return;
+    }
+
+    try {
+      // isLoading.value = true;
       final url = Uri.parse("https://klambi.ta.rplrus.com/api/login");
-      final body = {"email": email, "password": password};
+      final body = {"username": username, "password": password};
 
       final response = await http.post(
         url,
         body: body,
         headers: {'Authorization': 'Bearer $token'},
       );
-      print(response.body);
-      print("ini email ${email}");
 
       if (response.statusCode == 200) {
-        LoginResponseModel loginResponseModel = loginResponseModelFromJson(response.body);
-
+        LoginResponseModel loginResponseModel =
+        loginResponseModelFromJson(response.body);
         onLoginSuccess(loginResponseModel);
+        print("skdjs"+ response.body);
+        Get.offNamed("/navbar");
       } else {
-        message.value = "Username atau Password salah : ${response.statusCode}";
-        ToastMessage.show(message.value);
+        showStyledSnackbar("Username atau Password salah: ${response.statusCode}");
       }
     } catch (e) {
-      message.value = "An error occurred";
-      ToastMessage.show(message.value);
-      print(e);
-    } finally {
-      isLoading.value = false;
+      showStyledSnackbar("Terjadi kesalahan, silakan coba lagi");
     }
+    // finally {
+    //   isLoading.value = false;
+    // }
   }
+
   Future<void> logoutAction() async {
     try {
+      // Ambil token yang disimpan
+      String? savedToken = await prefs.getString("token");
+
+      // Menandakan bahwa proses logout sedang berlangsung
       isLoading.value = true;
 
       final url = Uri.parse("https://klambi.ta.rplrus.com/api/logout");
 
+      // Kirim permintaan logout
       final response = await http.post(
         url,
-        headers: {'Authorization': 'Bearer $token'},
+        headers: {'Authorization': 'Bearer $savedToken'},
       );
 
       print(response.body);
       if (response.statusCode == 200) {
-        // Hapus data dari SharedPreferences
+        // Menghapus semua data pengguna yang disimpan di SharedPreferences
         await prefs.remove("username");
-        await prefs.remove("email");
+        await prefs.remove("name");
+        await prefs.remove("image");
         await prefs.remove("token");
 
-        // Logout dari Firebase Authentication jika diperlukan
+        // Logout dari Firebase dan Google Sign-In
         await FirebaseAuth.instance.signOut();
         await googleSignIn.signOut();
 
-        // Set nilai user menjadi null
+        // Set user menjadi null
         setUser(null);
 
-        // Navigasi ke halaman login atau halaman lainnya setelah logout
-        Get.offAllNamed('/login');
-
-        print("Logout berhasil");
+        // Tampilkan snackbar sukses
+        showStyledSnackbar("Logout berhasil");
       } else {
-        message.value = "Gagal logout: ${response.statusCode}";
-        ToastMessage.show(message.value);
+        showStyledSnackbar("Gagal logout: ${response.statusCode}");
       }
     } catch (e) {
-      message.value = "An error occurred";
-      ToastMessage.show(message.value);
+      showStyledSnackbar("Terjadi kesalahan, silakan coba lagi");
       print(e);
     } finally {
+      // Pastikan isLoading di-set menjadi false setelah proses logout
       isLoading.value = false;
     }
   }
-  
 
   void onLoginSuccess(LoginResponseModel loginResponseModel) async {
-    await prefs.setString("username", loginResponseModel.data.name);
-    await prefs.setString("email", loginResponseModel.data.email);
+    await prefs.setString("username", loginResponseModel.data.username);
     await prefs.setString("token", loginResponseModel.data.token);
-
 
     profileController.setUser(user.value);
 
     String? savedToken = await prefs.getString("token");
     print("Token yang disimpan: $savedToken");
-    ToastMessage.show("Berhasil login");
+
+    showStyledSnackbar("Berhasil login");
 
     Get.offAllNamed('/navbar');
   }
@@ -141,4 +141,20 @@ class LoginController extends GetxController {
     return prefs.containsKey('username') || FirebaseAuth.instance.currentUser != null;
   }
 
+  // Function to show styled snackbar
+  void showStyledSnackbar(String message) {
+    Get.snackbar(
+      'Informasi', // Judul
+      message, // Pesan
+      snackPosition: SnackPosition.TOP, // Posisi Snackbar
+      backgroundColor: Colors.blue, // Warna Background
+      colorText: Colors.white, // Warna teks
+      borderRadius: 10,
+      margin: EdgeInsets.all(15),
+      duration: Duration(seconds: 3), // Durasi tampilan
+      icon: Icon(Icons.info, color: Colors.white), // Ikon di Snackbar
+      isDismissible: true, // Snackbar bisa di-dismiss
+      forwardAnimationCurve: Curves.easeOutBack, // Animasi munculnya Snackbar
+    );
+  }
 }

@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:klambi_ta/Pages/cart/controller/cart_controllers.dart';
 import 'package:klambi_ta/component/space_extension.dart';
-
 import '../../../Common/colors/color.dart';
 
 class CartItem extends StatelessWidget {
@@ -13,8 +12,8 @@ class CartItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Size mediaquery = MediaQuery.of(context).size;
-    final double height = mediaquery.height;
     final double width = mediaquery.width;
+
     return ListView.builder(
       padding: EdgeInsets.only(bottom: 100),
       shrinkWrap: true,
@@ -24,8 +23,8 @@ class CartItem extends StatelessWidget {
         final item = controllers.Cartdata[index];
 
         return Dismissible(
-          key: ValueKey(item.productId), // Unique key for each item
-          direction: DismissDirection.endToStart, // Swipe direction
+          key: ValueKey(item.productId),
+          direction: DismissDirection.endToStart,
           onDismissed: (direction) {
             controllers.deleteCartItem(item.productId, item.quantity, item.size);
           },
@@ -39,124 +38,136 @@ class CartItem extends StatelessWidget {
               size: 40,
             ),
           ),
-          child: Container(
-            height: height * 0.2,
-            width: double.infinity,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 45, left: 20),
-                  child: Container(
-                    height: height * 0.12,
-                    width: width * 0.18,
-                    foregroundDecoration: BoxDecoration(
+          child: Card(
+            elevation: 5,
+            margin: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Padding(
+              padding: EdgeInsets.all(10),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    height: width * 0.3, // Responsif berdasarkan lebar
+                    width: width * 0.3,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
                       image: DecorationImage(
                         image: NetworkImage(item.imageUrl),
                         fit: BoxFit.cover,
                       ),
                     ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 10),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        width: width * 0.58,
-                        child: Text(
-                          "${item.productTitle}",
-                          style: TextStyle(fontFamily: "General Sans"),
-                        ),
-                      ),
-                      Text(
-                        "Ukuran : ${item.size}",
-                        style: TextStyle(fontFamily: "General Sans"),
-                      ),
-                      Text(
-                        NumberFormat.currency(
-                          locale: 'id_ID',
-                          symbol: 'Rp ',
-                          decimalDigits: 0,
-                        ).format(item.productPrice),
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                          color: ColorValue.kSecondary,
-                          fontFamily: "General Sans",
-                        ),
-                      ),
-                      GetBuilder<CartControllers>(
-                        builder: (tx) => Text(
-                          "Jumlah : ${NumberFormat.currency(locale: 'id_ID', symbol: 'Rp ', decimalDigits: 0).format(tx.Cartdata[index].quantity * tx.Cartdata[index].productPrice)}",
-                        ),
-                      ),
-                      Container(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            GestureDetector(
-                              onTap: () {
-                                if (item.quantity > 0) {
-                                  item.quantity--;
+                  SizedBox(width: 10),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 10),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "${item.productTitle}",
+                            style: TextStyle(
+                              fontFamily: "General Sans",
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                            ),
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          SizedBox(height: 5),
+                          Text(
+                            "Ukuran : ${item.size}",
+                            style: TextStyle(fontFamily: "General Sans"),
+                          ),
+                          SizedBox(height: 5),
+                          Text(
+                            NumberFormat.currency(
+                              locale: 'id_ID',
+                              symbol: 'Rp ',
+                              decimalDigits: 0,
+                            ).format(item.productPrice),
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                              color: ColorValue.kSecondary,
+                              fontFamily: "General Sans",
+                            ),
+                          ),
+                          SizedBox(height: 5),
+                          GetBuilder<CartControllers>(
+                            builder: (tx) => Text(
+                              "Jumlah : ${NumberFormat.currency(locale: 'id_ID', symbol: 'Rp ', decimalDigits: 0).format(tx.Cartdata[index].quantity * tx.Cartdata[index].productPrice)}",
+                            ),
+                          ),
+                          SizedBox(height: 10),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              GestureDetector(
+                                onTap: () {
+                                  if (item.quantity > 0) {
+                                    item.quantity--;
+                                    controllers.update();
+                                    controllers.updateTotalPrice();
+                                  }
+                                },
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.rectangle,
+                                    border: Border.fromBorderSide(
+                                        BorderSide(color: ColorValue.kPrimary)),
+                                    borderRadius: BorderRadius.circular(6),
+                                  ),
+                                  child: Icon(Icons.remove, size: 18),
+                                ),
+                              ),
+                              GetBuilder<CartControllers>(
+                                builder: (tx) => Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                                  child: Text(
+                                    tx.Cartdata[index].quantity.toString(),
+                                    style: TextStyle(fontSize: 16),
+                                  ),
+                                ),
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  item.quantity++;
                                   controllers.update();
                                   controllers.updateTotalPrice();
-                                }
-                              },
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.rectangle,
-                                  border: Border.fromBorderSide(BorderSide(color: ColorValue.kPrimary)),
-                                  borderRadius: BorderRadius.circular(6),
+                                },
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.rectangle,
+                                    border: Border.fromBorderSide(
+                                        BorderSide(color: ColorValue.kPrimary)),
+                                    borderRadius: BorderRadius.circular(6),
+                                  ),
+                                  child: Icon(Icons.add, size: 18),
                                 ),
-                                child: Icon(Icons.remove, size: 18),
                               ),
-                            ),
-                            GetBuilder<CartControllers>(
-                              builder: (tx) => Text(
-                                tx.Cartdata[index].quantity.toString(),
-                                style: TextStyle(fontSize: 16),
-                              ),
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                item.quantity++;
-                                controllers.update();
-                                controllers.updateTotalPrice();
-                              },
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.rectangle,
-                                  border: Border.fromBorderSide(BorderSide(color: ColorValue.kPrimary)),
-                                  borderRadius: BorderRadius.circular(6),
-                                ),
-                                child: Icon(Icons.add, size: 18),
-                              ),
-                            ),
-                          ].withSpaceBetween(width: 8),
-                        ),
-                      ),
-                    ].withSpaceBetween(height: 2),
-                  ),
-                ),
-                Column(
-                  children: [
-                    Obx(
-                          () => Checkbox(
-                        value: controllers.selectedItems.contains(item),
-                        checkColor: ColorValue.kWhite,
-                        activeColor: ColorValue.kSecondary,
-                        side: BorderSide(color: ColorValue.kSecondary),
-                        onChanged: (bool? value) {
-                          controllers.toggleSelection(item);
-                          controllers.selectedCart(item.id, value ?? false, item.quantity);
-                        },
+                            ].withSpaceBetween(width: 8),
+                          ),
+                        ].withSpaceBetween(height: 2),
                       ),
                     ),
-                  ],
-                ),
-              ],
+                  ),
+                  Obx(
+                        () => Checkbox(
+                      value: controllers.selectedItems.contains(item),
+                      checkColor: ColorValue.kWhite,
+                      activeColor: ColorValue.kSecondary,
+                      side: BorderSide(color: ColorValue.kSecondary),
+                      onChanged: (bool? value) {
+                        controllers.toggleSelection(item);
+                        controllers.selectedCart(item.id, value ?? false, item.quantity);
+                      },
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         );

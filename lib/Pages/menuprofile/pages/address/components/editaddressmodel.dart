@@ -4,6 +4,8 @@ class Addresss {
   String categoryId;
   String nomorTelepon;
   String namaLengkap;
+  double latitude;
+  double longitude;
 
   Addresss({
     required this.keterangan,
@@ -11,6 +13,8 @@ class Addresss {
     required this.categoryId,
     required this.nomorTelepon,
     required this.namaLengkap,
+    required this.latitude,
+    required this.longitude,
   });
 
   Map<String, dynamic> toJson() {
@@ -20,6 +24,8 @@ class Addresss {
       'category_id': categoryId,
       'nomor_telepon': nomorTelepon,
       'nama_lengkap': namaLengkap,
+      'latitude': latitude,
+      'longitude': longitude,
     };
   }
 }

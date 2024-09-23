@@ -4,7 +4,6 @@ import 'package:klambi_ta/Pages/history/page/history.dart';
 import 'package:klambi_ta/Pages/home/page/home.dart';
 import 'package:klambi_ta/Pages/menuprofile/components/profile_controller.dart';
 import 'package:klambi_ta/Pages/menuprofile/pages/menu_profile.dart';
-import '../../Pages/history/page/testview.dart';
 import '../colors/color.dart';
 
 class LandingPageController extends GetxController {

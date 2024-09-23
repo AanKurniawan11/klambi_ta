@@ -3,7 +3,8 @@ import 'package:klambi_ta/Common/routes/navbar.dart';
 import 'package:klambi_ta/Pages/cart/page/cart.dart';
 import 'package:klambi_ta/Pages/design/controller/design_binding.dart';
 import 'package:klambi_ta/Pages/design/page/design.dart';
-import 'package:klambi_ta/Pages/history/components/history_binding.dart';
+import 'package:klambi_ta/Pages/history/controller/history_binding.dart';
+import 'package:klambi_ta/Pages/history/controller/historycontroller.dart';
 import 'package:klambi_ta/Pages/history/page/history.dart';
 import 'package:klambi_ta/Pages/home/components/home_binding.dart';
 import 'package:klambi_ta/Pages/home/page/home.dart';
@@ -30,9 +31,9 @@ import 'package:klambi_ta/Pages/user/register/page/register.dart';
 import 'package:klambi_ta/common/routes/routes_name.dart';
 import 'package:klambi_ta/Pages/cart/controller/cart_binding.dart';
 
-import '../../Pages/history/page/testview.dart';
 
 final PaymentController controller = Get.find();
+final HistoryController controllers = Get.find();
 List<GetPage> pageRoutes = <GetPage>[
   GetPage(
       name: RouteName.login,
@@ -77,7 +78,7 @@ List<GetPage> pageRoutes = <GetPage>[
       binding: AddressBinding()),
   GetPage(
       name: RouteName.insert,
-      page: () => const InsertAddressPageView(),
+      page: () =>  InsertAddressPageView(),
       binding: InserAddressBinding()),
   GetPage(
       name: RouteName.payment,

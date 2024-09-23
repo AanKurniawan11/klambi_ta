@@ -4,7 +4,6 @@ import 'package:flutter/widgets.dart';
 import 'package:klambi_ta/Common/colors/color.dart';
 import 'package:klambi_ta/Pages/onboarding/components/onboarding_item.dart';
 import 'package:klambi_ta/Pages/user/login/page/login.dart';
-import 'package:klambi_ta/Pages/user/register/page/register.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:get/get.dart';

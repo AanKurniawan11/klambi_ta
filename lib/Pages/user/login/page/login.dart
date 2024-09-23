@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:klambi_ta/Common/colors/color.dart';
 import 'package:klambi_ta/Pages/user/login/components/login_controller.dart';
 import 'package:klambi_ta/Pages/user/login/components/toast_message.dart';
+import 'package:klambi_ta/component/loadinfanimation.dart';
 import 'package:klambi_ta/component/my_elevatedbutton.dart';
 import 'package:klambi_ta/component/my_textfield.dart';
 import 'package:klambi_ta/component/pass_textfield.dart';
@@ -18,49 +19,18 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   final loginController = Get.put(LoginController());
-  final TextEditingController ctrEmail = TextEditingController();
+  final TextEditingController ctrUsername = TextEditingController();
   final TextEditingController ctrPassword = TextEditingController();
-
-  Future<void> signinWithGoogle() async {
-    FirebaseAuth auth = FirebaseAuth.instance;
-    final GoogleSignIn googleSignIn = GoogleSignIn();
-    try {
-      final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
-
-      if (googleUser != null) {
-        final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
-        final AuthCredential credential = GoogleAuthProvider.credential(
-          accessToken: googleAuth.accessToken,
-          idToken: googleAuth.idToken,
-        );
-
-        final UserCredential userCredential = await auth.signInWithCredential(credential);
-        loginController.setUser(userCredential.user); // Update user in the controller
-        Get.offAllNamed("/navbar");
-      }
-    } catch (e) {
-      ToastMessage.show('Login gagal. Silakan coba lagi.');
-      Get.snackbar("Gagal", "Coba Lagi");
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
     final Size mediaquery = MediaQuery.of(context).size;
     final double height = mediaquery.height;
     final double width = mediaquery.width;
+
     return Scaffold(
       body: SafeArea(
-        child: Obx(() => loginController.isLoading.value
-            ? Center(child:
-        LoadingAnimationWidget.discreteCircle(
-          color: ColorValue.kPrimary,
-          size: 50,
-          secondRingColor: ColorValue.kSecondary,
-          thirdRingColor: ColorValue.kDanger,
-        ),
-        )
-            : SingleChildScrollView(
+        child: SingleChildScrollView(
           scrollDirection: Axis.vertical,
           child: Stack(
             children: [
@@ -89,19 +59,20 @@ class _LoginState extends State<Login> {
                   Column(
                     children: [
                       Container(
-                        margin: EdgeInsets.all(10.0),
+                        margin: const EdgeInsets.all(10.0),
                         width: width * 0.8,
                         child: Column(
                           children: [
                             MyTextField(
-                              hint: "@example.com",
-                              label: "Email",
-                              prefixIcon: Icons.email_outlined,
-                              controller: ctrEmail,
+                              hint: "",
+                              label: "Username",
+                              prefixIcon: Icons.person_outline,
+                              controller: ctrUsername,
+                              validationMessage: 'Username Tidak Boleh Kosong',
                             ),
                             const SizedBox(height: 15),
                             PassTextField(
-                              hint: "Password",
+                              hint: "",
                               label: "Password",
                               prefixIcon: Icons.lock_outline,
                               controller: ctrPassword,
@@ -110,15 +81,13 @@ class _LoginState extends State<Login> {
                         ),
                       ),
                       Container(
-                        padding: EdgeInsets.symmetric(horizontal: 40),
+                        padding: const EdgeInsets.symmetric(horizontal: 40),
                         child: My_Button(
                           onclick: () async {
-                            loginController.isLoading.value = true;
                             await loginController.loginAction(
-                              ctrEmail.text,
+                              ctrUsername.text,
                               ctrPassword.text,
                             );
-                            loginController.isLoading.value = false;
                           },
                           title: 'Mulai',
                         ),
@@ -127,7 +96,7 @@ class _LoginState extends State<Login> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           const Text(
-                            "sudah punya akun ?",
+                            "Belum punya akun ?",
                             style: TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.w400,
@@ -159,7 +128,6 @@ class _LoginState extends State<Login> {
             ],
           ),
         )),
-      ),
     );
   }
 }

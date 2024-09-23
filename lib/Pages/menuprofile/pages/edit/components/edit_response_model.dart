@@ -1,8 +1,17 @@
-// File: models/update_profile_model.dart
+/// To parse this JSON data, do
+//
+//     final updateProfileResponse = updateProfileResponseFromJson(jsonString);
+
+import 'dart:convert';
+
+UpdateProfileResponse updateProfileResponseFromJson(String str) => UpdateProfileResponse.fromJson(json.decode(str));
+
+String updateProfileResponseToJson(UpdateProfileResponse data) => json.encode(data.toJson());
+
 class UpdateProfileResponse {
-  final bool success;
-  final String message;
-  final UserData data;
+  bool success;
+  String message;
+  Datas data;
 
   UpdateProfileResponse({
     required this.success,
@@ -10,35 +19,39 @@ class UpdateProfileResponse {
     required this.data,
   });
 
-  factory UpdateProfileResponse.fromJson(Map<String, dynamic> json) {
-    return UpdateProfileResponse(
-      success: json['success'],
-      message: json['message'],
-      data: UserData.fromJson(json['data']),
-    );
-  }
+  factory UpdateProfileResponse.fromJson(Map<String, dynamic> json) => UpdateProfileResponse(
+    success: json["success"],
+    message: json["message"],
+    data: Datas.fromJson(json["data"]),
+  );
+
+  Map<String, dynamic> toJson() => {
+    "success": success,
+    "message": message,
+    "data": data.toJson(),
+  };
 }
 
-class UserData {
-  final String name;
-  final String image;
+class Datas {
+  String name;
+  String username;
+  String image;
 
-  UserData({
+  Datas({
     required this.name,
+    required this.username,
     required this.image,
   });
 
-  factory UserData.fromJson(Map<String, dynamic> json) {
-    return UserData(
-      name: json['name'],
-      image: json['image'],
-    );
-  }
+  factory Datas.fromJson(Map<String, dynamic> json) => Datas(
+    name: json["name"],
+    username: json["username"],
+    image: json["image"],
+  );
 
-  Map<String, dynamic> toJson() {
-    return {
-      'name': name,
-      'image': image,
-    };
-  }
+  Map<String, dynamic> toJson() => {
+    "name": name,
+    "username": username,
+    "image": image,
+  };
 }

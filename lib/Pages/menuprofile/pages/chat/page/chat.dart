@@ -1,4 +1,3 @@
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -39,7 +38,8 @@ class ChatPage extends StatelessWidget {
               child: Obx(() {
                 if (chatController.isLoading.value) {
                   return Center(
-                    child: LoadingAnimationWidget.discreteCircle(color: ColorValue.kPrimary, size: 40), // Indikator loading
+                    child: LoadingAnimationWidget.discreteCircle(
+                        color: ColorValue.kPrimary, size: 40), // Indikator loading
                   );
                 }
                 if (chatController.hasNoMessages.value) {
@@ -56,7 +56,7 @@ class ChatPage extends StatelessWidget {
                   itemCount: chatController.chatList.length,
                   itemBuilder: (context, index) {
                     final chat = chatController.chatList[index];
-                    bool isSender = chat.sender == "Me"; // Contoh pengecekan apakah pengirim adalah pengguna
+                    bool isSender = chat.senderType == "Me"; // Contoh pengecekan apakah pengirim adalah pengguna
                     return Align(
                       alignment: isSender ? Alignment.centerRight : Alignment.centerLeft,
                       child: Container(
@@ -64,19 +64,17 @@ class ChatPage extends StatelessWidget {
                         padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
                         decoration: BoxDecoration(
                           color: isSender ? ColorValue.kPrimary : Colors.grey.shade200,
-                          borderRadius: BorderRadius.circular(20),
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(20),
+                            topRight: Radius.circular(20),
+                            bottomLeft: isSender ? Radius.circular(20) : Radius.circular(0),
+                            bottomRight: isSender ? Radius.circular(0) : Radius.circular(20),
+                          ),
                         ),
                         child: Column(
                           crossAxisAlignment:
                           isSender ? CrossAxisAlignment.end : CrossAxisAlignment.start,
                           children: [
-                            // if (chat.image != null)
-                            //   Image.file(
-                            //     File(chat.image!),
-                            //     width: 150,
-                            //     height: 150,
-                            //     fit: BoxFit.cover,
-                            //   ),
                             if (chat.message.isNotEmpty)
                               Text(
                                 chat.message,
@@ -136,7 +134,7 @@ class ChatPage extends StatelessWidget {
                       icon: Icon(Icons.send, color: Colors.white),
                       onPressed: () {
                         chatController.sendchat(1); // Ganti dengan ID penerima yang sesuai
-                        // _messageController.clear(); // Hapus komentar jika ingin menghapus pesan setelah mengirim
+                        _messageController.clear(); // Hapus pesan setelah mengirim
                       },
                     ),
                   ),

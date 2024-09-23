@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:klambi_ta/Pages/payment/controller/payment_controller.dart';
+import '../page/confirmpay.dart';
 
 class Test2 extends StatelessWidget {
   final PaymentController controller = Get.find();
@@ -8,62 +9,88 @@ class Test2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 10),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Pilih Metode Pembayaran',
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-              fontFamily: 'General Sans',
-              color: Colors.black,
-            ),
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
+      child: Obx(() => DropdownButtonFormField<String>(
+        decoration: InputDecoration(
+          filled: true,
+          fillColor: Colors.grey.shade200, // Warna latar belakang
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12.0), // Sudut melengkung
+            borderSide: BorderSide.none,
           ),
-          const SizedBox(height: 10),
-          Obx(() => Container(
-            padding: const EdgeInsets.symmetric(horizontal: 12.0),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8.0),
-              border: Border.all(color: Colors.grey.shade300, width: 1.5),
-              color: Colors.white,
-            ),
-            child: DropdownButtonHideUnderline(
-              child: DropdownButton<String>(
-                value: controller.paymeth.value.isEmpty ? null : controller.paymeth.value,
-                hint: Text(
-                  'Pilih Metode Pembayaran',
-                  style: TextStyle(color: Colors.grey.shade600),
-                ),
-                isExpanded: true,
-                items: ['Cash on Delivery']
-                    .map((method) => DropdownMenuItem<String>(
-                  value: method,
-                  child: Text(method),
-                ))
-                    .toList(),
-                onChanged: (String? newValue) {
-                  if (newValue != null) {
-                    controller.paymeth.value = newValue;
-                    controller.addPay(); // Memanggil fungsi untuk memperbarui metode pembayaran
-                    print('Metode pembayaran dipilih: ${controller.paymeth.value}');
-                  }
-                },
-                icon: Icon(
-                  Icons.arrow_drop_down,
-                  color: Colors.black,
-                ),
-                iconSize: 24,
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.black,
-                ),
+          contentPadding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
+        ),
+        value: controller.paymeth.value.isEmpty ? null : controller.paymeth.value,
+        hint: Text(
+          'Metode Pembayaran',
+          style: TextStyle(color: Colors.grey.shade600, fontSize: 16),
+        ),
+        isExpanded: true,
+        items: _buildPaymentMethods(),
+        onChanged: (String? newValue) {
+          if (newValue != null) {
+            controller.paymeth.value = newValue;
+            controller.addPay();
+            if (newValue == 'ATM BSI') {
+              Get.to(() => PaymentConfirmationPage());
+            }
+          }
+        },
+        icon: Icon(
+          Icons.arrow_drop_down,
+          color: Colors.blue.shade800,
+        ),
+        iconSize: 24,
+        style: TextStyle(
+          fontSize: 16,
+          color: Colors.blue.shade800,
+        ),
+      )),
+    );
+  }
+
+  List<DropdownMenuItem<String>> _buildPaymentMethods() {
+    return [
+      DropdownMenuItem<String>(
+        value: 'Cash on Delivery',
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(
+              child: Text(
+                'Cash on Delivery',
+                style: TextStyle(fontSize: 16, color: Colors.black),
               ),
             ),
-          )),
-        ],
+            Image.asset(
+              "assets/cod.jpg",
+              height: 50,
+              width: 50,
+              fit: BoxFit.cover,
+            ),
+          ],
+        ),
       ),
-    );
+      DropdownMenuItem<String>(
+        value: 'ATM BSI',
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(
+              child: Text(
+                'ATM BSI',
+                style: TextStyle(fontSize: 16, color: Colors.black),
+              ),
+            ),
+            Image.asset(
+              "assets/bsi.png",
+              height: 50,
+              width: 50,
+              fit: BoxFit.cover,
+            ),
+          ],
+        ),
+      ),
+    ];
   }
 }

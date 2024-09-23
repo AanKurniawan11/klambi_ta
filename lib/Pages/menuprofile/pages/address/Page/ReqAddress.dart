@@ -10,14 +10,6 @@ class ReqAddres extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: ColorValue.kBackground,
-      // appBar: AppBar(
-      //   // leading: IconButton(
-      //   //   onPressed: () {
-      //   //     Get.toNamed("/detail");
-      //   //   },
-      //   //   icon: Icon(Icons.arrow_back),
-      //   // ),
-      // ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 20),
         child: Column(
@@ -59,7 +51,7 @@ class ReqAddres extends StatelessWidget {
             ),
             My_Button(
               onclick: () {
-                Get.offNamed("/insert");
+                Get.toNamed("/addAddress");
               },
               title: 'Masukkan Alamat',
             ),

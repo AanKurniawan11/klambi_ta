@@ -21,15 +21,6 @@ class CustomerService extends StatelessWidget {
           ),
         ),
         backgroundColor: ColorValue.kSecondary,
-        leading: GestureDetector(
-          onTap: () {
-            Get.offAndToNamed("/navbar");
-          },
-          child: Icon(
-            Icons.arrow_back,
-            color: Colors.white,
-          ),
-        ),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),

@@ -33,25 +33,21 @@ class LoginResponseModel {
 }
 
 class Data {
-  String name;
+  String username;
   String token;
-  String email;
 
   Data({
-    required this.name,
+    required this.username,
     required this.token,
-    required this.email,
   });
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
-    name: json["name"],
+    username: json["username"],
     token: json["token"],
-    email: json["email"],
   );
 
   Map<String, dynamic> toJson() => {
-    "name": name,
+    "username": username,
     "token": token,
-    "email": email,
   };
 }

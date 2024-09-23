@@ -1,107 +1,64 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:klambi_ta/Pages/payment/controller/payment_controller.dart';
+import 'package:klambi_ta/Common/routes/routes_name.dart';
+import 'package:klambi_ta/Pages/payment/components/test2.dart';
+import '../components/CartOrderResponseModel.dart';
+import '../components/test3.dart';
+import '../controller/payment_controller.dart';
 
-class coba extends StatelessWidget {
+class OrderPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final PaymentController paymentController = Get.find();
+    final PaymentController controller = Get.find<PaymentController>();
 
     return Scaffold(
-      appBar: AppBar(title: Text('Order Details')),
+      appBar: AppBar(
+        title: Text('Order Details'),
+      ),
       body: Obx(() {
-        if (paymentController.isLoading.value) {
+        if (controller.isLoading.value) {
           return Center(child: CircularProgressIndicator());
+        } else if (controller.orderData.value == null) {
+          return Center(child: Text('No data available'));
         } else {
-          final order = paymentController.orderData.value?.order;
-          final products = paymentController.orderData.value?.products;
-          final address = order?.address;
+          final order = controller.orderData.value!;
 
-          return SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                if (order != null) ...[
-                  // Display Order Information
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text('Order ID: ${order.id ?? 'N/A'}'),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text('Payment Method: ${order.paymentMethod ?? 'N/A'}'),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text('Shipping Method: ${order.shippingMethod ?? 'N/A'}'),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text('Total Quantity: ${order.quantity ?? 0}'),
-                  ),
-                ],
-                if (address != null) ...[
-                  // Display Address Information
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text('Address: ${address.keterangan ?? 'N/A'}'),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text('Recipient: ${address.namaLengkap ?? 'N/A'}'),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text('Phone Number: ${address.nomorTelepon ?? 'N/A'}'),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text('Province: ${address.provinsi ?? 'N/A'}'),
-                  ),
-                ],
-                if (products != null && products.isNotEmpty) ...[
-                  // Display Product Information
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text('Products:', style: TextStyle(fontWeight: FontWeight.bold)),
-                  ),
-                  ...products.map((product) {
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text('Title: ${product.title ?? 'No Title'}'),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text('Price: ${product.price?.toString() ?? 'N/A'}'),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text('Quantity: ${product.quantity?.toString() ?? 'N/A'}'),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text('Size: ${product.size ?? 'N/A'}'),
-                        ),
-                        Container(
-                          height: 100,
-                          width: 100,
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: NetworkImage(product.image ?? 'https://via.placeholder.com/100'),
-                              fit: BoxFit.cover,
-                            ),
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                        ),
-                      ],
-                    );
-                  }).toList(),
-                ],
-              ],
-            ),
+          return ListView(
+            padding: EdgeInsets.all(8.0),
+            children: [
+              Text('Order ID: ${order.id}', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+              Text('User ID: ${order.userId}', style: TextStyle(fontSize: 16)),
+              Text('Address ID: ${order.addressId}', style: TextStyle(fontSize: 16)),
+              Text('Payment Method: ${order.paymentMethod}', style: TextStyle(fontSize: 16)),
+              Text('Shipping Method: ${order.shippingMethod}', style: TextStyle(fontSize: 16)),
+              Text('Handling Fee: ${order.handlingFee}', style: TextStyle(fontSize: 16)),
+              Text('Shipping Fee: ${order.shippingFee}', style: TextStyle(fontSize: 16)),
+              Text('Discount: ${order.discount}', style: TextStyle(fontSize: 16)),
+              Text('Total Price: ${order.totalPrice}', style: TextStyle(fontSize: 16)),
+              Text('Quantity: ${order.quantity}', style: TextStyle(fontSize: 16)),
+              Text('Status: ${order.status}', style: TextStyle(fontSize: 16)),
+              Text('Payment Confirmed At: ${order.paymentConfirmedAt}', style: TextStyle(fontSize: 16)),
+              Text('Estimated Delivery: ${order.estimatedDelivery}', style: TextStyle(fontSize: 16)),
+              Text('Payment Due Time: ${order.paymentDueTime}', style: TextStyle(fontSize: 16)),
+              Text('Created At: ${order.createdAt}', style: TextStyle(fontSize: 16)),
+              Text('Updated At: ${order.updatedAt}', style: TextStyle(fontSize: 16)),
+              Test2(),
+              Test3(),
+              SizedBox(height: 20),
+              Text('Products:', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+              ...?order.products?.map((product) => ListTile(
+                leading: product.image != null
+                    ? Image.network(product.image!)
+                    : Icon(Icons.image_not_supported),
+                title: Text(product.title ?? 'No Title'),
+                subtitle: Text('Price: ${product.price}\nQuantity: ${product.quantity}\nSize: ${product.size}'),
+              )),
+
+              ElevatedButton(onPressed: (){
+                controller.addHistory();
+                Get.off(RouteName.design);
+              }, child: Text("lanjutkan"))
+            ],
           );
         }
       }),

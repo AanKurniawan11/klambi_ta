@@ -23,7 +23,7 @@ class Provinsi extends StatelessWidget {
               children: [
                 CustomDropdown(
                   items: ['Kudus'],
-                  hintText:"Kota" ,
+                  hintText: _getHintText(),
                   onChanged: (String? newValue) {
                     if (newValue != null) {
                       print('Selected: $newValue');
@@ -38,4 +38,13 @@ class Provinsi extends StatelessWidget {
       ),
     );
   }
+  String _getHintText() {
+    // Cek apakah controller.Show memiliki elemen dan elemen pertama tidak null
+    if (controller.Show.isNotEmpty && controller.Show[0].provinsi != null) {
+      return controller.Show[0].provinsi!;
+    } else {
+      return "Kota"; // Tampilkan "Nama" jika tidak ada namaLengkap
+    }
+  }
+
 }

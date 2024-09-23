@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:klambi_ta/Common/colors/color.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class SearchField extends StatelessWidget {
   final ValueChanged<String> onChanged;
-  final TextEditingController _controller = TextEditingController();
+  final TextEditingController controller;
 
-  SearchField({super.key, required this.onChanged});
+  // Terima controller sebagai parameter agar statusnya bisa dipertahankan
+  SearchField({super.key, required this.onChanged, required this.controller});
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +14,7 @@ class SearchField extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 10),
       child: Form(
         child: TextFormField(
-          controller: _controller,
+          controller: controller, // Gunakan controller yang diteruskan
           onChanged: onChanged,
           decoration: InputDecoration(
             prefixIcon: Icon(Icons.search, color: ColorValue.kPrimary),
@@ -40,13 +40,3 @@ class SearchField extends StatelessWidget {
     );
   }
 }
-
-const searchOutlineInputBorder = OutlineInputBorder(
-  borderRadius: BorderRadius.all(Radius.circular(15)),
-  borderSide: BorderSide(color: ColorValue.kPrimary, width: 2),
-);
-
-const searchOutlineInputBorders = OutlineInputBorder(
-  borderRadius: BorderRadius.all(Radius.circular(15)),
-  borderSide: BorderSide(color: ColorValue.kLightGrey, width: 2),
-);

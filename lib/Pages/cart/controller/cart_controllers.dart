@@ -6,6 +6,7 @@ import 'package:klambi_ta/Pages/cart/models/showcartmodel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
+import '../../payment/components/AddHistoryresponsemodel.dart';
 import '../../payment/components/paymentmethodemodel.dart';
 import '../../payment/components/showcartordermodel.dart';
 
@@ -20,6 +21,7 @@ class CartControllers extends GetxController {
   int? orderId;
 
   var paymeth = "".obs;
+  var shipmeth = "".obs;
   var size = 'S'.obs;
   var quantity = 0.obs;
   var productTitle = ''.obs;
@@ -28,6 +30,11 @@ class CartControllers extends GetxController {
   var cartId = 0.obs;
   var selecteds = true;
   var totalPrice = 0.obs;
+
+  Future<void> setPreference() async {
+    prefs = await SharedPreferences.getInstance();
+    await ShowCartData();
+  }
 
   @override
   void onInit() async {
@@ -61,7 +68,6 @@ class CartControllers extends GetxController {
         body: jsonEncode(test.toJson()),
       );
       if (response.statusCode == 200) {
-        print('Payment method updated: ${response.body}');
         await fetchOrderCart();
         print("Updated order data: ${orderData.value}");
       } else {
@@ -76,23 +82,27 @@ class CartControllers extends GetxController {
 
 
   Future<void> addHistoryCart() async {
+    isLoading.value = true; // Set loading to true
     if (orderId == null) {
       print('Order ID is not available');
       return;
     }
 
     var token = await prefs.getString("token");
+    final paydata = AddHistoryResponseModel(
+      orderId: orderId!,
+    );
     try {
       final response = await http.post(
-        Uri.parse('https://klambi.ta.rplrus.com/api/orders/$orderId/history'),
+        Uri.parse('https://klambi.ta.rplrus.com/api/orders/history'),
         headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer $token',
         },
+        body: jsonEncode(paydata.toJson()), // Convert model to JSON and set body
       );
       print(response.body);
       if (response.statusCode == 200) {
-        print('History added successfully: ${response.body}');
         await fetchOrderCart();
       } else {
         print('Failed to add history: ${response.statusCode}');
@@ -101,6 +111,42 @@ class CartControllers extends GetxController {
       print('Error: $e');
     }
   }
+  Future<void> addShippingCart() async {
+    isLoading.value = true;
+    if (orderId == null) {
+      print('Order ID is not available');
+      return;
+    }
+
+    var token = await prefs.getString("token");
+    final shipdata = {
+      'order_id': orderId!,
+      'shipping_method': shipmeth.value,
+    };
+
+    try {
+      final response = await http.post(
+        Uri.parse('https://klambi.ta.rplrus.com/api/orders/update-shipping-method'),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+        body: jsonEncode(shipdata),
+      );
+
+      if (response.statusCode == 200) {
+        print('Payment method updated successfully');
+        await fetchOrderCart();
+      } else {
+        print('Failed to update payment method');
+      }
+    } catch (e) {
+      print('Error updating payment method: $e');
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
 
   Future<void> orderfromCart() async {
     isLoading.value = true; // Set loading to true
@@ -113,10 +159,8 @@ class CartControllers extends GetxController {
           'Authorization': 'Bearer $token',
         },
       );
-      print(response.body);
       if (response.statusCode == 201) {
-        print('Order from cart added successfully: ${response.body}');
-        await fetchOrderCart();
+        await ShowCartData();
       } else {
         print('Failed to add cart order: ${response.statusCode}');
       }
@@ -140,10 +184,8 @@ class CartControllers extends GetxController {
         },
       );
 
-      print(response.body);
 
       if (response.statusCode == 200) {
-        print(response.body);
         var jsonResponse = json.decode(response.body);
         ShowCartOrderModel orderResponse = ShowCartOrderModel.fromJson(jsonResponse);
         orderData.value = orderResponse.data;
@@ -156,14 +198,10 @@ class CartControllers extends GetxController {
         orderData.value = null;
       }
     } finally {
-      isLoading.value = false; // Stop loading regardless of the outcome
+      isLoading.value = false;
     }
   }
 
-  Future<void> setPreference() async {
-    prefs = await SharedPreferences.getInstance();
-    await ShowCartData(); // Make sure to wait for this method to finish before proceeding
-  }
 
   Future<void> selectedCart(int id, bool status, int quantity) async {
     var token = await prefs.getString("token");
@@ -181,7 +219,8 @@ class CartControllers extends GetxController {
       print(response.body);
 
       if (response.statusCode == 200) {
-        // Optionally refresh data after selecting a cart item
+        print("sukses to send: ${response.statusCode}");
+
       } else {
         print("Failed to send: ${response.statusCode}");
       }
@@ -209,6 +248,7 @@ class CartControllers extends GetxController {
         body: jsonEncode(carts.toJson()),
       );
       print(response.body);
+      print(response.statusCode);
 
       if (response.statusCode == 200) {
         await ShowCartData(); // Refresh cart data after adding
@@ -274,7 +314,6 @@ class CartControllers extends GetxController {
         final responseData = jsonDecode(response.body);
 
         if (responseData['status'] == true) {
-          // Cari item yang sesuai berdasarkan productId, quantity, dan size
           final Item? removedItem = Cartdata.firstWhere(
                 (item) => item.productId == productId &&
                 item.quantity == quantity &&
@@ -284,8 +323,8 @@ class CartControllers extends GetxController {
           if (removedItem != null) {
             Cartdata.remove(removedItem);
             selectedItems.remove(removedItem);
-
             updateTotalPrice(); // Update total price after item is removed
+            ShowCartData();
             print("Item berhasil dihapus: ${responseData['message']}");
           } else {
             print("Item tidak ditemukan di Cartdata.");

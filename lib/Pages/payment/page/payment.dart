@@ -2,32 +2,27 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:klambi_ta/Common/colors/color.dart';
+import 'package:klambi_ta/Common/routes/routes_name.dart';
 import 'package:klambi_ta/Pages/menuprofile/pages/address/controller/address_controller.dart';
 import 'package:klambi_ta/Pages/payment/components/test2.dart';
+import 'package:klambi_ta/Pages/payment/components/test3.dart';
 import 'package:klambi_ta/Pages/payment/controller/payment_controller.dart';
+import 'package:klambi_ta/component/loadinfanimation.dart';
 import 'package:klambi_ta/component/my_elevatedbutton.dart';
-import 'package:klambi_ta/component/space_extension.dart';
-import 'package:loading_animation_widget/loading_animation_widget.dart';
 import '../../../component/format_price.dart';
+import '../../menuprofile/pages/address/edit/editAddress.dart';
 
 class Payment extends StatelessWidget {
   Payment({super.key});
   final PaymentController controller = Get.put(PaymentController());
-
-
-  @override
-  void onInit() async {
-     controller.onInit();
-    controller.setPreference(); // Ensure preferences are set
-    controller.fetchOrderData(); // Fetch order data to get order ID
-  }
+  final AddressController addressController = Get.put(AddressController());
 
   @override
   Widget build(BuildContext context) {
-    controller.fetchOrderData();
     final Size mediaQuery = MediaQuery.of(context).size;
     final double height = mediaQuery.height;
     final double width = mediaQuery.width;
+    final double textScaleFactor = MediaQuery.of(context).textScaleFactor;
 
     return Scaffold(
       appBar: AppBar(
@@ -36,26 +31,24 @@ class Payment extends StatelessWidget {
           style: TextStyle(
             fontFamily: 'General Sans',
             fontWeight: FontWeight.w600,
-            fontSize: 24,
+            fontSize: 24 * textScaleFactor,
             color: ColorValue.kBlack,
           ),
         ),
         centerTitle: true,
-        leading: IconButton(
-          onPressed: () {
-            Get.offAllNamed("/navbar");
-          },
-          icon: Icon(Icons.arrow_back, color: ColorValue.kBlack),
-        ),
         backgroundColor: Colors.white,
         elevation: 0,
       ),
       body: Obx(() {
-        final order = controller.orderData.value?.order;
-        final products = controller.orderData.value?.products;
-        final address = order?.address;
+        if (controller.isLoading.value) {
+          return Loading();
+        }
 
-        // Calculate total price for all products
+        final order = controller.orderData.value;
+        final products = order?.products;
+        final addressData = addressController.Show.isNotEmpty ? addressController.Show[0] : null;
+        controller.fetchLatestOrder();
+
         int totalProductPrice = 0;
         if (products != null) {
           for (var product in products) {
@@ -89,7 +82,7 @@ class Payment extends StatelessWidget {
                         Text(
                           "Dikirim ke:",
                           style: TextStyle(
-                            fontSize: 14,
+                            fontSize: 14 * textScaleFactor,
                             fontWeight: FontWeight.w600,
                             fontFamily: 'General Sans',
                             color: ColorValue.kSecondary,
@@ -105,26 +98,26 @@ class Payment extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    "Nama Lengkap: ${address?.namaLengkap}",
+                                    "Nama Lengkap: ${addressData?.namaLengkap ?? 'N/A'}",
                                     style: TextStyle(
-                                      fontSize: 14,
+                                      fontSize: 14 * textScaleFactor,
                                       fontWeight: FontWeight.w500,
                                       fontFamily: 'General Sans',
                                     ),
                                   ),
                                   Text(
-                                    "No HP: ${address?.nomorTelepon}",
+                                    "No HP: ${addressData?.nomorTelepon ?? 'N/A'}",
                                     style: TextStyle(
-                                      fontSize: 14,
+                                      fontSize: 14 * textScaleFactor,
                                       fontWeight: FontWeight.w500,
                                       fontFamily: 'General Sans',
                                     ),
                                   ),
                                   SizedBox(height: 5),
                                   Text(
-                                    "${address?.provinsi}, ${address?.keterangan}",
+                                    "${addressData?.provinsi ?? ''}, ${addressData?.keterangan ?? ''}",
                                     style: TextStyle(
-                                      fontSize: 14,
+                                      fontSize: 14 * textScaleFactor,
                                       fontWeight: FontWeight.w400,
                                       fontFamily: 'General Sans',
                                       color: Colors.grey[700],
@@ -137,22 +130,23 @@ class Payment extends StatelessWidget {
                             ),
                           ],
                         ),
-                        // Align(
-                        //   alignment: Alignment.bottomRight,
-                        //   child: TextButton(
-                        //     onPressed: () {
-                        //       // Get.offAllNamed("/edit");
-                        //     },
-                        //     child: Text("Ganti", style: TextStyle(color: ColorValue.kSecondary)),
-                        //   ),
-                        // ),
+                        Align(
+                          alignment: Alignment.bottomRight,
+                          child: TextButton(
+                            onPressed: () {
+                              if (addressData != null) {
+                                Get.to(EditAddressView(addressId: addressData!.id));
+                              }
+                            },
+                            child: Text("Ganti", style: TextStyle(color: ColorValue.kSecondary)),
+                          ),
+                        ),
                       ],
                     ),
                   ),
                 ),
               ),
               SizedBox(height: 20),
-              // Rincian Pesanan
               Container(
                 width: width * 0.9,
                 padding: const EdgeInsets.all(16.0),
@@ -176,7 +170,7 @@ class Payment extends StatelessWidget {
                         Text(
                           "Rincian Pesanan",
                           style: TextStyle(
-                            fontSize: 16,
+                            fontSize: 16 * textScaleFactor,
                             fontWeight: FontWeight.w600,
                             fontFamily: 'General Sans',
                           ),
@@ -209,7 +203,7 @@ class Payment extends StatelessWidget {
                                   Text(
                                     product.title ?? 'Judul Produk',
                                     style: TextStyle(
-                                      fontSize: 14,
+                                      fontSize: 14 * textScaleFactor,
                                       fontWeight: FontWeight.w600,
                                       fontFamily: 'General Sans',
                                     ),
@@ -220,7 +214,7 @@ class Payment extends StatelessWidget {
                                   Text(
                                     "Ukuran: ${product.size ?? 'N/A'}",
                                     style: TextStyle(
-                                      fontSize: 13,
+                                      fontSize: 13 * textScaleFactor,
                                       fontWeight: FontWeight.w500,
                                       fontFamily: 'General Sans',
                                       color: Colors.grey[700],
@@ -233,7 +227,7 @@ class Payment extends StatelessWidget {
                                       Text(
                                         formatPrice(product.price ?? 0),
                                         style: TextStyle(
-                                          fontSize: 15,
+                                          fontSize: 15 * textScaleFactor,
                                           fontWeight: FontWeight.w600,
                                           fontFamily: 'General Sans',
                                           color: ColorValue.kPrimary,
@@ -242,7 +236,7 @@ class Payment extends StatelessWidget {
                                       Text(
                                         "x${product.quantity ?? 0}",
                                         style: TextStyle(
-                                          fontSize: 13,
+                                          fontSize: 13 * textScaleFactor,
                                           fontWeight: FontWeight.w500,
                                           fontFamily: 'General Sans',
                                           color: Colors.grey[700],
@@ -260,58 +254,59 @@ class Payment extends StatelessWidget {
                     Column(
                       children: [
                         _buildPriceDetailRow(
-                          "Total Pesanan (${products?[0].quantity ?? 0} produk)",
+                          "Total Pesanan (${products?.length ?? 0} produk)",
                           formatPrice(totalProductPrice),
                         ),
+                        SizedBox(height: 5),
                         _buildPriceDetailRow(
                           'Biaya Penangan',
                           formatPrice(order?.handlingFee ?? 0),
                         ),
+                        SizedBox(height: 5),
                         _buildPriceDetailRow(
                           'Biaya Pengiriman',
                           formatPrice(order?.shippingFee ?? 0),
                         ),
-                      ].withSpaceBetween(height: 5)
-                    ),
-                    SizedBox(height: 20),
-                    Divider(color: ColorValue.kLightGrey),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 10),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            "Total Pembayaran",
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
-                              fontFamily: 'General Sans',
-                            ),
+                        Test2(),
+                        Test3(),
+                        Divider(color: ColorValue.kLightGrey),
+                        SizedBox(height: 10),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "Total Pembayaran",
+                                style: TextStyle(
+                                  fontSize: 16 * textScaleFactor,
+                                  fontWeight: FontWeight.w700,
+                                  fontFamily: 'General Sans',
+                                ),
+                              ),
+                              Text(
+                                formatPrice(order?.totalPrice ?? 0),
+                                style: TextStyle(
+                                  fontSize: 16 * textScaleFactor,
+                                  fontWeight: FontWeight.w700,
+                                  fontFamily: 'General Sans',
+                                  color: ColorValue.kPrimary,
+                                ),
+                              ),
+                            ],
                           ),
-                          Text(
-                            formatPrice((totalProductPrice +
-                                (order?.handlingFee ?? 0) +
-                                (order?.shippingFee ?? 0))),
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w700,
-                              fontFamily: 'General Sans',
-                              color: ColorValue.kPrimary,
-                            ),
-                          ),
-                        ],
-                      ),
+                        ),
+                        SizedBox(height: 20),
+                        My_Button(
+                          title: 'Konfirmasi Pembayaran',
+                          onclick: () {
+                            controller.addHistory();
+                            Get.offAllNamed(RouteName.design);
+                          },
+                          loading: controller.isLoading.value,
+                        ),
+                      ],
                     ),
-                    SizedBox(height: 20),
-                    Test2(),
-                    My_Button(
-                      title: 'Konfirmasi Pembayaran',
-                      onclick: (){
-                        controller.addHistory();
-                        Get.offAllNamed("/design");
-                      }
-                    ),
-
                   ],
                 ),
               ),
@@ -322,25 +317,25 @@ class Payment extends StatelessWidget {
     );
   }
 
-  Widget _buildPriceDetailRow(String title, String value) {
+  Widget _buildPriceDetailRow(String label, String value) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
-          title,
+          label,
           style: TextStyle(
-            fontSize: 14,
-            fontWeight: FontWeight.w600,
+            fontSize: 13,
+            fontWeight: FontWeight.w500,
             fontFamily: 'General Sans',
+            color: ColorValue.kDarkGrey,
           ),
         ),
         Text(
           value,
           style: TextStyle(
-            fontSize: 14,
-            fontWeight: FontWeight.w600,
+            fontSize: 13,
+            fontWeight: FontWeight.w500,
             fontFamily: 'General Sans',
-            color: Colors.grey[700],
           ),
         ),
       ],

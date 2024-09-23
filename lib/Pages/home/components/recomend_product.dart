@@ -12,10 +12,9 @@ import '../../../common/colors/color.dart';
 
 class RecomendProduct extends StatelessWidget {
   final Datum item;
+  final HomeController controller = Get.find(); // Menggunakan Get.find() untuk mendapatkan instance yang sudah ada
 
   RecomendProduct({required this.item});
-
-  final HomeController controller = Get.put(HomeController());
 
   String formatPrices(int price) {
     final format = NumberFormat.currency(locale: 'id_ID', symbol: 'Rp ', decimalDigits: 0);
@@ -30,28 +29,52 @@ class RecomendProduct extends StatelessWidget {
       onTap: () {
         Get.to(() => DetailView(item: item));
       },
-      child: Container(
-        height: size.height * 0.9,
-        width: size.width * 0.5,
-        decoration: BoxDecoration(
-          border: Border.all(color: ColorValue.kLightGrey),
-          borderRadius: BorderRadius.circular(12),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(10),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              buildProductImage(size),
-              SizedBox(height: size.height * 0.02),
-              buildProductTitle(),
-              SizedBox(height: size.height * 0.005),
-              buildProductPrice(),
-              SizedBox(height: size.height * 0.005),
-              buildProductInfo(),
-            ],
+      child: Stack(
+        children: [
+          Container(
+            constraints: BoxConstraints(
+              maxWidth: size.width * 0.5,
+              maxHeight: size.height * 0.5,
+            ),
+            decoration: BoxDecoration(
+              border: Border.all(color: ColorValue.kLightGrey),
+              borderRadius: BorderRadius.circular(12),
+              color: item.stock > 0 ? Colors.white : Colors.grey[200],
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  buildProductImage(size),
+                  const SizedBox(height: 10),
+                  buildProductTitle(),
+                  const SizedBox(height: 5),
+                  buildProductPrice(),
+                  const SizedBox(height: 5),
+                  buildProductInfo(),
+                ],
+              ),
+            ),
           ),
-        ),
+          if (item.stock == 0)
+            Positioned.fill(
+              child: Container(
+                color: Colors.grey.withOpacity(0.5),
+                child: Center(
+                  child: const Text(
+                    'Habis',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: "General Sans",
+                    ),
+                  ),
+                ),
+              ),
+            ),
+        ],
       ),
     );
   }
@@ -70,7 +93,7 @@ class RecomendProduct extends StatelessWidget {
               highlightColor: Colors.grey[100]!,
               child: Container(color: Colors.grey[300]),
             ),
-            errorWidget: (context, url, error) => Icon(Icons.error),
+            errorWidget: (context, url, error) => const Icon(Icons.error),
           ),
         ),
         Positioned(
@@ -86,7 +109,7 @@ class RecomendProduct extends StatelessWidget {
             child: Center(
               child: Text(
                 item.category.displayName,
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.white,
                   fontSize: 9,
                   fontWeight: FontWeight.w600,
@@ -103,7 +126,7 @@ class RecomendProduct extends StatelessWidget {
   Widget buildProductTitle() {
     return Text(
       item.title,
-      style: TextStyle(
+      style: const TextStyle(
         fontSize: 14,
         fontWeight: FontWeight.w500,
         fontFamily: "General Sans",
@@ -116,7 +139,7 @@ class RecomendProduct extends StatelessWidget {
   Widget buildProductPrice() {
     return Text(
       formatPrices(item.price),
-      style: TextStyle(
+      style: const TextStyle(
         fontSize: 16,
         fontWeight: FontWeight.w600,
         fontFamily: "General Sans",
@@ -130,7 +153,7 @@ class RecomendProduct extends StatelessWidget {
       child: Row(
         children: [
           buildRating(),
-          Text(
+          const Text(
             '|',
             style: TextStyle(
               color: ColorValue.kDarkGrey,
@@ -139,7 +162,7 @@ class RecomendProduct extends StatelessWidget {
             ),
           ),
           buildStockInfo(),
-          Text(
+          const Text(
             '|',
             style: TextStyle(
               color: ColorValue.kDarkGrey,
@@ -156,14 +179,14 @@ class RecomendProduct extends StatelessWidget {
   Widget buildRating() {
     return Row(
       children: [
-        Icon(
+        const Icon(
           Icons.star,
           size: 14,
           color: ColorValue.kPrimary,
         ),
         Text(
           item.rate.toString(),
-          style: TextStyle(
+          style: const TextStyle(
             color: ColorValue.kDarkGrey,
             fontSize: 12,
             fontFamily: "General Sans",
@@ -176,7 +199,7 @@ class RecomendProduct extends StatelessWidget {
   Widget buildStockInfo() {
     return Text(
       "Stock ${item.stock}",
-      style: TextStyle(
+      style: const TextStyle(
         fontSize: 12,
         color: ColorValue.kDarkGrey,
         fontFamily: "General Sans",
@@ -187,8 +210,7 @@ class RecomendProduct extends StatelessWidget {
   Widget buildSalesInfo() {
     return Text(
       "Terjual ${item.sold}",
-
-      style: TextStyle(
+      style: const TextStyle(
         fontSize: 12,
         color: ColorValue.kDarkGrey,
         fontFamily: "General Sans",

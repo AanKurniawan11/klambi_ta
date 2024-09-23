@@ -41,7 +41,7 @@ class _ImageUploadState extends State<ImageUpload> {
           border: Border.all(color: ColorValue.kLightGrey),
         ),
         width: double.infinity,
-        height: 150,
+        height: 560,
         child: ValueListenableBuilder<File?>(
           valueListenable: widget.uploadedImage,
           builder: (context, image, child) {
@@ -56,7 +56,7 @@ class _ImageUploadState extends State<ImageUpload> {
                 ),
                 SizedBox(height: 5),
                 Text(
-                  'Unggah File (PNG)',
+                  'Unggah Desain (PNG & JPG)',
                   style: TextStyle(
                     fontFamily: 'General Sans',
                     fontWeight: FontWeight.w500,
@@ -68,7 +68,7 @@ class _ImageUploadState extends State<ImageUpload> {
             )
                 : Image.file(
               image,
-              fit: BoxFit.cover,
+              fit: BoxFit.fill,
             );
           },
         ),

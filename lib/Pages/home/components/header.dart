@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:klambi_ta/Common/colors/color.dart';
+import 'package:klambi_ta/Common/routes/routes_name.dart';
 import 'package:klambi_ta/Pages/cart/page/cart.dart';
 import 'package:klambi_ta/Pages/menuprofile/pages/edit/controller/edit_controller.dart';
 import 'package:klambi_ta/component/space_extension.dart';
@@ -36,45 +37,44 @@ class Header extends StatelessWidget {
 
     return Row(
       children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Obx(() {
-              if (editController.isLoading.value) {
-                return Shimmer.fromColors(
-                  baseColor: Colors.grey[300]!,
-                  highlightColor: Colors.grey[100]!,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        height: height * 0.035,
-                        width: width * 0.7,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: Colors.grey[300],
-                        ),
-                      ),
-                      Container(
-                        height: height * 0.03,
-                        width: width * 0.5,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: Colors.grey[300],
-                        ),
-                      ),
-                    ].withSpaceBetween(height: 5),
-                  ),
-                );
-              } else {
-                final username = editController.ctrName.text.isNotEmpty
-                    ? editController.ctrName.text
-                    : editController.userProfile.value.name ?? '';
-
-                return Padding(
+        Obx(() {
+          return AnimatedOpacity(
+            duration: const Duration(milliseconds: 500),
+            opacity: editController.isLoading.value ? 0.5 : 1.0,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                AnimatedContainer(
+                  duration: const Duration(milliseconds: 500),
                   padding: const EdgeInsets.symmetric(horizontal: 25),
-                  child: Column(
+                  child: editController.isLoading.value
+                      ? Shimmer.fromColors(
+                    baseColor: Colors.grey[300]!,
+                    highlightColor: Colors.grey[100]!,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          height: height * 0.035,
+                          width: width * 0.6,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: Colors.grey[300],
+                          ),
+                        ),
+                        Container(
+                          height: height * 0.03,
+                          width: width * 0.5,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: Colors.grey[300],
+                          ),
+                        ),
+                      ].withSpaceBetween(height: 5),
+                    ),
+                  )
+                      : Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
@@ -83,12 +83,12 @@ class Header extends StatelessWidget {
                         child: FittedBox(
                           fit: BoxFit.fitWidth,
                           child: Text(
-                            '${greeting()}$username',
+                            '${greeting()}${editController.ctrName.text.isNotEmpty ? editController.ctrName.text : editController.userProfile.value.name ?? ''}',
                             style: TextStyle(
                               fontFamily: 'General Sans',
                               fontWeight: FontWeight.w600,
                               fontSize: 16,
-                              color: ColorValue.kSecondary,
+                              color: ColorValue.kBlack,
                             ),
                           ),
                         ),
@@ -99,22 +99,22 @@ class Header extends StatelessWidget {
                           fontFamily: 'General Sans',
                           fontWeight: FontWeight.w500,
                           fontSize: 14,
-                          color: ColorValue.kSecondary,
+                          color: ColorValue.kDarkGrey,
                         ),
                       ),
                     ],
                   ),
-                );
-              }
-            }),
-          ],
-        ),
+                ),
+              ],
+            ),
+          );
+        }),
         const Spacer(),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 30),
           child: GestureDetector(
             onTap: () {
-              Get.to(() => Cart());
+              Get.toNamed(RouteName.cart);
             },
             child: Stack(
               children: [

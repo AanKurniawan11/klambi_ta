@@ -1,14 +1,11 @@
 import 'dart:convert';
 
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:klambi_ta/Pages/menuprofile/pages/chat/components/chatresponsemodel.dart';
 import 'package:klambi_ta/Pages/menuprofile/pages/chat/components/showchatresponsemodel.dart';
-import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
-import '../../../../../Common/colors/color.dart';
 
 class ChatController extends GetxController {
   late final SharedPreferences prefs;
@@ -35,6 +32,12 @@ class ChatController extends GetxController {
       message: message.value,
     );
 
+    print(message);
+    if (chat.message.isEmpty) {
+      print('Message field is required.');
+      return; // Jangan lanjutkan jika pesan kosong
+    }
+
     isLoading.value = true;
     try {
       final response = await http.post(
@@ -45,11 +48,14 @@ class ChatController extends GetxController {
         },
         body: jsonEncode(chat.toJson()),
       );
+
+      print('Response body: ${response.body}'); // Tambahkan log ini
       if (response.statusCode == 200) {
         message.value = "";
         await _showMessageWithDelay();
       } else {
         print('Failed to send message: ${response.statusCode}');
+        print('Response body: ${response.body}');
       }
     } catch (e) {
       print('Error: $e');

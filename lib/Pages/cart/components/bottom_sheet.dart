@@ -7,82 +7,94 @@ import '../../menuprofile/pages/address/controller/address_controller.dart';
 import '../controller/cart_controllers.dart';
 
 class BottomSheetCart extends StatelessWidget {
-   BottomSheetCart({super.key});
+  BottomSheetCart({super.key});
   final CartControllers controllers = Get.put(CartControllers());
-   final AddressController Showcontroller = Get.put(AddressController());
+  final AddressController showController = Get.put(AddressController());
 
-
-   @override
+  @override
   Widget build(BuildContext context) {
-    final Size mediaquery = MediaQuery.of(context).size;
-    final double height = mediaquery.height;
-    final double width = mediaquery.width;
+    final Size mediaQuery = MediaQuery.of(context).size;
+    final double height = mediaQuery.height;
+    final double width = mediaQuery.width;
+
     return Obx(() {
       final totalPrice = controllers.totalPrice.value;
       final hasSelectedItems = controllers.selectedItems.isNotEmpty;
 
       return Container(
-        padding: EdgeInsets.all(5),
-        height: height * 0.13,
+        padding: EdgeInsets.all(width * 0.02), // Responsive padding
+        height: height * 0.15, // Responsive height
         color: Colors.white,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text("Total:", style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600)),
-                  Text(
-                    NumberFormat.currency(locale: 'id_ID', symbol: 'Rp ', decimalDigits: 0).format(totalPrice),
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600, color: ColorValue.kSecondary),
-                  ),
-                ],
-              ),
-            ),
-            GestureDetector(
-              onTap: () {
-                if (hasSelectedItems) {
-                  if (Showcontroller.Show.isNotEmpty) {
-                    controllers.orderfromCart();
-                    Get.offNamed("/paymentcart");
-                  } else {
-                    Get.to(ReqAddres());
-                  }
-                } else {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('Silakan pilih item terlebih dahulu')),
-                  );
-                }
-              },
-              child: Container(
-                margin: EdgeInsets.only(bottom: 4),
-                width: width * 0.9,
-                height: height * 0.055,
-                decoration: BoxDecoration(
-                  color: hasSelectedItems ? ColorValue.kPrimary : ColorValue.kDarkGrey,
-                  borderRadius: BorderRadius.circular(10),
+        child: SingleChildScrollView( // Add scrollable view
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Padding(
+                padding: EdgeInsets.all(width * 0.03), // Responsive padding
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Total:",
+                      style: TextStyle(
+                        fontSize: width * 0.05, // Responsive font size
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    Text(
+                      NumberFormat.currency(
+                        locale: 'id_ID',
+                        symbol: 'Rp ',
+                        decimalDigits: 0,
+                      ).format(totalPrice),
+                      style: TextStyle(
+                        fontSize: width * 0.05, // Responsive font size
+                        fontWeight: FontWeight.w600,
+                        color: ColorValue.kSecondary,
+                      ),
+                    ),
+                  ],
                 ),
-                child: Center(
-                  child: Text(
-                    "Beli",
-                    style: TextStyle(
-                      fontFamily: "General Sans",
-                      color: Colors.white,
+              ),
+              GestureDetector(
+                onTap: () {
+                  if (hasSelectedItems) {
+                    if (showController.Show.isNotEmpty) {
+                      controllers.orderfromCart();
+                      Get.offNamed("/paymentcart");
+                    } else {
+                      Get.to(ReqAddres());
+                    }
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text('Silakan pilih item terlebih dahulu')),
+                    );
+                  }
+                },
+                child: Container(
+                  margin: EdgeInsets.only(bottom: height * 0.02), // Responsive margin
+                  width: width * 0.9, // Responsive width
+                  height: height * 0.06, // Responsive height
+                  decoration: BoxDecoration(
+                    color: hasSelectedItems ? ColorValue.kPrimary : ColorValue.kDarkGrey,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Center(
+                    child: Text(
+                      "Beli",
+                      style: TextStyle(
+                        fontFamily: "General Sans",
+                        color: Colors.white,
+                        fontSize: width * 0.045, // Responsive font size
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       );
-    }
-    );
+    });
   }
-
 }
-
-
-

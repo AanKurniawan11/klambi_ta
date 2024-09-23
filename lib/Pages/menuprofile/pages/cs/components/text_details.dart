@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:klambi_ta/Common/colors/color.dart';
-import 'package:klambi_ta/Pages/history/page/testview.dart';
-import 'package:klambi_ta/component/my_elevatedbutton.dart';
-import 'package:get/get.dart';
+
 
 class TextDetails extends StatelessWidget {
   const TextDetails({super.key});

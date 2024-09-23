@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:klambi_ta/Pages/menuprofile/pages/address/edit/editAddress.dart';
+import 'package:klambi_ta/component/loadinfanimation.dart';
 import 'package:klambi_ta/component/mytext.dart';
-import 'package:klambi_ta/component/space_extension.dart';
 import '../../../../../common/colors/color.dart';
 import '../controller/address_controller.dart';
 
@@ -13,80 +13,80 @@ class AddAddress extends StatelessWidget {
   Widget build(BuildContext context) {
     final AddressController controller = Get.put(AddressController());
     final Size mediaquery = MediaQuery.of(context).size;
-    final double height = mediaquery.height;
-    final double width = mediaquery.width;
+    final String fromPage = Get.arguments ?? ''; // Menyimpan halaman asal navigasi
 
     return Scaffold(
       backgroundColor: ColorValue.kBackground,
       appBar: AppBar(
-        leading: IconButton(
-          onPressed: () {
-            Get.toNamed("/navbar");
-          },
-          icon: Icon(Icons.arrow_back),
-        ),
         title: Text("Alamat", style: TextStyle(fontSize: 24, fontFamily: "General Sans")),
         centerTitle: true,
         elevation: 0,
         backgroundColor: Colors.transparent,
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-        child: Column(
-          children: [
-            Obx(() {
-              if (controller.Show.isEmpty) {
-                return Expanded(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Image.asset(
-                        'assets/images/checkout/add1.png',
-                        width: width * 0.7,
-                        height: height * 0.3,
-                      ),
-                      SizedBox(height: 20),
-                      Text(
-                        'Masukkan Alamat Rumahmu',
-                        style: TextStyle(
-                          fontFamily: 'General Sans',
-                          fontWeight: FontWeight.bold,
-                          fontSize: 22,
-                          color: ColorValue.kBlack,
+      body: Obx(() {
+        if (controller.isLoading.value) {
+          return Loading();
+        }
+
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0), // Padding horizontal
+          child: Column(
+            children: [
+              if (controller.Show.isEmpty) ...[
+                Expanded(
+                  child: Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset(
+                          'assets/images/checkout/add1.png',
+                          width: mediaquery.width * 0.7,
+                          height: mediaquery.height * 0.3,
+                          fit: BoxFit.cover,
                         ),
-                        textAlign: TextAlign.center,
-                      ),
-                      SizedBox(height: 10),
-                      Text(
-                        'Satu langkah lagi untuk mengirimkan barangmu',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontFamily: 'General Sans',
-                          fontWeight: FontWeight.normal,
-                          fontSize: 16,
-                          color: ColorValue.kBlack,
-                        ),
-                      ),
-                      SizedBox(height: 20),
-                      GestureDetector(
-                        onTap: () async {
-                          Get.toNamed("/insert");
-                        },
-                        child: Text(
-                          "Masukkan Alamat",
+                        SizedBox(height: 20),
+                        Text(
+                          'Masukkan Alamat Rumahmu',
                           style: TextStyle(
-                            color: ColorValue.kSecondary,
-                            fontSize: 16,
+                            fontFamily: 'General Sans',
                             fontWeight: FontWeight.bold,
-                            decoration: TextDecoration.underline,
+                            fontSize: 22,
+                            color: ColorValue.kBlack,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                        SizedBox(height: 10),
+                        Text(
+                          'Satu langkah lagi untuk mengirimkan barangmu',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontFamily: 'General Sans',
+                            fontWeight: FontWeight.normal,
+                            fontSize: 16,
+                            color: ColorValue.kBlack,
                           ),
                         ),
-                      ),
-                    ],
+                        SizedBox(height: 20),
+                        GestureDetector(
+                          onTap: () async {
+                            Get.toNamed("/insert");
+                          },
+                          child: Text(
+                            "Masukkan Alamat",
+                            style: TextStyle(
+                              color: ColorValue.kSecondary,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              decoration: TextDecoration.underline,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                );
-              } else {
-                return Expanded(
+                ),
+              ] else ...[
+                Expanded(
                   child: ListView.builder(
                     itemCount: controller.Show.length,
                     itemBuilder: (context, index) {
@@ -155,7 +155,7 @@ class AddAddress extends StatelessWidget {
                                   IconButton(
                                     icon: Icon(Icons.delete, color: ColorValue.kLightGrey, size: 20),
                                     onPressed: () async {
-                                      controller.deleteAddress(data.id);
+                                      await controller.deleteAddress(data.id);
                                     },
                                   ),
                                 ],
@@ -166,12 +166,12 @@ class AddAddress extends StatelessWidget {
                       );
                     },
                   ),
-                );
-              }
-            }),
-          ],
-        ),
-      ),
+                ),
+              ],
+            ],
+          ),
+        );
+      }),
     );
   }
 }

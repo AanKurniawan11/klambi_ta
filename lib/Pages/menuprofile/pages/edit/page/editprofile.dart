@@ -1,11 +1,10 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:klambi_ta/Pages/menuprofile/pages/edit/components/textfield.dart';
 import 'package:klambi_ta/Pages/menuprofile/pages/edit/controller/edit_controller.dart';
+import 'package:klambi_ta/component/loadinfanimation.dart';
 import 'package:klambi_ta/component/my_elevatedbutton.dart';
 import 'package:klambi_ta/component/space_extension.dart';
-import 'package:loading_animation_widget/loading_animation_widget.dart';
 import '../../../../../common/colors/color.dart';
 
 class EditProfile extends StatelessWidget {
@@ -24,60 +23,47 @@ class EditProfile extends StatelessWidget {
           style: TextStyle(fontFamily: "General Sans"),
         ),
         centerTitle: true,
-        leading: GestureDetector(
-          onTap: () {
-            Get.offAllNamed("/navbar");
-          },
-          child: Icon(
-            Icons.arrow_back,
-          ),
-        ),
       ),
       body: Obx(
-        () => SafeArea(
+            () => SafeArea(
           child: SingleChildScrollView(
             child: Container(
-              padding: EdgeInsets.all(20),
-              width: width * 0.98,
+              padding: EdgeInsets.all(width * 0.05), // Padding responsif
+              width: width,
               child: Column(
                 children: [
                   Container(
                     width: width * 0.3,
-                    height: height * 0.155,
+                    height: height * 0.2,
                     child: Stack(
                       children: [
                         controllerEdit.pickedImage.value == null
                             ? ClipOval(
-                                child: Container(
-                                  height: height * 0.14,
-                                  width: width * 0.3,
-                                  decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                      image: controllerEdit.imageUrl.value !=
-                                              null
-                                          ? NetworkImage(
-                                              controllerEdit.imageUrl.value!)
-                                          : AssetImage(
-                                                  "assets/images/banner/pro.png")
-                                              as ImageProvider,
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                ),
-                              )
-                            : ClipOval(
-                                child: Container(
-                                  height: height * 0.14,
-                                  width: width * 0.3,
-                                  decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                      image: FileImage(
-                                          controllerEdit.pickedImage.value!),
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                ),
+                          child: Container(
+                            height: height * 0.15,
+                            width: width * 0.3,
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                image: controllerEdit.userProfile.value.image != null
+                                    ? NetworkImage(controllerEdit.userProfile.value.image)
+                                    : AssetImage("assets/images/banner/pro.png") as ImageProvider,
+                                fit: BoxFit.cover,
                               ),
+                            ),
+                          ),
+                        )
+                            : ClipOval(
+                          child: Container(
+                            height: height * 0.15,
+                            width: width * 0.3,
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                image: FileImage(controllerEdit.pickedImage.value!),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
+                        ),
                         Positioned(
                           bottom: 5,
                           right: 0,
@@ -115,7 +101,7 @@ class EditProfile extends StatelessWidget {
                       Text(
                         "Ganti Username",
                         style: TextStyle(
-                          fontSize: 16,
+                          fontSize: width * 0.04, // Ukuran font responsif
                           fontWeight: FontWeight.w500,
                         ),
                       ),
@@ -126,25 +112,30 @@ class EditProfile extends StatelessWidget {
                     ],
                   ),
                   Obx(() => controllerEdit.isLoading.value
-                      ? Center(
-                          child: LoadingAnimationWidget.discreteCircle(
-                            color: ColorValue.kPrimary,
-                            size: 50,
-                            secondRingColor: ColorValue.kSecondary,
-                            thirdRingColor: ColorValue.kDanger,
-                          ),
-                        )
+                      ? Loading()
                       : My_Button(
-                          onclick: () {
-                            controllerEdit.updateProfile(
-                              controllerEdit.ctrName.text,
-                              controllerEdit.pickedImage.value,
-                            );
-                            Get.offAllNamed("/navbar");
-                          },
-                          title: "Simpan",
-                        )),
-                ].withSpaceBetween(height: 30),
+                    onclick: () {
+                      // Validasi sebelum mengupdate
+                      if (controllerEdit.ctrName.text.isNotEmpty && controllerEdit.isImageValid.value) {
+                        controllerEdit.updateProfile(
+                          controllerEdit.ctrName.text,
+                          controllerEdit.pickedImage.value,
+                        ).then((_) {
+                          controllerEdit.ctrName.clear(); // Hapus teks username
+                          Get.offAllNamed("/navbar");
+                        });
+                      } else {
+                        Get.snackbar(
+                          "Peringatan",
+                          "Username dan gambar harus diisi.",
+                          snackPosition: SnackPosition.BOTTOM,
+                        );
+                      }
+                    },
+                    title: "Simpan",
+                    image: controllerEdit.isImageValid.value,
+                  )),
+                ].withSpaceBetween(height: height * 0.04), // Jarak responsif antar widget
               ),
             ),
           ),
@@ -163,14 +154,6 @@ class EditProfile extends StatelessWidget {
               ListTile(
                 leading: Icon(Icons.photo_library),
                 title: Text('Galeri'),
-                onTap: () {
-                  controller.pickImage();
-                  Navigator.of(context).pop();
-                },
-              ),
-              ListTile(
-                leading: Icon(Icons.photo_camera),
-                title: Text('Kamera'),
                 onTap: () {
                   controller.pickImage();
                   Navigator.of(context).pop();

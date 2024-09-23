@@ -1,18 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:klambi_ta/Common/colors/color.dart';
-import 'package:klambi_ta/Pages/menuprofile/components/menu_item.dart';
-import 'package:klambi_ta/Pages/menuprofile/pages/address/controller/address_controller.dart';
-import 'package:klambi_ta/Pages/menuprofile/pages/edit/controller/edit_controller.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfileController extends GetxController {
   late final SharedPreferences prefs;
   RxString username = "".obs;
-  RxString email = "".obs;
   RxString imageUrl = "".obs;
 
   final GoogleSignIn googleSignIn = GoogleSignIn();
@@ -23,9 +17,8 @@ class ProfileController extends GetxController {
 
   void getUser() {
     username.value = prefs.getString("username") ?? "";
-    email.value = prefs.getString("email") ?? "";
     imageUrl.value = prefs.getString("imageUrl") ?? "";
-    print("Email loaded from prefs: ${email.value}");
+    print("Email loaded from prefs: ${username.value}");
 
   }
 
@@ -77,7 +70,6 @@ class ProfileController extends GetxController {
 
       user.value = null;
       username.value = "";
-      email.value = "";
       imageUrl.value = "";
 
       update();
@@ -98,12 +90,10 @@ class ProfileController extends GetxController {
     user.value = firebaseUser;
     if (firebaseUser != null) {
       username.value = firebaseUser.displayName ?? "";
-      email.value = firebaseUser.email ?? "";
 
       prefs.setString("username", username.value);
-      prefs.setString("email", email.value);
 
-      print("Email set in setUser: ${email.value}");
+      print("Email set in setUser: ${username.value}");
 
       if (firebaseUser.photoURL != null) {
         imageUrl.value = firebaseUser.photoURL!;
